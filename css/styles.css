@@ -1,0 +1,173 @@
+*{
+	padding: 0;
+	margin: 0;
+}
+
+body{
+	font-family: "Arial";
+}
+
+/*recent.html*/
+#menu{
+	background-color: #d35400;
+	width: 15%;
+	height: 100vh;
+}
+
+#menu div{
+	padding-top: 35px;
+}
+
+a{
+	text-decoration-line: none;
+}
+
+#menu div .menu-item{
+	padding: 10px 20px;
+	color: white;
+}
+
+.active{
+	background-color: #e67e22;
+}
+
+.menu-item:hover{
+	background-color: #e67e22;
+	cursor: pointer;
+}
+
+#file{
+	position: absolute;
+	top: 0;
+	left: 15%;
+	height: 100vh;
+	overflow-y: scroll;
+}
+
+#file .file-item{
+	display: inline-block;
+	margin: 35px 40px;
+}
+
+#file .file-item img:hover{
+	box-shadow: 0 2px 8px 0 gray;
+	cursor: pointer;
+}
+
+#file .file-item p:nth-child(2){
+	text-align: center;
+	font-weight: bold;
+}
+
+#file .file-item p:nth-child(3){
+	text-align: center;
+	color: gray;
+	margin-top: 5px;
+}
+
+hr{
+	margin: 10px 0;
+	border: 0;
+  	width: 100%;
+  	height: 1px;
+  	background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+/*modal*/
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+    border-radius: 5px;
+}
+
+/* Modal Content */
+.modal-content {
+    position: relative;
+    background-color: white;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0} 
+    to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+}
+
+/* The Close Button */
+.close {
+    color: black;
+    float: right;
+    font-size: 15px;
+    font-weight: bold;
+    border: 1px solid black;
+    padding: 10px 20px;
+}
+
+.close:hover, .close:focus {
+    color: gray;
+    border: 1px solid gray;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-body{
+	padding: 2px 16px;
+	height: 200px;
+}
+
+.modal-body p:nth-child(1){
+	margin-top: 30px;
+	text-align: center;
+}
+
+.modal-body p:nth-child(2){
+	font-size: 50px;
+	margin-top: 10px;
+	text-align: center;
+	background-color: #e1dfdf;
+	border-radius: 5px;
+}
+
+.modal-body p:nth-child(3){
+	margin-top: 20px;
+	text-align: center;
+	color: gray;
+}
+
+/*new-canvas.html*/
+#setup{
+	position: absolute;
+	top: 0;
+	left: 15%;
+	height: 100vh;
+	width: 85%;
+}
+
+#setup p{
+	margin-top: 40px;
+	margin-left: 20px;
+	font-size: 20px;
+}

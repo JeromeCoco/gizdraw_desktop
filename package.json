@@ -1,0 +1,16 @@
+{
+  "name": "GizDraw",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "",
+  "keywords": "",
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "~1.6.2"
+  }
+}
