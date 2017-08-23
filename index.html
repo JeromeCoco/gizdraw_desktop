@@ -6,68 +6,125 @@
 	</head>
 	<body>
 		<div id="menu">
-			<div>
+			<div class="menu-container">
 				<div class="menu-item active" id="recent">Recent</div>
 				<div class="menu-item" id="new-canvas">New canvas...</div>
 				<div class="menu-item" id="open-file">Open file...</div>
 				<div class="menu-item" id="settings">Settings</div>
+				<div class="sub-settings">
+					<ul>
+						<li>Connect new device...</li>
+						<li>Disconnect device...</li>
+					</ul>
+				</div>
 				<hr>
 				<div class="menu-item" id="about">About GizDraw</div>
 			</div>
 		</div>
-		<div id="file">
-			<div class="file-item">
-				<img src="img/file-default-image.jpg">
-				<p>sketchpad.gd</p>
-				<p>file:///C:/Users/PC...</p>
-			</div>
-			<div class="file-item">
-				<img src="img/file-default-image.jpg">
-				<p>sketchpad.gd</p>
-				<p>file:///C:/Users/PC...</p>
-			</div>
-			<div class="file-item">
-				<img src="img/file-default-image.jpg">
-				<p>sketchpad.gd</p>
-				<p>file:///C:/Users/PC...</p>
-			</div>
-			<div class="file-item">
-				<img src="img/file-default-image.jpg">
-				<p>sketchpad.gd</p>
-				<p>file:///C:/Users/PC...</p>
-			</div>
-			<div class="file-item">
-				<img src="img/file-default-image.jpg">
-				<p>sketchpad.gd</p>
-				<p>file:///C:/Users/PC...</p>
-			</div>
-			<div class="file-item">
-				<img src="img/file-default-image.jpg">
-				<p>sketchpad.gd</p>
-				<p>file:///C:/Users/PC...</p>
-			</div>
-			<div class="file-item">
-				<img src="img/file-default-image.jpg">
-				<p>sketchpad.gd</p>
-				<p>file:///C:/Users/PC...</p>
-			</div>
-			<div class="file-item">
-				<img src="img/file-default-image.jpg">
-				<p>sketchpad.gd</p>
-				<p>file:///C:/Users/PC...</p>
-			</div>
-			<div class="file-item">
-				<img src="img/file-default-image.jpg">
-				<p>sketchpad.gd</p>
-				<p>file:///C:/Users/PC...</p>
-			</div>
-			<div class="file-item">
-				<img src="img/file-default-image.jpg">
-				<p>sketchpad.gd</p>
-				<p>file:///C:/Users/PC...</p>
+		<div class="panel" id="recent-panel">
+			<div id="file">
+				<div class="file-item">
+					<img src="img/file-default-image.jpg">
+					<p>sketchpad.gd</p>
+					<p>file:///C:/Users/PC...</p>
+				</div>
+				<div class="file-item">
+					<img src="img/file-default-image.jpg">
+					<p>sketchpad.gd</p>
+					<p>file:///C:/Users/PC...</p>
+				</div>
+				<div class="file-item">
+					<img src="img/file-default-image.jpg">
+					<p>sketchpad.gd</p>
+					<p>file:///C:/Users/PC...</p>
+				</div>
+				<div class="file-item">
+					<img src="img/file-default-image.jpg">
+					<p>sketchpad.gd</p>
+					<p>file:///C:/Users/PC...</p>
+				</div>
+				<div class="file-item">
+					<img src="img/file-default-image.jpg">
+					<p>sketchpad.gd</p>
+					<p>file:///C:/Users/PC...</p>
+				</div>
+				<div class="file-item">
+					<img src="img/file-default-image.jpg">
+					<p>sketchpad.gd</p>
+					<p>file:///C:/Users/PC...</p>
+				</div>
+				<div class="file-item">
+					<img src="img/file-default-image.jpg">
+					<p>sketchpad.gd</p>
+					<p>file:///C:/Users/PC...</p>
+				</div>
+				<div class="file-item">
+					<img src="img/file-default-image.jpg">
+					<p>sketchpad.gd</p>
+					<p>file:///C:/Users/PC...</p>
+				</div>
+				<div class="file-item">
+					<img src="img/file-default-image.jpg">
+					<p>sketchpad.gd</p>
+					<p>file:///C:/Users/PC...</p>
+				</div>
+				<div class="file-item">
+					<img src="img/file-default-image.jpg">
+					<p>sketchpad.gd</p>
+					<p>file:///C:/Users/PC...</p>
+				</div>
 			</div>
 		</div>
-		<div id="enterPin" class="modal">
+		<div class="panel" id="setup-canvas-panel">
+			<div id="setup">
+				<p>Set Up Canvas Details</p>
+				<table>
+					<tr>
+						<td>
+							<div>Canvas Name:</div>
+						</td>
+						<td>
+							<input type="text"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div>Width:</div>
+						</td>
+						<td>
+							<input type="number"/> px
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div>Height:</div>
+						</td>
+						<td>
+							<input type="number"/> px
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div>Background:</div>
+						</td>
+						<td>
+							<select id="setCanvasColor">
+								<option>White</option>
+								<option>Transparent</option>
+								<option>Color</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>
+							<button>Create</button>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<!-- <div id="enterPin" class="modal">
   			<div class="modal-content">
     			<div class="modal-body">
       				<p>Please enter this <b>PIN</b> to your mobile device.</p>
@@ -76,8 +133,11 @@
       				<div class="close">Exit</div>
     			</div>
   			</div>
-		</div>
+		</div> -->
+		<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+		<script src="js/jquery-3.1.1.min.js"></script>
 		<script src="js/index.js"></script>
 		<script src="js/page-transition.js"></script>
+		<script>if (window.module) module = window.module;</script>
 	</body>
 </html>
