@@ -20,6 +20,16 @@ $(document).ready(function(){
 		}
 	});
 
+	//connect and disconnect show modal
+
+	$('#connect-new').click(function(){
+		$('#enterPin').css("display", "block");
+	});
+
+	$('#disconnect').click(function(){
+		$('#enterPin').css("display", "block");
+	});
+
 	$('#recent').click(function(){
 		changePanel();
 		$(this).addClass('active');
