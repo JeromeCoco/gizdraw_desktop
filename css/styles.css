@@ -74,7 +74,7 @@ a{
 	margin-top: 5px;
 }
 
-hr{
+hr#division{
 	margin: 10px 0;
 	border: 0;
   	width: 100%;
@@ -251,4 +251,42 @@ table tr td button:hover{
 .sub-settings ul li:hover{
 	color: #e67e22;
 	cursor: pointer;
+}
+
+#about-content{
+	position: absolute;
+	top: 0;
+	left: 15%;
+	height: 100vh;
+	overflow-y: scroll;
+	width: 85%;
+}
+
+#about-content div{
+	width: 90%;
+    background-color: #ebebeb;
+    font-size: 25px;
+    margin: auto;
+    margin-top: 40px;
+    padding: 14px 20px;
+    box-shadow: 12px 12px #d8d8d8;
+}
+
+#about-content div p{
+	margin-bottom: 10px;
+}
+
+#about-content div img{
+	width: 125px;
+    margin-top: 20px;
+}
+
+#about-content div span{
+	color: #6b6969;
+    position: absolute;
+    width: 73%;
+    left: 19%;
+    font-size: 15px;
+    top: 137px;
+    text-align: center;
 }

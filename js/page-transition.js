@@ -2,6 +2,7 @@ $(document).ready(function(){
 
 	$('#recent-panel').addClass('show');
 	$('#setup-canvas-panel').addClass('hide');
+	$('#about-panel').addClass('hide');
 
 	function changePanel(){
 		$('.menu-item').removeClass('active');
@@ -47,6 +48,13 @@ $(document).ready(function(){
 	$('#settings').click(function(){
 		$(this).toggleClass('active');
 		$('.sub-settings').toggleClass('show-settings');
+	});
+
+	$('#about').click(function(){
+		changePanel();
+		$(this).addClass('active');
+		$('#about-panel').removeClass('hide');
+		$('#about-panel').addClass('show');
 	});
 
 });
