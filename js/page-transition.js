@@ -23,6 +23,7 @@ $(document).ready(function(){
 			colored = false;
 			$('#colorpick').fadeOut('fast');
 		}
+		preview();
 	});
 
 	//connect and disconnect show modal
@@ -85,15 +86,44 @@ $(document).ready(function(){
 	}
 
 	$('#show-preview').click(function(){
-		preview();
+		var width = $('#canvas-width').val();
+		var height = $('#canvas-height').val();
+
+		if (width <= 1000 && width >= 300) {
+			if (height <= 650 && height >= 300) {
+				preview();
+			} else {
+				$('#canvas-height').css("background-color", "red");
+			}
+		} else {
+			$('#canvas-width').css("background-color", "red");
+		}
 	});
 
 	$('#canvas-width').change(function(){
-		preview();
+		var width = $(this).val();
+
+		if (width <= 1000 && width >= 300) {
+			preview();
+			$(this).css("background-color", "#1a1919");
+			$('#create-canvas').css("display", "block");
+		} else {
+			$(this).css("background-color", "red");
+			$('#create-canvas').css("display", "none");
+		}
 	});
 
 	$('#canvas-height').change(function(){
-		preview();
+		var height = $(this).val();
+
+		if (height <= 1000 && height >= 300) {
+			preview();
+			$(this).css("background-color", "#1a1919");
+			$('#create-canvas').css("display", "block");
+		} else {
+			$(this).css("background-color", "red");
+			$('#create-canvas').css("display", "none");
+		}
 	});
 
 });
