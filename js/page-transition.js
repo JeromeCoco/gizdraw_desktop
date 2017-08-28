@@ -3,6 +3,7 @@ $(document).ready(function(){
 	$('#recent-panel').addClass('show');
 	$('#setup-canvas-panel').addClass('hide');
 	$('#about-panel').addClass('hide');
+	$('#colorpick').addClass('hide');
 
 	function changePanel(){
 		$('.menu-item').removeClass('active');
@@ -15,7 +16,7 @@ $(document).ready(function(){
 	$('#setCanvasColor').change(function(){
 		var set = $(this).val();
 		if (set == "Color") {
-			$(this).after("<input id='colorpick' type='color'/>");
+			$('#colorpick').fadeIn('fast');
 		} else {
 			$('#colorpick').fadeOut('fast');
 		}
@@ -55,6 +56,11 @@ $(document).ready(function(){
 		$(this).addClass('active');
 		$('#about-panel').removeClass('hide');
 		$('#about-panel').addClass('show');
+	});
+
+	$('#show-preview').click(function(){
+		$('#preview').css("display", "inline-block");
+		$('#canvas-preview').css();
 	});
 
 });

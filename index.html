@@ -92,7 +92,7 @@
 							<div>Width:</div>
 						</td>
 						<td>
-							<input type="number"/> px
+							<input id="canvas-width" type="number" value="900" /> px
 						</td>
 					</tr>
 					<tr>
@@ -100,7 +100,7 @@
 							<div>Height:</div>
 						</td>
 						<td>
-							<input type="number"/> px
+							<input id="canvas-height" type="number" value="600"/> px
 						</td>
 					</tr>
 					<tr>
@@ -113,15 +113,20 @@
 								<option>Transparent</option>
 								<option>Color</option>
 							</select>
+							<input id='colorpick' type='color'/>
 						</td>
 					</tr>
 					<tr>
 						<td></td>
 						<td>
 							<button>Create</button>
+							<span id="show-preview">Show Preview</span>
 						</td>
 					</tr>
 				</table>
+			</div>
+			<div id="preview">
+				<div id="canvas-preview"></div>
 			</div>
 		</div>
 		<div class="panel" id="about-panel">

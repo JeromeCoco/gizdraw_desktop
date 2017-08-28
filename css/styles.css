@@ -167,12 +167,17 @@ hr#division{
 }
 
 /*new-canvas.html*/
-#setup{
+#setup-canvas-panel{
 	position: absolute;
 	top: 0;
 	left: 15%;
 	height: 100vh;
 	width: 85%;
+	overflow-y: scroll;
+}
+
+#setup{
+	display: inline-block;
 }
 
 #setup p{
@@ -214,6 +219,7 @@ table tr td button{
 	padding: 8px 10px;
     background-color: #2980b9;
     border: none;
+    margin-bottom: 15px;
     color: white;
     font-size: 16px;
     width: 110%;
@@ -224,10 +230,34 @@ table tr td button:hover{
 	background-color: #0081ff;
 }
 
+table tr td span{
+    text-decoration: underline;
+    text-align: left;
+    margin-left: -20px;
+    font-size: 15px;
+}
+
+table tr td span:hover{
+	color: #0081ff;
+	cursor: pointer;
+}
+
 #colorpick{
 	position: relative;
     left: 28px;
     padding: 3px;
+}
+
+#preview{
+	display: none;
+    position: absolute;
+    background-color: #d2d2d2;
+    width: 600px;
+    height: 550px;
+    top: 72px;
+    margin-left: 20px;
+    overflow-y: scroll;
+    overflow-x: scroll;
 }
 
 .sub-settings{
