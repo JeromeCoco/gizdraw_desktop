@@ -100,7 +100,7 @@
 							<div>Height:</div>
 						</td>
 						<td>
-							<input id="canvas-height" type="number" value="300" step="25" min="300" max="650" /> px
+							<input id="canvas-height" type="number" value="300" step="25" min="300" max="625" /> px
 						</td>
 					</tr>
 					<tr>
@@ -129,6 +129,17 @@
 				<div id="canvas-preview"></div>
 			</div>
 		</div>
+		<div class="panel" id="sketchpad">
+			<ul>
+				<li id="backToMenu">Back to Menu</li>
+				<li>Create New</li>
+				<li>Open file</li>
+				<li>Save as</li>
+			</ul>
+			<div id="main-sketch">
+
+			</div>
+		</div>
 		<div class="panel" id="about-panel">
 			<div id="about-content">
 				<div>
@@ -136,21 +147,44 @@
 					<hr/>
 					<img src="img/logo2.png">
 					<span>
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+						GizDraw was developed by students from the University of Caloocan City, North Campus. It is created with Apache Cordova and Electron that uses Chromium and Node.JS Technology. Both desktop and mobile application of GizDraw is created using HTML5. The goal of the application is to provide an efficient sketchpad for students to create artwork by using a mobile device.
 					</span>
 				</div>
 			</div>
+			<div id="developers">
+				<p>
+					The Developers
+				</p>
+				<div class="card">
+  					<div class="container">
+  						<img src="img/girl.png" width="100%">
+    					<h5><b>Krizia Mae Olazo</b></h5> 
+    					<p id="task">Programmer</p> 
+  					</div>
+				</div>
+				<div class="card">
+  					<div class="container">
+  						<img src="img/boy.png" width="100%">
+    					<h5><b>Aeron Isog</b></h5> 
+    					<p id="task">Programmer</p> 
+  					</div>
+				</div>
+				<div class="card">
+  					<div class="container">
+  						<img src="img/man.png" width="100%">
+    					<h5><b>Jerome Coco</b></h5> 
+    					<p id="task">UI / UX Designer</p> 
+  					</div>
+				</div>
+				<br/>
+			</div>
+			<p id="copyright">Unpublished work. &copy; 2017 GizDraw.</p>
 		</div>
 		<div id="enterPin" class="modal">
   			<div class="modal-content">
     			<div class="modal-body">
       				<p>Please enter this <b>PIN</b> to your mobile device.</p>
-      				<p>12345</p>
+      				<p id="randompin">12345</p>
       				<p>Waiting for connection...</p>
       				<div class="close">Exit</div>
     			</div>

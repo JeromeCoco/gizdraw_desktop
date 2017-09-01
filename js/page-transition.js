@@ -4,7 +4,15 @@ $(document).ready(function(){
 	$('#setup-canvas-panel').addClass('hide');
 	$('#about-panel').addClass('hide');
 	$('#colorpick').addClass('hide');
+	$('#sketchpad').css("display", "none");
 	var colored = false;
+
+	var pin = "";
+	var value = "1234567890";
+	for( var i = 0; i < 5; i++ ) {
+		pin += value.charAt(Math.floor(Math.random() * value.length));
+	}
+	$('#randompin').html(pin);
 
 	function changePanel(){
 		$('.menu-item').removeClass('active');
@@ -105,7 +113,7 @@ $(document).ready(function(){
 
 		if (width <= 1000 && width >= 300) {
 			preview();
-			$(this).css("background-color", "#1a1919");
+			$(this).css("background-color", "#aaaaaa");
 			$('#create-canvas').css("display", "block");
 		} else {
 			$(this).css("background-color", "red");
@@ -118,7 +126,7 @@ $(document).ready(function(){
 
 		if (height <= 1000 && height >= 300) {
 			preview();
-			$(this).css("background-color", "#1a1919");
+			$(this).css("background-color", "#aaaaaa");
 			$('#create-canvas').css("display", "block");
 		} else {
 			$(this).css("background-color", "red");

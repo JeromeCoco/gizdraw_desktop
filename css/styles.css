@@ -187,7 +187,7 @@ hr#division{
 }
 
 #setup table{
-	background-color: #242424;
+	background-color: #d2d2d2;
 	margin-left: 20px;
 	margin-top: 10px;
 	padding: 20px 60px;
@@ -196,21 +196,18 @@ hr#division{
 
 table tr td{
 	padding: 7px;
-	color: white;
 }
 
 table tr td div{
-	color: white;
 	padding: 8px 10px;
 	text-align: right;
 }
 
 table tr td input, select{
-	background-color: #1a1919;
+	background-color: #aaaaaa;
 	padding: 6px;
 	margin-left: -17px;
 	font-size: 14px;
-	color: white;
 	border: none;
 	width: 85%;
 }
@@ -235,6 +232,7 @@ table tr td span{
     text-align: left;
     margin-left: -20px;
     font-size: 14px;
+    color: black;
 }
 
 table tr td span:hover{
@@ -264,9 +262,9 @@ table tr td span:hover{
 .sub-settings{
 	padding-top: 0;
     position: relative;
-    background-color: #292929;
+    background-color: #e67e22;
     color: white;
-    padding: 10px 20px;
+    padding: 3px 20px;
     display: none;
 }
 
@@ -280,7 +278,7 @@ table tr td span:hover{
 }
 
 .sub-settings ul li:hover{
-	color: #e67e22;
+	color: black;
 	cursor: pointer;
 }
 
@@ -291,6 +289,48 @@ table tr td span:hover{
 	height: 100vh;
 	overflow-y: scroll;
 	width: 85%;
+}
+
+#developers{
+	position: absolute;
+	top: 300px;
+	left: 18%;
+	overflow-y: hidden;
+	width: 82%;
+}
+
+#developers p{
+	font-size: 20px;
+}
+
+#about-panel p#copyright{
+	position: absolute;
+	right: 10px;
+	bottom: 0;
+	font-size: 14px;
+	color: gray;
+}
+
+.card {
+	border: 1px solid #e3e3e3;
+    transition: 0.3s;
+    width: 18%;
+    display: inline-block;
+    padding: 20px;
+    margin: 20px;
+    background-color: whitesmoke;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.card div{
+    padding: 2px 16px;
+}
+
+.card div #task{
+	font-size: 13px;
 }
 
 #about-content div{
@@ -320,4 +360,27 @@ table tr td span:hover{
     font-size: 15px;
     top: 137px;
     text-align: center;
+}
+
+#main-sketch{
+	margin: auto;
+	margin-top: 20px;
+	box-shadow: 0 3px 15px -6px;
+}
+
+#sketchpad ul{
+	background-color: white;
+	box-shadow: 0 2px 15px -6px;
+	height: 30px;
+}
+
+#sketchpad ul li{
+	display: inline-block;
+    margin: 7px 10px;
+    font-size: 14px;
+}
+
+#sketchpad ul li:hover{
+	cursor: pointer;
+	
 }
