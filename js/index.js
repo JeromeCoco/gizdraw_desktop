@@ -39,4 +39,8 @@ $(document).ready(function(){
 		dialog.showOpenDialog();
 	});
 
+	$('#openFileOnSketch').click(function(){
+		dialog.showOpenDialog();
+	});
+
 })
