@@ -84,7 +84,7 @@
 							<div>Canvas Name:</div>
 						</td>
 						<td>
-							<input type="text"/>
+							<input id="canvasName" type="text"/>
 						</td>
 					</tr>
 					<tr>
@@ -100,7 +100,7 @@
 							<div>Height:</div>
 						</td>
 						<td>
-							<input id="canvas-height" type="number" value="300" step="25" min="300" max="625" /> px
+							<input id="canvas-height" type="number" value="300" step="25" min="300" max="550" /> px
 						</td>
 					</tr>
 					<tr>
@@ -126,15 +126,19 @@
 				</table>
 			</div>
 			<div id="preview">
-				<div id="canvas-preview"></div>
+				<span id="btnFullScreenPreview">
+					<img src="img/fullscreen.png" width="30px">
+				</span>
+				<div id="canvas-preview">
+				</div>
 			</div>
 		</div>
 		<div class="panel" id="sketchpad">
 			<ul>
 				<li id="backToMenu">Back to Menu</li>
-				<li>Create New</li>
+				<li>Clear Canvas</li>
 				<li>Open file</li>
-				<li>Save as</li>
+				<li>Save</li>
 			</ul>
 			<div id="main-sketch">
 

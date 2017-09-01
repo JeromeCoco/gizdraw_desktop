@@ -98,7 +98,7 @@ $(document).ready(function(){
 		var height = $('#canvas-height').val();
 
 		if (width <= 1000 && width >= 300) {
-			if (height <= 650 && height >= 300) {
+			if (height <= 550 && height >= 300) {
 				preview();
 			} else {
 				$('#canvas-height').css("background-color", "red");
@@ -124,7 +124,7 @@ $(document).ready(function(){
 	$('#canvas-height').change(function(){
 		var height = $(this).val();
 
-		if (height <= 1000 && height >= 300) {
+		if (height <= 550 && height >= 300) {
 			preview();
 			$(this).css("background-color", "#aaaaaa");
 			$('#create-canvas').css("display", "block");
@@ -132,6 +132,25 @@ $(document).ready(function(){
 			$(this).css("background-color", "red");
 			$('#create-canvas').css("display", "none");
 		}
+	});
+
+	$('#backToMenu').click(function(){
+		$('#menu').css("display", "block");
+		$('.panel').removeClass('show');
+		$('.panel').addClass('hide');
+		$('#setup-canvas-panel').removeClass('hide');
+		$('#setup-canvas-panel').addClass('show');
+		$('#main-sketch').css('display', "none");
+		$('#sketchpad').css('display', "none");
+		$('body').css("background-color", "white");
+	});
+
+	$('#btnFullScreenPreview').click(function(){
+		$('#preview').toggleClass('showPreviewFull');
+	});
+
+	$('#closeModalPreview').click(function(){
+		
 	});
 
 });
