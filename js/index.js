@@ -14,6 +14,7 @@ $(document).ready(function(){
 
 	$('#create-canvas').click(function(){
 		if ($('#canvasName').val() != "") {
+			$('#canvas-name-active').html($('#canvasName').val());
 			$('#menu').css("display", "none");
 			$('#setup-canvas-panel').addClass('hide');
 			$('#main-sketch').css('display', "block");

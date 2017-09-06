@@ -7,12 +7,15 @@ $(document).ready(function(){
 	$('#sketchpad').css("display", "none");
 	var colored = false;
 
-	var pin = "";
-	var value = "1234567890";
-	for( var i = 0; i < 5; i++ ) {
-		pin += value.charAt(Math.floor(Math.random() * value.length));
+	generatePIN();
+	function generatePIN() {
+		var pin = "";
+		var value = "1234567890";
+		for( var i = 0; i < 5; i++ ) {
+			pin += value.charAt(Math.floor(Math.random() * value.length));
+		}
+		$('#randompin').html(pin);
 	}
-	$('#randompin').html(pin);
 
 	function changePanel(){
 		$('.menu-item').removeClass('active');
@@ -38,10 +41,12 @@ $(document).ready(function(){
 
 	$('#connect-new').click(function(){
 		$('#enterPin').css("display", "block");
+		generatePIN();
 	});
 
 	$('#disconnect').click(function(){
 		$('#enterPin').css("display", "block");
+		generatePIN();
 	});
 
 	$('#recent').click(function(){
