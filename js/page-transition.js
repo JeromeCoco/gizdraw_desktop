@@ -8,13 +8,20 @@ $(document).ready(function(){
 	var colored = false;
 
 	generatePIN();
+	if ($('#randompin').html() == "") {
+		$('#randompin').html("<p style='color:red;font-size:20px;padding:10px;'>Connect your device to a network.</p>");
+	}
 	function generatePIN() {
-		var pin = "";
-		var value = "1234567890";
-		for( var i = 0; i < 5; i++ ) {
-			pin += value.charAt(Math.floor(Math.random() * value.length));
-		}
-		$('#randompin').html(pin);
+		window.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;   //compatibility for firefox and chrome
+    	var pc = new RTCPeerConnection({iceServers:[]}), noop = function(){};      
+    	pc.createDataChannel("");    //create a bogus data channel
+    	pc.createOffer(pc.setLocalDescription.bind(pc), noop);    // create offer and set local description
+    	pc.onicecandidate = function(ice){  //listen for candidate events
+        if(!ice || !ice.candidate || !ice.candidate.candidate)  return;
+        	var myIP = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/.exec(ice.candidate.candidate)[1];
+        	$('#randompin').html(myIP);
+        	pc.onicecandidate = noop;
+    	};
 	}
 
 	function changePanel(){
