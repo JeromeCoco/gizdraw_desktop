@@ -6,22 +6,41 @@ $(document).ready(function(){
 	$('#colorpick').addClass('hide');
 	$('#sketchpad').css("display", "none");
 	var colored = false;
+	var myIP;
+	var socket;
+	var isConnected;
+	generateIP();
 
-	generatePIN();
 	if ($('#randompin').html() == "") {
 		$('#randompin').html("<p style='color:red;font-size:20px;padding:10px;'>Connect your device to a network.</p>");
 	}
-	function generatePIN() {
+
+	function generateIP() {
 		window.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;   //compatibility for firefox and chrome
     	var pc = new RTCPeerConnection({iceServers:[]}), noop = function(){};      
     	pc.createDataChannel("");    //create a bogus data channel
     	pc.createOffer(pc.setLocalDescription.bind(pc), noop);    // create offer and set local description
     	pc.onicecandidate = function(ice){  //listen for candidate events
         if(!ice || !ice.candidate || !ice.candidate.candidate)  return;
-        	var myIP = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/.exec(ice.candidate.candidate)[1];
+        	myIP = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/.exec(ice.candidate.candidate)[1];
         	$('#randompin').html(myIP);
+
+        	// Connect to Server after getting own IP
+        	socket = io('http://'+myIP+':3000');
+			socket.on("connect", function(){
+				isConnected = true;
+				console.log("Connected");
+			});
+
         	pc.onicecandidate = noop;
     	};
+	}
+
+	//console.log(isConnected);
+	if (isConnected) {
+		socket.on("closeModalOnPCExecute", function(data){
+			console.log(data);
+		});
 	}
 
 	function changePanel(){
@@ -31,7 +50,6 @@ $(document).ready(function(){
 	}
 
 	//setCanvasColor
-
 	$('#setCanvasColor').change(function(){
 		var set = $(this).val();
 		if (set == "Color") {
@@ -45,15 +63,14 @@ $(document).ready(function(){
 	});
 
 	//connect and disconnect show modal
-
 	$('#connect-new').click(function(){
 		$('#enterPin').css("display", "block");
-		generatePIN();
+		generateIP();
 	});
 
 	$('#disconnect').click(function(){
 		$('#enterPin').css("display", "block");
-		generatePIN();
+		generateIP();
 	});
 
 	$('#recent').click(function(){
