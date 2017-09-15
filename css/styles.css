@@ -400,3 +400,7 @@ table tr td span:hover{
 	cursor: pointer;
 	
 }
+#btnFullScreenPreview {
+	content: url('../img/fullscreen.png');
+	width: 30px;
+}

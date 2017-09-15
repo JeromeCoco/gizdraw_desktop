@@ -8,8 +8,13 @@ console.log("Server is running...");
 io.sockets.on('connection', function (socket) {
     console.log('socket connected:' + socket.id);
 
-    socket.on('closeModalOnPC', function(data){
+    /*socket.on("closeModal", function(data){
     	console.log(data);
-    	socket.emit("closeModalOnPCExecute", data);
-	});
+    });*/
+
+    socket.on("message", function(data){
+    	console.log(data);
+    	socket.emit("HelloPC", "hello pc");
+    });
+
 });

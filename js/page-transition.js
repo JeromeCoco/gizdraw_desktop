@@ -8,7 +8,7 @@ $(document).ready(function(){
 	var colored = false;
 	var myIP;
 	var socket;
-	var isConnected;
+
 	generateIP();
 
 	if ($('#randompin').html() == "") {
@@ -21,26 +21,18 @@ $(document).ready(function(){
     	pc.createDataChannel("");    //create a bogus data channel
     	pc.createOffer(pc.setLocalDescription.bind(pc), noop);    // create offer and set local description
     	pc.onicecandidate = function(ice){  //listen for candidate events
-        if(!ice || !ice.candidate || !ice.candidate.candidate)  return;
+        	if(!ice || !ice.candidate || !ice.candidate.candidate)  return;
         	myIP = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/.exec(ice.candidate.candidate)[1];
         	$('#randompin').html(myIP);
 
         	// Connect to Server after getting own IP
         	socket = io('http://'+myIP+':3000');
 			socket.on("connect", function(){
-				isConnected = true;
 				console.log("Connected");
 			});
 
         	pc.onicecandidate = noop;
     	};
-	}
-
-	//console.log(isConnected);
-	if (isConnected) {
-		socket.on("closeModalOnPCExecute", function(data){
-			console.log(data);
-		});
 	}
 
 	function changePanel(){
@@ -176,6 +168,13 @@ $(document).ready(function(){
 
 	$('#btnFullScreenPreview').click(function(){
 		$('#preview').toggleClass('showPreviewFull');
+		screenwidth = $('.showPreviewFull').width();
+		if (screenwidth>100) {
+			$('#btnFullScreenPreview').css("content","url('img/minimize.png')");
+		}
+		else {
+			$('#btnFullScreenPreview').css("content","url('img/fullscreen.png')");	
+		}
 	});
 
 	$('#closeModalPreview').click(function(){
