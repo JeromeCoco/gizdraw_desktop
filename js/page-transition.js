@@ -11,6 +11,17 @@ $(document).ready(function(){
 
 	generateIP();
 
+	socket = io('http://localhost:3000');
+	socket.on("connect", function(){
+		console.log("Connected");
+
+		socket.on('sendtopc', function(data){
+			$("#status").html("Connected.");
+			$("#status").css("color", "green");
+
+		});
+	});
+
 	if ($('#randompin').html() == "") {
 		$('#randompin').html("<p style='color:red;font-size:20px;padding:10px;'>Connect your device to a network.</p>");
 	}
@@ -24,13 +35,6 @@ $(document).ready(function(){
         	if(!ice || !ice.candidate || !ice.candidate.candidate)  return;
         	myIP = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/.exec(ice.candidate.candidate)[1];
         	$('#randompin').html(myIP);
-
-        	// Connect to Server after getting own IP
-        	socket = io('http://'+myIP+':3000');
-			socket.on("connect", function(){
-				console.log("Connected");
-			});
-
         	pc.onicecandidate = noop;
     	};
 	}
