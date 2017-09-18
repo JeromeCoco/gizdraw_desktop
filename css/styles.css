@@ -133,6 +133,7 @@ hr#division{
     font-weight: bold;
     border: 1px solid black;
     padding: 10px 20px;
+    display: none;
 }
 
 .close:hover, .close:focus {

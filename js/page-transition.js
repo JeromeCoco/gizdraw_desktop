@@ -18,7 +18,7 @@ $(document).ready(function(){
 		socket.on('sendtopc', function(data){
 			$("#status").html("Connected.");
 			$("#status").css("color", "green");
-
+			$(".close").css("display", "block");
 		});
 	});
 
@@ -181,8 +181,13 @@ $(document).ready(function(){
 		}
 	});
 
-	$('#closeModalPreview').click(function(){
-		
+	$('#create-canvas').click(function(){
+		var canvasDetails = {
+			canvasName: $("#canvasName").val(),
+			canvasWidth: $("#canvas-width").val(),
+			canvasHeight: $("#canvas-height").val(),
+		}
+		socket.emit("createCanvas", canvasDetails);
 	});
 
 });

@@ -9,7 +9,10 @@ io.sockets.on('connection', function (socket) {
     console.log('socket connected:' + socket.id);
 
     socket.on("sender", function(data){
-    	console.log(data);
     	socket.broadcast.emit("sendtopc", data);
     })
+
+    socket.on("createCanvas", function(data){
+    	socket.broadcast.emit("createCanvasToMobile", data);
+    });
 });
