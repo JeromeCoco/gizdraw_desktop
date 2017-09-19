@@ -16,8 +16,9 @@ $(document).ready(function(){
 		console.log("Connected");
 
 		socket.on('sendtopc', function(data){
-			$("#status").html("Connected.");
-			$("#status").css("color", "green");
+			$("#status").html("CONNECTED");
+			$("#status").css("font-size", "25px");
+			$("#status").css("color", "white");
 			$(".close").css("display", "block");
 		});
 	});

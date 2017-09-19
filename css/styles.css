@@ -18,7 +18,7 @@ body{
 
 /*recent.html*/
 #menu{
-	background-color: #d35400;
+	background-color: #e44d2e;
 	width: 15%;
 	height: 100vh;
 }
@@ -37,11 +37,11 @@ a{
 }
 
 .active{
-	background-color: #e67e22;
+	background-color: #ec826c;
 }
 
 .menu-item:hover{
-	background-color: #e67e22;
+	background-color: #ec826c;
 	cursor: pointer;
 }
 
@@ -102,17 +102,26 @@ hr#division{
 /* Modal Content */
 .modal-content {
     position: relative;
-    background-color: white;
+    background-color: #e44d2e;
     margin: auto;
     padding: 0;
     border: 1px solid #888;
-    width: 80%;
+    width: 30%;
+    height: 42%;
+    border-radius: 5px;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
     -webkit-animation-name: animatetop;
     -webkit-animation-duration: 0.4s;
     animation-name: animatetop;
     animation-duration: 0.4s
 }
+
+.above-text{
+	color: white;
+	padding: 10px;
+	border-radius: 5px;
+}
+
 
 /* Add Animation */
 @-webkit-keyframes animatetop {
@@ -124,22 +133,36 @@ hr#division{
     from {top:-300px; opacity:0}
     to {top:0; opacity:1}
 }
+/* Random IP */
+
+#randompin{
+	background-color: white;
+	font-size: 30px;
+}
+
+/* status*/
+#status{
+	color: white;
+	text-align:center;
+	margin-top: 30px;
+}
 
 /* The Close Button */
 .close {
-    color: black;
-    float: right;
+    color: white;
+    text-align: center;
     font-size: 15px;
     font-weight: bold;
-    border: 1px solid black;
     padding: 10px 20px;
+    background-color: #9f3520;
+    border-radius: 3px;
+    float: right;
+    margin-top: 15px;
     display: none;
 }
 
 .close:hover, .close:focus {
-    color: gray;
-    border: 1px solid gray;
-    text-decoration: none;
+    background-color: #e97057;
     cursor: pointer;
 }
 
@@ -279,7 +302,7 @@ table tr td span:hover{
 .sub-settings{
 	padding-top: 0;
     position: relative;
-    background-color: #e67e22;
+    background-color: #e44d2e;
     color: white;
     padding: 3px 20px;
     display: none;
