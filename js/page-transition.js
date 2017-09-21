@@ -183,11 +183,21 @@ $(document).ready(function(){
 	});
 
 	$('#create-canvas').click(function(){
+
+		var canvasColor;
+		if ($("#setCanvasColor").val() == "White") {
+			canvasColor = "white";
+		} else if ($("#setCanvasColor").val() == "Color") {
+			canvasColor = $("#colorpick").val();
+		}
+
 		var canvasDetails = {
 			canvasName: $("#canvasName").val(),
 			canvasWidth: $("#canvas-width").val(),
 			canvasHeight: $("#canvas-height").val(),
+			canvasBackgroundColor: canvasColor
 		}
+
 		socket.emit("createCanvas", canvasDetails);
 	});
 
