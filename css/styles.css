@@ -408,6 +408,11 @@ table tr td span:hover{
 	box-shadow: 0 3px 15px -6px;
 }
 
+#main-sketch canvas{
+	width: inherit;
+	height: inherit;
+}
+
 #sketchpad ul{
 	background-color: white;
 	box-shadow: 0 2px 15px -6px;
