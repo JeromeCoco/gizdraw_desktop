@@ -13,7 +13,6 @@ $(document).ready(function(){
 
 	socket = io('http://localhost:3000');
 	socket.on("connect", function(){
-		console.log("Connected");
 
 		socket.on('sendtopc', function(data){
 			$("#status").html("CONNECTED");
@@ -21,6 +20,7 @@ $(document).ready(function(){
 			$("#status").css("color", "white");
 			$(".close").css("display", "block");
 		});
+
 	});
 
 	if ($('#randompin').html() == "") {
@@ -46,7 +46,6 @@ $(document).ready(function(){
 		$('.panel').addClass('hide');
 	}
 
-	//setCanvasColor
 	$('#setCanvasColor').change(function(){
 		var set = $(this).val();
 		if (set == "Color") {
@@ -59,7 +58,6 @@ $(document).ready(function(){
 		preview();
 	});
 
-	//connect and disconnect show modal
 	$('#connect-new').click(function(){
 		$('#enterPin').css("display", "block");
 		generateIP();

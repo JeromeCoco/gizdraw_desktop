@@ -144,7 +144,7 @@ hr#division{
 #status{
 	color: white;
 	text-align:center;
-	margin-top: 30px;
+	margin-top: 20px;
 }
 
 /* The Close Button */
@@ -156,7 +156,6 @@ hr#division{
     padding: 10px 20px;
     background-color: #9f3520;
     border-radius: 3px;
-    float: right;
     margin-top: 15px;
     display: none;
 }
