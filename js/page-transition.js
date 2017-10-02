@@ -158,7 +158,7 @@ $(document).ready(function(){
 		}
 	});
 
-	$('#backToMenu').click(function(){
+	/*$('#backToMenu').click(function(){
 		$('#menu').css("display", "block");
 		$('.panel').removeClass('show');
 		$('.panel').addClass('hide');
@@ -167,7 +167,7 @@ $(document).ready(function(){
 		$('#main-sketch').css('display', "none");
 		$('#sketchpad').css('display', "none");
 		$('body').css("background-color", "white");
-	});
+	});*/
 
 	$('#btnFullScreenPreview').click(function(){
 		$('#preview').toggleClass('showPreviewFull');
