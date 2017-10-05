@@ -8,6 +8,16 @@ $(document).ready(function(){
 	var colored = false;
 	var myIP;
 	var socket;
+	var currTool = "pencil";
+	var markerWidth = 5;	
+	var markerColor = "#000";
+	var canvas = document.querySelector('#main_canvas');
+	var mainsketch = document.querySelector('#main-sketch');
+	var ctx = canvas.getContext('2d');
+	var ppts = [];
+	var dataX, dataY;
+	var tmp_canvas, tmp_ctx;
+	var touchstate;
 
 	generateIP();
 
@@ -15,12 +25,42 @@ $(document).ready(function(){
 	socket.on("connect", function(){
 
 		socket.on('sendtopc', function(data){
-			$("#status").html("CONNECTED");
+			$("#status").html("Connected.");
 			$("#status").css("font-size", "25px");
 			$("#status").css("color", "white");
 			$(".close").css("display", "block");
 		});
 
+		socket.on('sendActiveToolToPC', function(data){
+			console.log("Active tool"+ data);
+			currTool = data;
+		});
+
+		socket.on('onTouchStartToPC', function(data){
+			touchstate = data;
+		});
+
+		socket.on('onTouchEndToPC', function(data){
+			touchstate = data;
+			ctx.drawImage(tmp_canvas, 0, 0);
+			tmp_ctx.clearRect(0, 0, tmp_canvas.width, tmp_canvas.height);
+			ppts = [];
+		});
+
+		socket.on('sendCoordinatesToPC', function(data){
+			switch (currTool) {
+				case 'pencil':
+					ctx.globalCompositeOperation = 'source-over';
+					markerColor = "#000";
+					tmp_ctx.strokeStyle = markerColor;
+					tmp_ctx.fillStyle = markerColor;
+					tmp_ctx.shadowBlur = 0;
+					dataX = data.x;
+					dataY = data.y;
+					onPaint();
+				break;	
+			}
+		});
 	});
 
 	if ($('#randompin').html() == "") {
@@ -125,10 +165,10 @@ $(document).ready(function(){
 			if (height <= 550 && height >= 300) {
 				preview();
 			} else {
-				$('#canvas-height').css("background-color", "red");
+				$('#canvas-height').css("background-color", "#e44d2e");
 			}
 		} else {
-			$('#canvas-width').css("background-color", "red");
+			$('#canvas-width').css("background-color", "#e44d2e");
 		}
 	});
 
@@ -140,7 +180,7 @@ $(document).ready(function(){
 			$(this).css("background-color", "#aaaaaa");
 			$('#create-canvas').css("display", "block");
 		} else {
-			$(this).css("background-color", "red");
+			$(this).css("background-color", "#e44d2e");
 			$('#create-canvas').css("display", "none");
 		}
 	});
@@ -153,7 +193,7 @@ $(document).ready(function(){
 			$(this).css("background-color", "#aaaaaa");
 			$('#create-canvas').css("display", "block");
 		} else {
-			$(this).css("background-color", "red");
+			$(this).css("background-color", "#e44d2e");
 			$('#create-canvas').css("display", "none");
 		}
 	});
@@ -196,7 +236,49 @@ $(document).ready(function(){
 			canvasBackgroundColor: canvasColor
 		}
 
+		// Creating a tmp canvas
+		tmp_canvas = document.createElement('canvas');
+		tmp_ctx = tmp_canvas.getContext('2d');
+		tmp_canvas.id = 'tmp_canvas';
+		tmp_canvas.width = canvasDetails.canvasWidth;
+		tmp_canvas.height = canvasDetails.canvasHeight;
+		canvas.height = canvasDetails.canvasHeight;
+		canvas.width = canvasDetails.canvasWidth;
+		mainsketch.appendChild(tmp_canvas);
+		$('#tmp_canvas').css("position","absolute");
+		$('#tmp_canvas').css("top","50px");
 		socket.emit("createCanvas", canvasDetails);
 	});
+
+
+	var onPaint = function() {
+		// Saving all the points in an array
+		ppts.push({x: dataX, y: dataY});
+		if (ppts.length < 3) {
+			var b = ppts[0];
+			tmp_ctx.beginPath();
+			tmp_ctx.arc(b.x, b.y, tmp_ctx.lineWidth / 2, 0, Math.PI * 2, !0);
+			tmp_ctx.fill();
+			tmp_ctx.closePath();
+			return;
+		}
+		// Tmp canvas is always cleared up before drawing.
+		tmp_ctx.clearRect(0, 0, tmp_canvas.width, tmp_canvas.height);
+		tmp_ctx.beginPath();
+		tmp_ctx.moveTo(ppts[0].x, ppts[0].y);
+		for (var i = 1; i < ppts.length - 2; i++) {
+			var c = (ppts[i].x + ppts[i + 1].x) / 2;
+			var d = (ppts[i].y + ppts[i + 1].y) / 2;
+			tmp_ctx.quadraticCurveTo(ppts[i].x, ppts[i].y, c, d);
+		}
+		// For the last 2 points
+		tmp_ctx.quadraticCurveTo(
+			ppts[i].x,
+			ppts[i].y,
+			ppts[i + 1].x,
+			ppts[i + 1].y
+		);
+		tmp_ctx.stroke();
+	};
 
 });

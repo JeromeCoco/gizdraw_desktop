@@ -15,4 +15,20 @@ io.sockets.on('connection', function (socket) {
     socket.on("createCanvas", function(data){
     	socket.broadcast.emit("createCanvasToMobile", data);
     });
+
+    socket.on("sendActiveTool", function(data){
+    	socket.broadcast.emit("sendActiveToolToPC", data);
+    });
+
+    socket.on("sendCoordinates", function(data){
+    	socket.broadcast.emit("sendCoordinatesToPC", data);
+    });
+
+    socket.on("onTouchStart", function (data) {
+        socket.broadcast.emit("onTouchStartToPC", data);
+    });
+
+    socket.on("onTouchEnd", function (data) {
+        socket.broadcast.emit("onTouchEndToPC", data);
+    });
 });

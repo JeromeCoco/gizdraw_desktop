@@ -66,12 +66,12 @@
 	var ppts = [];
 
 	/* Mouse Capturing Work */
-	tmp_canvas.addEventListener('touchmove', function(e) {
-		var targetYval = e.targetTouches[0].pageY;
-		var targetXval = e.targetTouches[0].pageX;
-		mouse.x = typeof targetXval !== 'undefined' ? targetXval : e.layerX;
-		mouse.y = typeof targetYval  !== 'undefined' ? targetYval  : e.layerY;
-	}, false);
+	// tmp_canvas.addEventListener('touchmove', function(e) {
+	// 	var targetYval = e.targetTouches[0].pageY;
+	// 	var targetXval = e.targetTouches[0].pageX;
+	// 	mouse.x = typeof targetXval !== 'undefined' ? targetXval : e.layerX;
+	// 	mouse.y = typeof targetYval  !== 'undefined' ? targetYval  : e.layerY;
+	// }, false);
 
 	$('#pen-width').change(function () {
 		markerWidth = parseInt($('#pen-width').val());

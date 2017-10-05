@@ -407,11 +407,6 @@ table tr td span:hover{
 	box-shadow: 0 3px 15px -6px;
 }
 
-#main-sketch canvas{
-	width: inherit;
-	height: inherit;
-}
-
 #sketchpad ul{
 	background-color: white;
 	box-shadow: 0 2px 15px -6px;
@@ -425,9 +420,9 @@ table tr td span:hover{
 }
 
 #sketchpad ul li:hover{
-	cursor: pointer;
-	
+	cursor: pointer;	
 }
+
 #btnFullScreenPreview {
 	content: url('../img/fullscreen.png');
 	width: 30px;

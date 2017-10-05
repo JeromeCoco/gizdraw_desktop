@@ -29,7 +29,7 @@ $(document).ready(function(){
 			$('body').css("background-color", "#d2d2d2");
 			$('#canvasName').css('background-color',"#aaaaaa");
 		} else {
-			$('#canvasName').css('background-color',"red");
+			$('#canvasName').css('background-color',"#e44d2e");
 		}
 	});
 
