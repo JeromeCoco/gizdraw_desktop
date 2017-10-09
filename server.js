@@ -9,19 +9,19 @@ io.sockets.on('connection', function (socket) {
     console.log('socket connected:' + socket.id);
 
     socket.on("sender", function(data){
-    	socket.broadcast.emit("sendtopc", data);
+        socket.broadcast.emit("sendtopc", data);
     })
 
     socket.on("createCanvas", function(data){
-    	socket.broadcast.emit("createCanvasToMobile", data);
+        socket.broadcast.emit("createCanvasToMobile", data);
     });
 
     socket.on("sendActiveTool", function(data){
-    	socket.broadcast.emit("sendActiveToolToPC", data);
+        socket.broadcast.emit("sendActiveToolToPC", data);
     });
 
     socket.on("sendCoordinates", function(data){
-    	socket.broadcast.emit("sendCoordinatesToPC", data);
+        socket.broadcast.emit("sendCoordinatesToPC", data);
     });
 
     socket.on("onTouchStart", function (data) {
@@ -30,5 +30,25 @@ io.sockets.on('connection', function (socket) {
 
     socket.on("onTouchEnd", function (data) {
         socket.broadcast.emit("onTouchEndToPC", data);
+    });
+
+    socket.on("sendActivePreset", function (data) {
+        socket.broadcast.emit("sendActivePresetToPC", data);
+    });
+
+    socket.on("onTouchBrushStart", function(data){
+        socket.broadcast.emit("onTouchBrushStartToPC", data);
+    });
+
+    socket.on("onTouchBrushEnd", function(data){
+        socket.broadcast.emit("onTouchBrushEndToPC", data);
+    });
+
+    socket.on("sendPenColor", function(data){
+        socket.broadcast.emit("onSendPenColor", data);
+    });
+
+    socket.on("sendPenWidth", function(data){
+        socket.broadcast.emit("onSendPenWidth", data);
     });
 });
