@@ -51,4 +51,8 @@ io.sockets.on('connection', function (socket) {
     socket.on("sendPenWidth", function(data){
         socket.broadcast.emit("onSendPenWidth", data);
     });
+
+    socket.on("onResetCanvas", function(data){
+       socket.broadcast.emit("onResetCanvasToMobile", data); 
+    });
 });

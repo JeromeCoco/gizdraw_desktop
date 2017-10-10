@@ -14,6 +14,8 @@ $(document).ready(function(){
 	var canvas = document.querySelector('#main_canvas');
 	var mainsketch = document.querySelector('#main-sketch');
 	var ctx = canvas.getContext('2d');
+	var cStep = -1;
+	var cPushArray = new Array();
 
 	var ppts = [];
 	var dataX, dataY;
@@ -23,11 +25,14 @@ $(document).ready(function(){
 	var points = [], isDrawing;
 	var brushstate;
 	var xdata, ydata;
+	var isConnected = false;
 
 	generateIP();
 
 	socket = io('http://localhost:3000');
 	socket.on("connect", function(){
+
+		isConnected = true;
 
 		socket.on('sendtopc', function(data){
 			$("#status").html("Connected.");
@@ -101,20 +106,7 @@ $(document).ready(function(){
 					onErase();
 				break;
 				case 'brush':
-					if (currpreset == "preset-first") {
-						ctx.globalCompositeOperation = 'source-over';
-						var rgbaval = hexToRgbA(markerColor);
-						tmp_ctx.strokeStyle = rgbaval+',0.3)';
-						tmp_ctx.fillStyle = rgbaval+',0.3)';
-						tmp_ctx.shadowBlur = 0;
-						dataX = data.x;
-						dataY = data.y;
-						onPreset1();
-						console.log('preset1');
-					}
-					else {
-						console.log('wews');
-					}
+					onBrushPaint();
 				break;
 			}
 		});
@@ -372,8 +364,7 @@ $(document).ready(function(){
 		tmp_ctx.stroke();
 	};
 
-	// Preset 1 TouchStart Function
-	var onPreset1 = function () {
+	var onBrushPaint = function(){
 		// Saving all the points in an array
 		points.push({x: dataX, y: dataY});
 		if (points.length < 3) {
@@ -401,6 +392,23 @@ $(document).ready(function(){
 			points[i + 1].y
 		);
 
+		switch (currpreset){
+			case 'preset-first':
+				onPreset1();
+			break;
+			case 'preset-second':
+				onPreset2();
+			break;
+		}
+	};
+
+	// Preset 1 TouchStart Function
+	var onPreset1 = function () {
+		ctx.globalCompositeOperation = 'source-over';
+		var rgbaval = hexToRgbA(markerColor);
+		tmp_ctx.strokeStyle = rgbaval+',0.3)';
+		tmp_ctx.fillStyle = rgbaval+',0.3)';
+		tmp_ctx.shadowBlur = 0;
 		tmp_ctx.moveTo(points[points.length - 2].x, points[points.length - 2].y);
 		tmp_ctx.lineTo(points[points.length - 1].x, points[points.length - 1].y);
 		tmp_ctx.stroke();
@@ -424,7 +432,16 @@ $(document).ready(function(){
 	};
 
 	var onPreset2 = function () {
-		
+		tmp_ctx.strokeStyle = markerColor;
+		ctx.globalCompositeOperation = 'source-over';
+
+		ctx.beginPath();
+		ctx.strokeStyle = markerColor;
+		tmp_ctx.shadowBlur = 10;
+		tmp_ctx.shadowColor = markerColor;
+		tmp_ctx.lineWidth = markerWidth;
+		ctx.stroke();
+		console.log('preset-second');
 	};
 	// hex to rgba conversion
 	function hexToRgbA(hex){
@@ -459,4 +476,14 @@ $(document).ready(function(){
 	$("#rotate-canvas").click(function(){
 	});
 
+	// Canvas Reset
+	$("#clear-canvas").click(function(){
+		cStep = -1;
+		var cPushArray = new Array();
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+		if (isConnected) {
+			socket.emit("onResetCanvas", 'reset canvas');
+		}
+	});
 });
