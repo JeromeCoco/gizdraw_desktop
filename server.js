@@ -52,7 +52,23 @@ io.sockets.on('connection', function (socket) {
         socket.broadcast.emit("onSendPenWidth", data);
     });
 
-    socket.on("onResetCanvas", function(data){
-       socket.broadcast.emit("onResetCanvasToMobile", data); 
+    socket.on("onColorSend", function(data){
+        socket.broadcast.emit("onColorSendToPC", data);
+    });
+
+    socket.on("onUndo", function(data){
+        socket.broadcast.emit("onUndoReceive", data);
+    });
+
+    socket.on("onRedo", function(data){
+        socket.broadcast.emit("onRedoReceive", data);
+    });
+
+    socket.on("cStep", function(data){
+        socket.broadcast.emit("cStepReceive", data);
+    }); 
+
+    socket.on("onSendGrid", function(data){
+        socket.broadcast.emit("onSendGridToPC", data);
     });
 });

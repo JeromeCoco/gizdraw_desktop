@@ -14,25 +14,22 @@ $(document).ready(function(){
 	var canvas = document.querySelector('#main_canvas');
 	var mainsketch = document.querySelector('#main-sketch');
 	var ctx = canvas.getContext('2d');
-	var cStep = -1;
-	var cPushArray = new Array();
 
 	var ppts = [];
 	var dataX, dataY;
 	var tmp_canvas, tmp_ctx;
 	var touchstate;
 	var currpreset = "preset-first";
-	var points = [], isDrawing;
+	var points = [], isDrawing, lastPoint;
 	var brushstate;
 	var xdata, ydata;
-	var isConnected = false;
+	var canvasPic = new Image();
+	var cStep, cPushArray = new Array();
 
 	generateIP();
 
 	socket = io('http://localhost:3000');
 	socket.on("connect", function(){
-
-		isConnected = true;
 
 		socket.on('sendtopc', function(data){
 			$("#status").html("Connected.");
@@ -76,13 +73,48 @@ $(document).ready(function(){
 
 		socket.on('onSendPenColor', function (data) {
 			markerColor = data;
-			console.log(data);
 		});
 
 		socket.on('onSendPenWidth', function (data) {
 			markerWidth = data;
-			console.log(data);
 			tmp_ctx.lineWidth = markerWidth;
+		});
+
+		socket.on('onColorSendToPC', function (data) {
+			markerColor = data;
+		});
+
+		socket.on('onUndoReceive', function (data) {
+			canvasPic.src = data;
+			canvasPic.onload = function (){ 
+	        	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	        	ctx.drawImage(canvasPic, 0, 0); 
+	        }
+		});
+
+		socket.on('onRedoReceive', function (data) {
+			canvasPic.src = data;
+			canvasPic.onload = function (){ 
+	        	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	        	ctx.drawImage(canvasPic, 0, 0); 
+	        }
+		});
+		
+		socket.on('onSendGridToPC', function (data) {
+			if (data == "showGrid") {
+				$('.grid').css('display','none');
+			} else {
+				$('.grid').css('display','block');
+			}
+		});
+
+		socket.on('cStepReceive', function (data) {
+			cStep = data;
+			if (cStep == -1)
+			{
+				resetCanvas();
+			}
+			console.log(cStep);
 		});
 
 		socket.on('sendCoordinatesToPC', function(data){
@@ -96,13 +128,9 @@ $(document).ready(function(){
 					tmp_ctx.shadowBlur = 0;
 					tmp_ctx.lineJoin = 'round';
 					tmp_ctx.lineCap = 'round';
-					dataX = data.x;
-					dataY = data.y;
 					onPaint();
 				break;
 				case 'eraser':
-					dataX = data.x;
-					dataY = data.y;
 					onErase();
 				break;
 				case 'brush':
@@ -247,17 +275,6 @@ $(document).ready(function(){
 		}
 	});
 
-	/*$('#backToMenu').click(function(){
-		$('#menu').css("display", "block");
-		$('.panel').removeClass('show');
-		$('.panel').addClass('hide');
-		$('#setup-canvas-panel').removeClass('hide');
-		$('#setup-canvas-panel').addClass('show');
-		$('#main-sketch').css('display', "none");
-		$('#sketchpad').css('display', "none");
-		$('body').css("background-color", "white");
-	});*/
-
 	$('#btnFullScreenPreview').click(function(){
 		$('#preview').toggleClass('showPreviewFull');
 		screenwidth = $('.showPreviewFull').width();
@@ -336,6 +353,7 @@ $(document).ready(function(){
 		tmp_ctx.strokeStyle = "#FFF";
 		tmp_ctx.fillStyle = "#FFF";
 		tmp_ctx.shadowBlur = 0;
+		tmp_ctx.lineWidth =markerWidth;
 		ctx.globalCompositeOperation = 'destination-out';
 		if (ppts.length < 3) {
 			var b = ppts[0];
@@ -365,7 +383,6 @@ $(document).ready(function(){
 	};
 
 	var onBrushPaint = function(){
-		// Saving all the points in an array
 		points.push({x: dataX, y: dataY});
 		if (points.length < 3) {
 			var b = points[0];
@@ -392,28 +409,43 @@ $(document).ready(function(){
 			points[i + 1].y
 		);
 
-		switch (currpreset){
+		switch(currpreset){
 			case 'preset-first':
+				ctx.globalCompositeOperation = 'source-over';
+				// var rgbaval = hexToRgbA(markerColor);
+				tmp_ctx.strokeStyle = markerColor;
+				tmp_ctx.fillStyle = markerColor;
+				tmp_ctx.shadowBlur = 0;
 				onPreset1();
 			break;
 			case 'preset-second':
+				tmp_ctx.strokeStyle = markerColor;
+				ctx.globalCompositeOperation = 'source-over';
 				onPreset2();
+			break;
+			case 'preset-third':
+				lastPoint = { x: dataX, y: dataY };
+				ctx.strokeStyle = markerColor;
+				ctx.globalCompositeOperation = 'source-over';
+				onPreset3();
+			break;
+			case 'preset-fourth':
+				ctx.strokeStyle = markerColor;
+				ctx.globalCompositeOperation = 'source-over';
+				ctx.lineWidth = 1;
+	 			ctx.lineJoin = tmp_ctx.lineCap = 'round';
+				onPreset4();
 			break;
 		}
 	};
-
 	// Preset 1 TouchStart Function
 	var onPreset1 = function () {
-		ctx.globalCompositeOperation = 'source-over';
-		var rgbaval = hexToRgbA(markerColor);
-		tmp_ctx.strokeStyle = rgbaval+',0.3)';
-		tmp_ctx.fillStyle = rgbaval+',0.3)';
-		tmp_ctx.shadowBlur = 0;
+		// Saving all the points in an array
 		tmp_ctx.moveTo(points[points.length - 2].x, points[points.length - 2].y);
 		tmp_ctx.lineTo(points[points.length - 1].x, points[points.length - 1].y);
 		tmp_ctx.stroke();
 
-		var lastPoint = points[points.length-1];
+		lastPoint = points[points.length-1];
 
 		for (var i = 0, len = points.length; i < len; i++) {
 		    var dx = points[i].x - lastPoint.x;
@@ -432,16 +464,61 @@ $(document).ready(function(){
 	};
 
 	var onPreset2 = function () {
-		tmp_ctx.strokeStyle = markerColor;
-		ctx.globalCompositeOperation = 'source-over';
+		  tmp_ctx.stroke();
+		  ctx.beginPath();
+		  ctx.strokeStyle = markerColor;
+		  tmp_ctx.shadowBlur = 10;
+		  tmp_ctx.shadowColor = markerColor;
+		  tmp_ctx.lineWidth = markerWidth;
+	      ctx.stroke();
+	};
 
+	var  onPreset3 = function () {
+		  var currentPoint = { x: dataX, y: dataY };
+		  var dist = distanceBetween(lastPoint, currentPoint);
+		  var angle = angleBetween(lastPoint, currentPoint);
+		  
+		  for (var i = 0; i < dist; i+=5) {
+		    x = lastPoint.x + (Math.sin(angle) * i);
+		    y = lastPoint.y + (Math.cos(angle) * i);
+		    
+		    var radgrad = ctx.createRadialGradient(x,y,5,x,y,10);
+
+			var rgbaval = hexToRgbA(markerColor);
+		    radgrad.addColorStop(0, markerColor);
+		    radgrad.addColorStop(0.5, rgbaval+',0.5)');
+		    radgrad.addColorStop(1, rgbaval+',0)');
+		    
+		    tmp_ctx.shadowBlur = 0;
+		    ctx.fillStyle = radgrad;
+		    ctx.fillRect(x-15, y-15, 30, 30);
+		  }
+		  
+			lastPoint = currentPoint;
+	};
+
+	var onPreset4 = function () {
 		ctx.beginPath();
-		ctx.strokeStyle = markerColor;
-		tmp_ctx.shadowBlur = 10;
-		tmp_ctx.shadowColor = markerColor;
-		tmp_ctx.lineWidth = markerWidth;
+		ctx.moveTo(points[points.length - 2].x, points[points.length - 2].y);
+		ctx.lineTo(points[points.length - 1].x, points[points.length - 1].y);
 		ctx.stroke();
-		console.log('preset-second');
+
+		for (var i = 0, len = points.length; i < len; i++) {
+		dx = points[i].x - points[points.length-1].x;
+		dy = points[i].y - points[points.length-1].y;
+		d = dx * dx + dy * dy;
+
+			if (d < 2000 && Math.random() > d / 2000) {
+			  ctx.beginPath();
+			  var rgbaval = hexToRgbA(markerColor);
+			  tmp_ctx.shadowBlur = 0;
+			  tmp_ctx.lineWidth = 1;
+			  ctx.strokeStyle = rgbaval+',0.3)';
+			  ctx.moveTo( points[points.length-1].x + (dx * 0.5), points[points.length-1].y + (dy * 0.5));
+			  ctx.lineTo( points[points.length-1].x - (dx * 0.5), points[points.length-1].y - (dy * 0.5));
+			  ctx.stroke();
+			}
+		}
 	};
 	// hex to rgba conversion
 	function hexToRgbA(hex){
@@ -469,6 +546,19 @@ $(document).ready(function(){
 	  return "0123456789ABCDEF".charAt((n-n%16)/16)  + "0123456789ABCDEF".charAt(n%16);
 	}
 
+	// brush preset 3 configuring distance between points
+	function distanceBetween(point1, point2) {
+	  return Math.sqrt(Math.pow(point2.x - point1.x, 2) + Math.pow(point2.y - point1.y, 2));
+	}
+	// brush preset 3 configuring angle between points
+	function angleBetween(point1, point2) {
+	  return Math.atan2( point2.x - point1.x, point2.y - point1.y );
+	}
+
+	function resetCanvas(){
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+	}
+
 	$("#options").click(function(){
 		$(".sub-options").toggleClass("show-sub-options");
 	});
@@ -476,14 +566,4 @@ $(document).ready(function(){
 	$("#rotate-canvas").click(function(){
 	});
 
-	// Canvas Reset
-	$("#clear-canvas").click(function(){
-		cStep = -1;
-		var cPushArray = new Array();
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-		if (isConnected) {
-			socket.emit("onResetCanvas", 'reset canvas');
-		}
-	});
 });

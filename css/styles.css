@@ -407,35 +407,13 @@ table tr td span:hover{
 	box-shadow: 0 3px 15px -6px;
 }
 
-.sub-options{
-	display: none;
-	position: absolute;
-	top: 30px;
-	height: 60px;
-    background: #eeecec;
-    list-style: none;
-}
-
-.show-sub-options{
-	display: block;
-}
-
-.sub-options .sub-options-opt{
-	display: block;
-	margin: 10px;
-}
-
-.sub-options .sub-options-opt:hover{
-	color: #aba9a9;
-}
-
-#sketchpad #main-options{
+#sketchpad ul{
 	background-color: white;
 	box-shadow: 0 2px 15px -6px;
 	height: 30px;
 }
 
-#sketchpad #main-options .main-options-opt{
+#sketchpad ul li{
 	display: inline-block;
     margin: 7px 10px;
     font-size: 14px;
@@ -448,4 +426,12 @@ table tr td span:hover{
 #btnFullScreenPreview {
 	content: url('../img/fullscreen.png');
 	width: 30px;
+}
+
+.grid{
+	display: none;
+	position: absolute;
+    width: inherit;
+    height: inherit;
+    top: 50px;
 }
