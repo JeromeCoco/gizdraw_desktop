@@ -14,6 +14,7 @@ $(document).ready(function(){
 	var canvas = document.querySelector('#main_canvas');
 	var mainsketch = document.querySelector('#main-sketch');
 	var ctx = canvas.getContext('2d');
+	var isConnected = false;
 
 	var ppts = [];
 	var dataX, dataY;
@@ -30,6 +31,8 @@ $(document).ready(function(){
 
 	socket = io('http://localhost:3000');
 	socket.on("connect", function(){
+
+		isConnected = true;
 
 		socket.on('sendtopc', function(data){
 			$("#status").html("Connected.");
@@ -564,6 +567,14 @@ $(document).ready(function(){
 	});
 
 	$("#rotate-canvas").click(function(){
+	});
+
+	$("#clear-canvas").click(function(){
+		resetCanvas();
+		var cPushArray = new Array();
+		if (isConnected) {
+			socket.emit("onClearCanvas", "clear canvas");
+		}
 	});
 
 });
