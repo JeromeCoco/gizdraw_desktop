@@ -563,10 +563,11 @@ $(document).ready(function(){
 	}
 
 	$("#options").click(function(){
-		$(".sub-options").toggleClass("show-sub-options");
+		$(".options-list").toggleClass("show-options");
 	});
 
 	$("#rotate-canvas").click(function(){
+
 	});
 
 	$("#clear-canvas").click(function(){
@@ -576,5 +577,4 @@ $(document).ready(function(){
 			socket.emit("onClearCanvas", "clear canvas");
 		}
 	});
-
 });

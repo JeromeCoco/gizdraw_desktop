@@ -136,11 +136,18 @@
 			</div>
 		</div>
 		<div class="panel" id="sketchpad">
-			<ul>
-				<li><b id="canvas-name-active"></b></li>
-				<li id="clear-canvas">Clear Canvas</li>
-				<li id="openFileOnSketch">Open file</li>
-				<li>Save</li>
+			<ul id="main-menu">
+				<li class="main-menu-opt"><b id="canvas-name-active"></b></li>
+				<li class="main-menu-opt" id="options">
+					Options
+					<ul class="options-list">
+						<li class="options-list-opt" id="clear-canvas">Clear Canvas</li>
+						<li class="options-list-opt">Rotate Canvas</li>
+						<li class="options-list-opt">Resize Canvas</li>
+					</ul>
+				</li>
+				<li class="main-menu-opt" id="openFileOnSketch">Open file</li>
+				<li class="main-menu-opt">Save</li>
 			</ul>
 			<div id="main-sketch">
 				<canvas id="main_canvas"></canvas>
