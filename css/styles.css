@@ -440,6 +440,10 @@ table tr td span:hover{
 	margin: 10px;
 }
 
+.options-list-opt:hover{
+	color: #878787;
+}
+
 #btnFullScreenPreview {
 	content: url('../img/fullscreen.png');
 	width: 30px;
@@ -451,4 +455,20 @@ table tr td span:hover{
     width: inherit;
     height: inherit;
     top: 50px;
+}
+
+#canvas-setup, #aspect-ratio-size, #setCanvasColor{
+	width: 150px;
+}
+
+.aspect-ratio-opt{
+	display: none;
+}
+
+.aspect-ratio-show{
+	display: table-row;
+}
+
+.custom-opt-hide{
+	display: none;
 }

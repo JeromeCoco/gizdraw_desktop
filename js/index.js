@@ -19,8 +19,6 @@ $(document).ready(function(){
 			$('#setup-canvas-panel').addClass('hide');
 			$('#main-sketch').css('display', "block");
 			$('#sketchpad').css('display', "block");
-			$('#main-sketch').css('height', $('#canvas-height').val());
-			$('#main-sketch').css('width', $('#canvas-width').val());
 			if ($('#setCanvasColor').val() == "Color") {
 				$('#main-sketch').css('background-color', $('#colorpick').val());
 			} else {

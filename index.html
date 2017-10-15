@@ -84,10 +84,35 @@
 							<div>Canvas Name:</div>
 						</td>
 						<td>
-							<input id="canvasName" type="text"/>
+							<input value="MyCanvas" id="canvasName" type="text"/>
 						</td>
 					</tr>
 					<tr>
+						<td>
+							<div>Setup:</div>
+						</td>
+						<td>
+							<select id="canvas-setup">
+								<option>Custom</option>
+								<option>Aspect Ratio(16:9)</option>
+							</select>
+						</td>
+					</tr>
+					<tr class="aspect-ratio-opt">
+						<td>
+							<div>Canvas Size:</div>
+						</td>
+						<td>
+							<select id="aspect-ratio-size">
+								<option>640 x 360</option>
+								<option>768 x 432</option>
+								<option>800 x 450</option>
+								<option>896 x 504</option>
+								<option>960 x 540</option>
+							</select>
+						</td>
+					</tr>
+					<tr class="custom-opt">
 						<td>
 							<div>Width:</div>
 						</td>
@@ -95,7 +120,7 @@
 							<input id="canvas-width" type="number" value="300" step="25" min="300" max="1000" /> px
 						</td>
 					</tr>
-					<tr>
+					<tr class="custom-opt">
 						<td>
 							<div>Height:</div>
 						</td>
@@ -142,8 +167,8 @@
 					Options
 					<ul class="options-list">
 						<li class="options-list-opt" id="clear-canvas">Clear Canvas</li>
-						<li class="options-list-opt">Rotate Canvas</li>
-						<li class="options-list-opt">Resize Canvas</li>
+						<li class="options-list-opt">Rotate</li>
+						<li class="options-list-opt">Resize</li>
 					</ul>
 				</li>
 				<li class="main-menu-opt" id="openFileOnSketch">Open file</li>

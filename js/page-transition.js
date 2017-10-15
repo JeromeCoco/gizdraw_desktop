@@ -27,6 +27,8 @@ $(document).ready(function(){
 	var canvasPic = new Image();
 	var cStep, cPushArray = new Array();
 
+	var canvasMainWidth, canvasMainHeight;
+
 	generateIP();
 
 	socket = io('http://localhost:3000');
@@ -219,9 +221,14 @@ $(document).ready(function(){
 	});
 
 	function preview() {
-		var width = $('#canvas-width').val();
-		var height = $('#canvas-height').val();
-		var color = $('#colorpick').val();
+
+		if ($('#canvas-setup').val() == "Custom") {
+			width = $('#canvas-width').val();
+			height = $('#canvas-height').val();
+		} else {
+			width = canvasMainWidth;
+			height = canvasMainHeight;
+		}
 		
 		$('#preview').css("display", "inline-block");
 		$('#canvas-preview').css("width", width);
@@ -230,6 +237,7 @@ $(document).ready(function(){
 		$('#canvas-preview').css("margin-left", "10px");
 		$('#canvas-preview').css("box-shadow", "0px 3px 15px -6px");
 
+		var color = $('#colorpick').val();
 		if (colored) {
 			$('#canvas-preview').css("background-color", color);
 		} else if ($('#setCanvasColor').val() == "White") {
@@ -238,8 +246,16 @@ $(document).ready(function(){
 	}
 
 	$('#show-preview').click(function(){
-		var width = $('#canvas-width').val();
-		var height = $('#canvas-height').val();
+		var width;
+		var height;
+
+		if ($('#canvas-setup').val() == "Custom") {
+			width = $('#canvas-width').val();
+			height = $('#canvas-height').val();
+		} else {
+			width = canvasMainWidth;
+			height = canvasMainHeight;
+		}
 
 		if (width <= 1000 && width >= 300) {
 			if (height <= 550 && height >= 300) {
@@ -290,18 +306,31 @@ $(document).ready(function(){
 	});
 
 	$('#create-canvas').click(function(){
-
 		var canvasColor;
+
 		if ($("#setCanvasColor").val() == "White") {
 			canvasColor = "white";
 		} else if ($("#setCanvasColor").val() == "Color") {
 			canvasColor = $("#colorpick").val();
 		}
 
+		var width;
+		var height;
+
+		aspectRatioChange();
+
+		if ($('#canvas-setup').val() == "Custom") {
+			width = $('#canvas-width').val();
+			height = $('#canvas-height').val();
+		} else {
+			width = canvasMainWidth;
+			height = canvasMainHeight;
+		}
+
 		var canvasDetails = {
 			canvasName: $("#canvasName").val(),
-			canvasWidth: $("#canvas-width").val(),
-			canvasHeight: $("#canvas-height").val(),
+			canvasWidth: width,
+			canvasHeight: height,
 			canvasBackgroundColor: canvasColor
 		}
 
@@ -313,12 +342,13 @@ $(document).ready(function(){
 		tmp_canvas.height = canvasDetails.canvasHeight;
 		canvas.height = canvasDetails.canvasHeight;
 		canvas.width = canvasDetails.canvasWidth;
+		$('#main-sketch').css('height', canvasDetails.canvasHeight);
+		$('#main-sketch').css('width', canvasDetails.canvasWidth);
 		mainsketch.appendChild(tmp_canvas);
 		$('#tmp_canvas').css("position","absolute");
 		$('#tmp_canvas').css("top","50px");
 		socket.emit("createCanvas", canvasDetails);
 	});
-
 
 	var onPaint = function() {
 		// Saving all the points in an array
@@ -534,7 +564,6 @@ $(document).ready(function(){
 	        c= '0x'+c.join('');
 	        return 'rgba('+[(c>>16)&255, (c>>8)&255, c&255];
 	    }
-    // throw new Error('Bad Hex');
 	}
 
 	// rgb to hex conversion
@@ -577,4 +606,45 @@ $(document).ready(function(){
 			socket.emit("onClearCanvas", "clear canvas");
 		}
 	});
+
+	$("#canvas-setup").change(function(){
+		if ($(this).val() == "Custom") {
+			$('.aspect-ratio-opt').css("display","none");
+			$('.custom-opt').css("display","table-row");
+		} else {
+			$('.aspect-ratio-opt').css("display","table-row");
+			$('.custom-opt').css("display","none");
+		}
+	});
+
+	$("#aspect-ratio-size").change(function(){
+		aspectRatioChange();
+		preview();
+	});
+
+	function aspectRatioChange(){
+		var aspectRatioSize = $("#aspect-ratio-size").val();
+		switch (aspectRatioSize) {
+			case "640 x 360":
+				canvasMainHeight = 360;
+				canvasMainWidth = 640;
+			break;
+			case "768 x 432":
+				canvasMainHeight = 432;
+				canvasMainWidth = 768;
+			break;
+			case "800 x 450":
+				canvasMainHeight = 450;
+				canvasMainWidth = 800;
+			break;
+			case "896 x 504":
+				canvasMainHeight = 504;
+				canvasMainWidth = 896;
+			break;
+			case "960 x 540":
+				canvasMainHeight = 540;
+				canvasMainWidth = 960;
+			break;
+		}
+	}
 });
