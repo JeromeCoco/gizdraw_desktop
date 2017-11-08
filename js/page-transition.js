@@ -1,5 +1,4 @@
 $(document).ready(function(){
-
 	$('#recent-panel').addClass('show');
 	$('#setup-canvas-panel').addClass('hide');
 	$('#about-panel').addClass('hide');
@@ -33,7 +32,6 @@ $(document).ready(function(){
 
 	socket = io('http://localhost:3000');
 	socket.on("connect", function(){
-
 		isConnected = true;
 
 		socket.on('sendtopc', function(data){
@@ -44,7 +42,6 @@ $(document).ready(function(){
 		});
 
 		socket.on('sendActiveToolToPC', function(data){
-			console.log("Active tool"+ data);
 			currTool = data;
 		});
 
@@ -60,17 +57,14 @@ $(document).ready(function(){
 		});
 
 		socket.on('sendActivePresetToPC', function(data){
-			console.log(data);
 			currpreset = data;
 		});
 
 		socket.on('onTouchBrushStartToPC', function(data){
-			console.log(data);
 			brushstate = data;
 		});
 
 		socket.on('onTouchBrushEndToPC', function(data){
-			console.log(data);
 			brushstate = data;
 			isDrawing = false;
 			points.length = 0;
@@ -119,7 +113,6 @@ $(document).ready(function(){
 			{
 				resetCanvas();
 			}
-			console.log(cStep);
 		});
 
 		socket.on('sendCoordinatesToPC', function(data){
@@ -221,7 +214,6 @@ $(document).ready(function(){
 	});
 
 	function preview() {
-
 		if ($('#canvas-setup').val() == "Custom") {
 			width = $('#canvas-width').val();
 			height = $('#canvas-height').val();
@@ -484,50 +476,48 @@ $(document).ready(function(){
 		    var dx = points[i].x - lastPoint.x;
 		    var dy = points[i].y - lastPoint.y;
 		    var d = dx * dx + dy * dy;
-			    if (d < 1000) {
-			      ctx.beginPath();
-			      var rgbaval = hexToRgbA(markerColor);
-				  ctx.strokeStyle = rgbaval+',0.3)';
-				  tmp_ctx.lineWidth = 1;
-			      ctx.moveTo(lastPoint.x + (dx * 0.2), lastPoint.y + (dy * 0.2));
-			      ctx.lineTo(points[i].x - (dx * 0.2), points[i].y - (dy * 0.2));
-			      ctx.stroke();
-			    }
+		    if (d < 1000) {
+		    	ctx.beginPath();
+		      	var rgbaval = hexToRgbA(markerColor);
+			  	ctx.strokeStyle = rgbaval+',0.3)';
+			  	tmp_ctx.lineWidth = 1;
+		      	ctx.moveTo(lastPoint.x + (dx * 0.2), lastPoint.y + (dy * 0.2));
+		      	ctx.lineTo(points[i].x - (dx * 0.2), points[i].y - (dy * 0.2));
+		      	ctx.stroke();
+		    }
 	    }
 	};
 
 	var onPreset2 = function () {
-		  tmp_ctx.stroke();
-		  ctx.beginPath();
-		  ctx.strokeStyle = markerColor;
-		  tmp_ctx.shadowBlur = 10;
-		  tmp_ctx.shadowColor = markerColor;
-		  tmp_ctx.lineWidth = markerWidth;
-	      ctx.stroke();
+	  	tmp_ctx.stroke();
+	  	ctx.beginPath();
+	  	ctx.strokeStyle = markerColor;
+	  	tmp_ctx.shadowBlur = 10;
+	  	tmp_ctx.shadowColor = markerColor;
+	  	tmp_ctx.lineWidth = markerWidth;
+      	ctx.stroke();
 	};
 
 	var  onPreset3 = function () {
-		  var currentPoint = { x: dataX, y: dataY };
-		  var dist = distanceBetween(lastPoint, currentPoint);
-		  var angle = angleBetween(lastPoint, currentPoint);
-		  
-		  for (var i = 0; i < dist; i+=5) {
-		    x = lastPoint.x + (Math.sin(angle) * i);
-		    y = lastPoint.y + (Math.cos(angle) * i);
-		    
-		    var radgrad = ctx.createRadialGradient(x,y,5,x,y,10);
+	  	var currentPoint = { x: dataX, y: dataY };
+	  	var dist = distanceBetween(lastPoint, currentPoint);
+	  	var angle = angleBetween(lastPoint, currentPoint);
+	  
+	  	for (var i = 0; i < dist; i+=5) {
+	    	x = lastPoint.x + (Math.sin(angle) * i);
+	    	y = lastPoint.y + (Math.cos(angle) * i);
+	    
+	    	var radgrad = ctx.createRadialGradient(x,y,5,x,y,10);
+	    	var rgbaval = hexToRgbA(markerColor);
 
-			var rgbaval = hexToRgbA(markerColor);
-		    radgrad.addColorStop(0, markerColor);
-		    radgrad.addColorStop(0.5, rgbaval+',0.5)');
-		    radgrad.addColorStop(1, rgbaval+',0)');
-		    
-		    tmp_ctx.shadowBlur = 0;
-		    ctx.fillStyle = radgrad;
-		    ctx.fillRect(x-15, y-15, 30, 30);
-		  }
-		  
-			lastPoint = currentPoint;
+	    	radgrad.addColorStop(0, markerColor);
+	    	radgrad.addColorStop(0.5, rgbaval+',0.5)');
+	    	radgrad.addColorStop(1, rgbaval+',0)');
+	    	tmp_ctx.shadowBlur = 0;
+	    	ctx.fillStyle = radgrad;
+	    	ctx.fillRect(x-15, y-15, 30, 30);
+	  	}
+		lastPoint = currentPoint;
 	};
 
 	var onPreset4 = function () {
@@ -537,22 +527,23 @@ $(document).ready(function(){
 		ctx.stroke();
 
 		for (var i = 0, len = points.length; i < len; i++) {
-		dx = points[i].x - points[points.length-1].x;
-		dy = points[i].y - points[points.length-1].y;
-		d = dx * dx + dy * dy;
+			dx = points[i].x - points[points.length-1].x;
+			dy = points[i].y - points[points.length-1].y;
+			d = dx * dx + dy * dy;
 
 			if (d < 2000 && Math.random() > d / 2000) {
-			  ctx.beginPath();
-			  var rgbaval = hexToRgbA(markerColor);
-			  tmp_ctx.shadowBlur = 0;
-			  tmp_ctx.lineWidth = 1;
-			  ctx.strokeStyle = rgbaval+',0.3)';
-			  ctx.moveTo( points[points.length-1].x + (dx * 0.5), points[points.length-1].y + (dy * 0.5));
-			  ctx.lineTo( points[points.length-1].x - (dx * 0.5), points[points.length-1].y - (dy * 0.5));
-			  ctx.stroke();
+			  	ctx.beginPath();
+			  	var rgbaval = hexToRgbA(markerColor);
+			  	tmp_ctx.shadowBlur = 0;
+			  	tmp_ctx.lineWidth = 1;
+			  	ctx.strokeStyle = rgbaval+',0.3)';
+			  	ctx.moveTo( points[points.length-1].x + (dx * 0.5), points[points.length-1].y + (dy * 0.5));
+			  	ctx.lineTo( points[points.length-1].x - (dx * 0.5), points[points.length-1].y - (dy * 0.5));
+			  	ctx.stroke();
 			}
 		}
 	};
+
 	// hex to rgba conversion
 	function hexToRgbA(hex){
 	    var c;
@@ -572,16 +563,17 @@ $(document).ready(function(){
 	}
 
 	function toHex(n) {
-	  n = parseInt(n,10);
-	  if (isNaN(n)) return "00";
-	  n = Math.max(0,Math.min(n,255));
-	  return "0123456789ABCDEF".charAt((n-n%16)/16)  + "0123456789ABCDEF".charAt(n%16);
+		n = parseInt(n,10);
+		if (isNaN(n)) return "00";
+		n = Math.max(0,Math.min(n,255));
+		return "0123456789ABCDEF".charAt((n-n%16)/16)  + "0123456789ABCDEF".charAt(n%16);
 	}
 
 	// brush preset 3 configuring distance between points
 	function distanceBetween(point1, point2) {
 	  return Math.sqrt(Math.pow(point2.x - point1.x, 2) + Math.pow(point2.y - point1.y, 2));
 	}
+	
 	// brush preset 3 configuring angle between points
 	function angleBetween(point1, point2) {
 	  return Math.atan2( point2.x - point1.x, point2.y - point1.y );

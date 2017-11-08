@@ -41,6 +41,5 @@ $(document).ready(function(){
 	$('#openFileOnSketch').click(function(){
 		dialog.showOpenDialog();
 	});
-
 	
 })
