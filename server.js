@@ -72,7 +72,11 @@ io.sockets.on('connection', function (socket) {
         socket.broadcast.emit("onSendGridToPC", data);
     });
 
-    socket.on("onClearCanvas", function(data){
+    socket.on("onClearCanvasFromPC", function(data){
         socket.broadcast.emit("onClearCanvasToMobile", data);
+    });
+
+    socket.on("onClearCanvasFromMobile", function(data){
+        socket.broadcast.emit("onClearCanvasToPC", data);
     });
 });

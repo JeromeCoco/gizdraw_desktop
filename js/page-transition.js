@@ -136,6 +136,11 @@ $(document).ready(function(){
 				break;
 			}
 		});
+
+		socket.on("onClearCanvasToPC", function(data){
+			resetCanvas();
+			var cPushArray = new Array();
+		});
 	});
 
 	if ($('#randompin').html() == "") {
@@ -595,7 +600,7 @@ $(document).ready(function(){
 		resetCanvas();
 		var cPushArray = new Array();
 		if (isConnected) {
-			socket.emit("onClearCanvas", "clear canvas");
+			socket.emit("onClearCanvasFromPC", "clear canvas");
 		}
 	});
 
