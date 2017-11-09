@@ -79,4 +79,8 @@ io.sockets.on('connection', function (socket) {
     socket.on("onClearCanvasFromMobile", function(data){
         socket.broadcast.emit("onClearCanvasToPC", data);
     });
+
+    socket.on("onDisconnectFromMobile", function(data){
+        socket.broadcast.emit("onDisconnectToPC", data);
+    });
 });

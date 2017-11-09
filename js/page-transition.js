@@ -141,6 +141,11 @@ $(document).ready(function(){
 			resetCanvas();
 			var cPushArray = new Array();
 		});
+
+		socket.on("onDisconnectToPC", function(data){
+			location.reload();
+		});
+		
 	});
 
 	if ($('#randompin').html() == "") {
