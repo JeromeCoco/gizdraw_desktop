@@ -183,9 +183,13 @@ $(document).ready(function(){
 		preview();
 	});
 
-	$('#connect-new').click(function(){
-		$('#enterPin').css("display", "block");
-		generateIP();
+	$('.disconnect-option').click(function(){
+		var confirmation = confirm("Are you sure you want to disconnect?");
+
+		if (confirmation) {
+			socket.emit("onDisconnectFromPC", "disconnect");
+			location.reload();
+		}
 	});
 
 	$('#disconnect').click(function(){
