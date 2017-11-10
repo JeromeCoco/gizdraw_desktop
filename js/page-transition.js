@@ -25,8 +25,9 @@ $(document).ready(function(){
 	var xdata, ydata;
 	var canvasPic = new Image();
 	var cStep, cPushArray = new Array();
-
 	var canvasMainWidth, canvasMainHeight;
+
+	$('.simple_color_live_preview').simpleColor({ livePreview: true, cellWidth: 5, cellHeight: 5 });
 
 	generateIP();
 
@@ -36,8 +37,11 @@ $(document).ready(function(){
 
 		socket.on('sendtopc', function(data){
 			$("#status").html("Connected.");
-			$("#status").css("font-size", "25px");
+			$("#status").css("font-size", "20px");
 			$("#status").css("color", "white");
+			$(".modal-content").css("height", "120px");
+			$(".above-text").css("display", "none");
+			$("#randompin").css("display", "none");
 			$(".close").css("display", "block");
 		});
 
@@ -175,10 +179,10 @@ $(document).ready(function(){
 		var set = $(this).val();
 		if (set == "Color") {
 			colored = true;
-			$('#colorpick').fadeIn('fast');
+			$('.simpleColorDisplay').fadeIn('fast');
 		} else {
 			colored = false;
-			$('#colorpick').fadeOut('fast');
+			$('.simpleColorDisplay').fadeOut('fast');
 		}
 		preview();
 	});
@@ -190,11 +194,6 @@ $(document).ready(function(){
 			socket.emit("onDisconnectFromPC", "disconnect");
 			location.reload();
 		}
-	});
-
-	$('#disconnect').click(function(){
-		$('#enterPin').css("display", "block");
-		generateIP();
 	});
 
 	$('#recent').click(function(){
@@ -303,10 +302,9 @@ $(document).ready(function(){
 	$('#btnFullScreenPreview').click(function(){
 		$('#preview').toggleClass('showPreviewFull');
 		screenwidth = $('.showPreviewFull').width();
-		if (screenwidth>100) {
+		if (screenwidth > 100) {
 			$('#btnFullScreenPreview').css("content","url('img/minimize.png')");
-		}
-		else {
+		} else {
 			$('#btnFullScreenPreview').css("content","url('img/fullscreen.png')");	
 		}
 	});

@@ -139,7 +139,8 @@
 								<option>Color</option>
 								<option>Paper Texture</option>
 							</select>
-							<input id='colorpick' type='color'/>
+							<!-- <input id='colorpick' type='color'/> -->
+							<input class='simple_color_live_preview' value='#000' name="penColor" id="colorpick"/>
 						</td>
 					</tr>
 					<tr>
@@ -243,6 +244,7 @@
 		</div>
 		<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
 		<script src="js/jquery-3.1.1.min.js"></script>
+		<script src="js/jquery.simple-color.js"></script>
 		<script src="js/draw.js"></script>
 		<script src="js/index.js"></script>
 		<script src="js/socket.io.js"></script>

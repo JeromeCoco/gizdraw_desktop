@@ -1,4 +1,5 @@
 /*enter pin modal*/
+
 var enterPin = document.getElementById('enterPin');
 var span = document.getElementsByClassName("close")[0];
 
