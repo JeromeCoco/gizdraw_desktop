@@ -87,4 +87,8 @@ io.sockets.on('connection', function (socket) {
     socket.on("onDisconnectFromPC", function(data){
         socket.broadcast.emit("onDisconnectToMobile", data);
     });
+
+    socket.on("onBgChangeFromMobile", function(data){
+        socket.broadcast.emit("onBgChangeToPC", data);
+    });
 });

@@ -27,6 +27,9 @@ $(document).ready(function(){
 	var cStep, cPushArray = new Array();
 	var canvasMainWidth, canvasMainHeight;
 
+	var bgColor;
+	var bgIsColored = false;
+
 	$('.simple_color_live_preview').simpleColor({ livePreview: true, cellWidth: 5, cellHeight: 5 });
 
 	generateIP();
@@ -113,8 +116,7 @@ $(document).ready(function(){
 
 		socket.on('cStepReceive', function (data) {
 			cStep = data;
-			if (cStep == -1)
-			{
+			if (cStep == -1) {
 				resetCanvas();
 			}
 		});
@@ -150,6 +152,11 @@ $(document).ready(function(){
 			location.reload();
 		});
 		
+		socket.on("onBgChangeToPC", function(data){
+			bgColor = data;
+			bgIsColored = true;
+			$('#main-sketch').css("background-color", bgColor);
+		});
 	});
 
 	if ($('#randompin').html() == "") {
@@ -302,6 +309,7 @@ $(document).ready(function(){
 	$('#btnFullScreenPreview').click(function(){
 		$('#preview').toggleClass('showPreviewFull');
 		screenwidth = $('.showPreviewFull').width();
+
 		if (screenwidth > 100) {
 			$('#btnFullScreenPreview').css("content","url('img/minimize.png')");
 		} else {
@@ -385,10 +393,15 @@ $(document).ready(function(){
 	};
 
 	var onErase = function() {
+		if (bgIsColored) {
+			eraserColor = bgColor;
+		} else {
+			eraserColor = '#FFF';
+		}
 		// Saving all the points in an array
 		ppts.push({x: dataX, y: dataY});
-		tmp_ctx.strokeStyle = "#FFF";
-		tmp_ctx.fillStyle = "#FFF";
+		tmp_ctx.strokeStyle = eraserColor;
+		tmp_ctx.fillStyle = eraserColor;
 		tmp_ctx.shadowBlur = 0;
 		tmp_ctx.lineWidth =markerWidth;
 		ctx.globalCompositeOperation = 'destination-out';
@@ -597,10 +610,6 @@ $(document).ready(function(){
 
 	$("#options").click(function(){
 		$(".options-list").toggleClass("show-options");
-	});
-
-	$("#rotate-canvas").click(function(){
-
 	});
 
 	$("#clear-canvas").click(function(){
