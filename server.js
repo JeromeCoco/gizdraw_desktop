@@ -91,4 +91,9 @@ io.sockets.on('connection', function (socket) {
     socket.on("onBgChangeFromMobile", function(data){
         socket.broadcast.emit("onBgChangeToPC", data);
     });
+
+    socket.on("onBgChangeFromPC", function(data){
+       socket.broadcast.emit("onBgChangeToMobile", data);
+       console.log(data);
+    });
 });

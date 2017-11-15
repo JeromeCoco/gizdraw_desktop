@@ -9,7 +9,7 @@
 			<div class="menu-container">
 				<div class="menu-item active" id="recent">Recent</div>
 				<div class="menu-item" id="new-canvas">New canvas...</div>
-				<div class="menu-item" id="open-file">Open file...</div>
+				<div class="menu-item open" id="open-file">Open file...</div>
 				<div class="menu-item" id="settings">Settings</div>
 				<div class="sub-settings">
 					<ul>
@@ -168,12 +168,12 @@
 					Options
 					<ul class="options-list">
 						<li class="options-list-opt" id="clear-canvas">Clear Canvas</li>
-						<li class="options-list-opt">Set Background</li>
+						<li class="options-list-opt" id="changeBackground">Set Background</li>
 						<li class="options-list-opt">Rotate</li>
 						<li class="options-list-opt">Resize</li>
 					</ul>
 				</li>
-				<li class="main-menu-opt" id="openFileOnSketch">Open file</li>
+				<li class="main-menu-opt open" id="openFileOnSketch">Open...</li>
 				<li class="main-menu-opt">Save</li>
 			</ul>
 			<div id="main-sketch">
@@ -239,6 +239,22 @@
       				<p id="randompin"></p>
       				<p id="status">Waiting for connection...</p>
       				<div class="close">Close</div>
+    			</div>
+  			</div>
+		</div>
+		<div id="canvasOptions" class="modal">
+  			<div class="modal-content">
+    			<div class="modal-body">
+    				<img id="close-canvas-option" src="img/close-button.png">
+      				<div>Choose Canvas Background</div>
+      				<select id="select-canvas-option">
+      					<option>Transparent</option>
+      					<option>White</option>
+      					<option>Color</option>
+      					<option>Paper Texture</option>
+      				</select>
+      				<input type="color" id="custom-bg-color" />
+      				<button id="setBgColor">Set Background</button>
     			</div>
   			</div>
 		</div>

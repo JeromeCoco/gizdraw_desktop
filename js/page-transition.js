@@ -153,9 +153,13 @@ $(document).ready(function(){
 		});
 		
 		socket.on("onBgChangeToPC", function(data){
-			bgColor = data;
-			bgIsColored = true;
-			$('#main-sketch').css("background-color", bgColor);
+			bgColor = data.bgColor;
+			bgIsColored = data.bgIsColored;
+			if (bgIsColored) {
+				$('#main-sketch').css("background-color", bgColor);
+			} else {
+				$('#main-sketch').css("background-color", "white");
+			}
 		});
 	});
 
@@ -660,4 +664,39 @@ $(document).ready(function(){
 			break;
 		}
 	}
+
+	$("#changeBackground").click(function(){
+		$("#canvasOptions").css("display", "block");
+	});
+
+	$("#select-canvas-option").change(function(){
+		if ($(this).val() == "Color") {
+			$('#custom-bg-color').fadeIn('slow');
+		} else {
+			$('#custom-bg-color').fadeOut('slow');
+		}
+	});
+
+	$("#close-canvas-option").click(function(){
+		$("#canvasOptions").css("display", "none");
+	});
+
+	$("#setBgColor").click(function(){
+		var setColor = $("#custom-bg-color").val();
+		$("#canvasOptions").css("display", "none");
+
+		if ($("#select-canvas-option").val() == "Color") {
+			$('#main-sketch').css("background-color", setColor);
+			bgColor = setColor;
+			bgIsColored = true;
+		} else {
+			$('#main-sketch').css("background-color", "white");
+			bgColor = "#FFFFFF";
+			bgIsColored = false;
+		}
+
+		if (isConnected) {
+			socket.emit("onBgChangeFromPC", {bgColor:bgColor, bgIsColored:bgIsColored});
+		}
+	});
 });

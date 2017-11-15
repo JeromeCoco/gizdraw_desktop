@@ -1,17 +1,13 @@
-/*enter pin modal*/
-
-var enterPin = document.getElementById('enterPin');
-var span = document.getElementsByClassName("close")[0];
-
-window.onload = function() {
-    enterPin.style.display = "block";
-}
-
-span.onclick = function() {
-    enterPin.style.display = "none";
-}
-
 $(document).ready(function(){
+
+	var canvasOptions = document.getElementById('canvasOptions');
+	var enterPin = document.getElementById('enterPin');
+
+	enterPin.style.display = "block";
+
+	$(".close").click(function(){
+		enterPin.style.display = "none";
+	});
 
 	$('#create-canvas').click(function(){
 		if ($('#canvasName').val() != "") {
@@ -35,11 +31,7 @@ $(document).ready(function(){
 	const fs = require("fs");
 	const {dialog} = require("electron").remote;
 
-	$('#open-file').click(function(){
-		dialog.showOpenDialog();
-	});
-
-	$('#openFileOnSketch').click(function(){
+	$('.open').click(function(){
 		dialog.showOpenDialog();
 	});
 	
