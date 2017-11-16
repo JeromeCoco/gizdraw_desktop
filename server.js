@@ -3,7 +3,7 @@ var io = require('socket.io')(server);
 
 server.listen(3000);
 
-console.log("Server is running...");
+console.log('Server is running...');
 
 io.sockets.on('connection', function (socket) {
     console.log('socket connected:' + socket.id);
@@ -94,6 +94,5 @@ io.sockets.on('connection', function (socket) {
 
     socket.on("onBgChangeFromPC", function(data){
        socket.broadcast.emit("onBgChangeToMobile", data);
-       console.log(data);
     });
 });

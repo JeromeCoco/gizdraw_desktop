@@ -167,6 +167,35 @@ $(document).ready(function(){
 		$('#randompin').html("<p style='color:red;font-size:20px;padding:10px;'>Connect your device to a network.</p>");
 	}
 
+	var convertSetFromIPToLetter = {
+        1 : 'aa', 2 : 'ab', 3 : 'ac', 4 : 'ad', 5 : 'ae', 6 : 'ba', 7 : 'bb', 8 : 'bc', 9 : 'bd', 10 : 'be',
+        11 : 'ca', 12 : 'cb', 13 : 'cc', 14 : 'cd', 15 : 'ce', 16 : 'da', 17 : 'db', 18 : 'dc', 19 : 'dd', 20 : 'de',
+        21 : 'ea', 22 : 'eb', 23 : 'ec', 24 : 'ed', 25 : 'ee', 26 : 'fa', 27 : 'fb', 28 : 'fc', 29 : 'fd', 30 : 'fe',
+        31 : 'ga', 32 : 'gb', 33 : 'gc', 34 : 'gd', 35 : 'ge', 36 : 'ha', 37 : 'hb', 38 : 'hc', 39 : 'hd', 40 : 'he',
+        41 : 'ia', 42 : 'ib', 43 : 'ic', 44 : 'id', 45 : 'ie', 46 : 'ja', 47 : 'jb', 48 : 'jc', 49 : 'jd', 50 : 'je',
+        51 : 'ka', 52 : 'kb', 53 : 'kc', 54 : 'kd', 55 : 'ke', 56 : 'la', 57 : 'lb', 58 : 'lc', 59 : 'ld', 60 : 'le',
+        61 : 'ma', 62 : 'mb', 63 : 'mc', 64 : 'md', 65 : 'me', 66 : 'na', 67 : 'nb', 68 : 'nc', 69 : 'nd', 70 : 'ne',
+        71 : 'oa', 72 : 'ob', 73 : 'oc', 74 : 'od', 75 : 'oe', 76 : 'pa', 77 : 'pb', 78 : 'pc', 79 : 'pd', 80 : 'pe',
+        81 : 'qa', 82 : 'qb', 83 : 'qc', 84 : 'qd', 85 : 'qe', 86 : 'ra', 87 : 'rb', 88 : 'rc', 89 : 'rd', 90 : 're',
+        91 : 'sa', 92 : 'sb', 93 : 'sc', 94 : 'sd', 95 : 'se', 96 : 'ta', 97 : 'tb', 98 : 'tc', 99 : 'td', 100 : 'te',
+        101 : 'ua', 102 : 'ub', 103 : 'uc', 104 : 'ud', 105 : 'ue', 106 : 'va', 107 : 'vb', 108 : 'vc', 109 : 'vd', 110 : 've',
+        111 : 'wa', 112 : 'wb', 113 : 'wc', 114 : 'wd', 115 : 'we', 116 : 'xa', 117 : 'xb', 118 : 'xc', 119 : 'xd', 120 : 'xe',
+        121 : 'ya', 122 : 'yb', 123 : 'yc', 124 : 'yd', 125 : 'ye', 126 : 'za', 127 : 'zb', 128 : 'zc', 129 : 'zd', 130 : 'ze',
+        131 : 'Aa', 132 : 'Ab', 133 : 'Ac', 134 : 'Ad', 135 : 'Ae', 136 : 'Ba', 137 : 'Bb', 138 : 'Bc', 139 : 'Bd', 140 : 'Be',
+        141 : 'Ca', 142 : 'Cb', 143 : 'Cc', 144 : 'Cd', 145 : 'Ce', 146 : 'Da', 147 : 'Db', 148 : 'Dc', 149 : 'Dd', 150 : 'De',
+        151 : 'Ea', 152 : 'Eb', 153 : 'Ec', 154 : 'Ed', 155 : 'Ee', 156 : 'Fa', 157 : 'Fb', 158 : 'Fc', 159 : 'Fd', 160 : 'Fe',
+        161 : 'Ga', 162 : 'Gb', 163 : 'Gc', 164 : 'Gd', 165 : 'Ge', 166 : 'Ha', 167 : 'Hb', 168 : 'Hc', 169 : 'Hd', 170 : 'He',
+        171 : 'Ia', 172 : 'Ib', 173 : 'Ic', 174 : 'Id', 175 : 'Ie', 176 : 'Ja', 177 : 'Jb', 178 : 'Jc', 179 : 'Jd', 180 : 'Je',
+        181 : 'Ka', 182 : 'Kb', 183 : 'Kc', 184 : 'Kd', 185 : 'Ke', 186 : 'La', 187 : 'Lb', 188 : 'Lc', 189 : 'Ld', 190 : 'Le',
+        191 : 'Ma', 192 : 'Mb', 193 : 'Mc', 194 : 'Md', 195 : 'Me', 196 : 'Na', 197 : 'Nb', 198 : 'Nc', 199 : 'Nd', 200 : 'Ne',
+        201 : 'Oa', 202 : 'Ob', 203 : 'Oc', 204 : 'Od', 205 : 'Oe', 206 : 'Pa', 207 : 'Pb', 208 : 'Pc', 209 : 'Pd', 210 : 'Pe',
+        211 : 'Qa', 212 : 'Qb', 213 : 'Qc', 214 : 'Qd', 215 : 'Qe', 216 : 'Ra', 217 : 'Rb', 218 : 'Rc', 219 : 'Rd', 220 : 'Re',
+        221 : 'Sa', 222 : 'Sb', 223 : 'Sc', 224 : 'Sd', 225 : 'Se', 226 : 'Ta', 227 : 'Tb', 228 : 'Tc', 229 : 'Td', 230 : 'Te',
+        231 : 'Ua', 232 : 'Ub', 233 : 'Uc', 234 : 'Ud', 235 : 'Ue', 236 : 'Va', 237 : 'Vb', 238 : 'Vc', 239 : 'Vd', 240 : 'Ve',
+        241 : 'Wa', 242 : 'Wb', 243 : 'Wc', 244 : 'Wd', 245 : 'We', 246 : 'Xa', 247 : 'Xb', 248 : 'Xc', 249 : 'Xd', 250 : 'Xe',
+        251 : 'Ya', 252 : 'Yb', 253 : 'Yc', 254 : 'Yd', 255 : 'Ye'
+    }
+
 	function generateIP() {
 		window.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;   //compatibility for firefox and chrome
     	var pc = new RTCPeerConnection({iceServers:[]}), noop = function(){};      
@@ -175,7 +204,12 @@ $(document).ready(function(){
     	pc.onicecandidate = function(ice){  //listen for candidate events
         	if(!ice || !ice.candidate || !ice.candidate.candidate)  return;
         	myIP = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/.exec(ice.candidate.candidate)[1];
-        	$('#randompin').html(myIP);
+        	// split ip
+        	var splitIP = myIP.split(".");
+        	var part1 = splitIP[0], part2 = splitIP[1], part3 = splitIP[2], part4 = splitIP[3];
+        	// display to letters
+        	$('#randompin').html(convertSetFromIPToLetter[parseInt(part1)] + convertSetFromIPToLetter[parseInt(part2)] + convertSetFromIPToLetter[parseInt(part3)] + convertSetFromIPToLetter[parseInt(part4)]);
+        	console.log(myIP);
         	pc.onicecandidate = noop;
     	};
 	}
