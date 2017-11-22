@@ -543,24 +543,34 @@ table tr td span:hover{
 	display: none;
     width: 0px;
     height: 50px;
-    background: #a7a5a5;
+    background: #c3c3c3;
     position: absolute;
     bottom: 10px;
     right: 0;
     opacity: 0.9;
     transition: .325s;
+    box-shadow: 6px 3px 75px -11px black;
 }
 
 .toggleNotification{
-	width: 230px;
+	width: 260px;
 	transition: .325s;
 }
 
 .activeToolContainer{
 	text-align: center;
-    margin-top: 18px;
+    margin-top: -32px;
+    margin-left: 35px;
 }
 
 .activeToolShow{
 	display: block;
+}
+
+.activeToolNotificationBar img{
+	text-align: unset;
+	margin-top: unset;
+	margin-left: unset;
+	width: 50px;
+	height: 100%;
 }

@@ -225,7 +225,6 @@ $(document).ready(function(){
         	var part1 = splitIP[0], part2 = splitIP[1], part3 = splitIP[2], part4 = splitIP[3];
         	// display to letters
         	$('#randompin').html(convertSetFromIPToLetter[parseInt(part1)] + convertSetFromIPToLetter[parseInt(part2)] + convertSetFromIPToLetter[parseInt(part3)] + convertSetFromIPToLetter[parseInt(part4)]);
-        	console.log(myIP);
         	pc.onicecandidate = noop;
     	};
 	}
@@ -577,7 +576,7 @@ $(document).ready(function(){
       	ctx.stroke();
 	};
 
-	var  onPreset3 = function () {
+	var onPreset3 = function () {
 	  	var currentPoint = { x: dataX, y: dataY };
 	  	var dist = distanceBetween(lastPoint, currentPoint);
 	  	var angle = angleBetween(lastPoint, currentPoint);
