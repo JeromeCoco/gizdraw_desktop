@@ -538,3 +538,29 @@ table tr td span:hover{
 .custom-opt-hide{
 	display: none;
 }
+
+.activeToolNotificationBar{
+	display: none;
+    width: 0px;
+    height: 50px;
+    background: #a7a5a5;
+    position: absolute;
+    bottom: 10px;
+    right: 0;
+    opacity: 0.9;
+    transition: .325s;
+}
+
+.toggleNotification{
+	width: 230px;
+	transition: .325s;
+}
+
+.activeToolContainer{
+	text-align: center;
+    margin-top: 18px;
+}
+
+.activeToolShow{
+	display: block;
+}

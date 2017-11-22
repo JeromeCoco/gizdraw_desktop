@@ -161,6 +161,22 @@ $(document).ready(function(){
 				$('#main-sketch').css("background-color", "white");
 			}
 		});
+
+		socket.on("changeToolToPC", function(data){
+			$("#activeTool").html(data);
+			$(".activeToolNotificationBar").toggleClass('toggleNotification');
+			$(".activeToolNotificationBar").fadeIn("fast");
+			$(".activeToolContainer").toggleClass("activeToolShow");
+
+			setTimeout(function(){
+				$(".activeToolContainer").css("display", "block");
+			}, 100);
+
+			setTimeout(function(){
+				$(".activeToolNotificationBar").toggleClass('toggleNotification');
+				$(".activeToolContainer").css("display", "none");
+			}, 2000);
+		});
 	});
 
 	if ($('#randompin').html() == "") {

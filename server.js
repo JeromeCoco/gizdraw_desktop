@@ -95,4 +95,8 @@ io.sockets.on('connection', function (socket) {
     socket.on("onBgChangeFromPC", function(data){
        socket.broadcast.emit("onBgChangeToMobile", data);
     });
+
+    socket.on("changeToolFromMobile", function(data){
+       socket.broadcast.emit("changeToolToPC", data); 
+    });
 });

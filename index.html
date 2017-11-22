@@ -139,7 +139,6 @@
 								<option>Color</option>
 								<option>Paper Texture</option>
 							</select>
-							<!-- <input id='colorpick' type='color'/> -->
 							<input class='simple_color_live_preview' value='#000' name="penColor" id="colorpick"/>
 						</td>
 					</tr>
@@ -179,17 +178,20 @@
 			<div id="main-sketch">
 				<canvas id="main_canvas"></canvas>
 				<svg class="grid" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-						<defs>
-		  					<pattern id="smallGrid" width="8" height="8" patternUnits="userSpaceOnUse">
-		    					<path d="M 8 0 L 0 0 0 8" fill="none" stroke="gray" stroke-width="0.5"/>
-		  					</pattern>
-		  					<pattern id="grids" width="80" height="80" patternUnits="userSpaceOnUse">
-		    					<rect width="80" height="80" fill="url(#smallGrid)"/>
-		    					<path d="M 80 0 L 0 0 0 80" fill="none" stroke="black" stroke-width="1"/>
-		  					</pattern>
-						</defs>
-						<rect width="100%" height="100%" fill="url(#grids)" />
-					</svg>
+					<defs>
+	  					<pattern id="smallGrid" width="8" height="8" patternUnits="userSpaceOnUse">
+	    					<path d="M 8 0 L 0 0 0 8" fill="none" stroke="gray" stroke-width="0.5"/>
+	  					</pattern>
+	  					<pattern id="grids" width="80" height="80" patternUnits="userSpaceOnUse">
+	    					<rect width="80" height="80" fill="url(#smallGrid)"/>
+	    					<path d="M 80 0 L 0 0 0 80" fill="none" stroke="black" stroke-width="1"/>
+	  					</pattern>
+					</defs>
+					<rect width="100%" height="100%" fill="url(#grids)" />
+				</svg>
+				<div class="activeToolNotificationBar">
+					<p class="activeToolContainer">Active Tool: <b id="activeTool">Pencil</b> </p>
+				</div>
 			</div>
 		</div>
 		<div class="panel" id="about-panel">
