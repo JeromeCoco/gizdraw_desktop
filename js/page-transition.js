@@ -24,6 +24,7 @@ $(document).ready(function(){
 	var brushstate;
 	var xdata, ydata;
 	var canvasPic = new Image();
+	var canvasPicSrc;
 	var cStep, cPushArray = new Array();
 	var canvasMainWidth, canvasMainHeight;
 
@@ -176,6 +177,10 @@ $(document).ready(function(){
 				$(".activeToolNotificationBar").toggleClass('toggleNotification');
 				$(".activeToolContainer").css("display", "none");
 			}, 2000);
+		});
+
+		socket.on("onReceivecStep", function(data){
+			canvasPicSrc = data.canvasPiccStep;
 		});
 	});
 
@@ -747,5 +752,33 @@ $(document).ready(function(){
 		if (isConnected) {
 			socket.emit("onBgChangeFromPC", {bgColor:bgColor, bgIsColored:bgIsColored});
 		}
+	});
+
+	$('#resize').click(function(){
+		$(mainsketch).resizable({
+			resize:function(event, ui){
+				$(tmp_canvas).css({'top':'0px'});
+				tmp_canvas.width = ui.size.width;
+				tmp_canvasheight = ui.size.height;
+				main_canvas.width = ui.size.width;
+				main_canvas.height = ui.size.height;
+
+		        canvasPic.src = canvasPicSrc;
+		        canvasPic.onload = function () { 
+		        	ctx.clearRect(0, 0, canvas.width, canvas.height);
+		        	ctx.drawImage(canvasPic, 0, 0); 
+		        }
+				// console.log(ui.size.width + "" + ui.size.height);
+				// $('.canvasSize').toggleClass('canvas-size-show');
+				$('#canvas-size').html(ui.size.width + "px x " + ui.size.height +"px");
+
+
+				if (isConnected) {
+					socket.emit("canvasResizeFromPC", {canvasSizeWidth:ui.size.width, canvasSizeHeight:ui.size.height});
+				}
+			}
+		});
+
+		$(mainsketch).css("border", "3px dashed gray");
 	});
 });

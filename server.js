@@ -99,4 +99,12 @@ io.sockets.on('connection', function (socket) {
     socket.on("changeToolFromMobile", function(data){
        socket.broadcast.emit("changeToolToPC", data); 
     });
+
+    socket.on("canvasResizeFromPC", function(data){
+       socket.broadcast.emit("onCanvasResizeToMobile", data); 
+    });
+
+    socket.on("onSendcStep", function(data){
+       socket.broadcast.emit("onReceivecStep", data);  
+    });
 });

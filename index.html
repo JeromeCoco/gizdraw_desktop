@@ -3,6 +3,7 @@
 	<head>
 		<title></title>
 		<link rel="stylesheet" type="text/css" href="css/styles.css">
+		<link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
 	</head>
 	<body>
 		<div id="menu">
@@ -169,7 +170,7 @@
 						<li class="options-list-opt" id="clear-canvas">Clear Canvas</li>
 						<li class="options-list-opt" id="changeBackground">Set Background</li>
 						<li class="options-list-opt">Rotate</li>
-						<li class="options-list-opt">Resize</li>
+						<li class="options-list-opt" id="resize">Resize</li>
 					</ul>
 				</li>
 				<li class="main-menu-opt open" id="openFileOnSketch">Open...</li>
@@ -194,6 +195,8 @@
 					<p class="activeToolContainer">Active Tool: <b id="activeTool">Pencil</b></p>
 				</div>
 			</div>
+
+			<h1 id="canvas-size" class="canvasSize">LOL</h1>
 		</div>
 		<div class="panel" id="about-panel">
 			<div id="about-content">
@@ -268,6 +271,7 @@
 		<script src="js/index.js"></script>
 		<script src="js/socket.io.js"></script>
 		<script src="js/page-transition.js"></script>
+		<script src="js/jquery-ui.js"></script>
 		<script>if (window.module) module = window.module;</script>
 	</body>
 </html>
