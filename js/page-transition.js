@@ -755,11 +755,12 @@ $(document).ready(function(){
 	});
 
 	$('#resize').click(function(){
+		$(tmp_canvas).css({'top':'0px'});
+		$(".grid").css({'top':'0px'});
 		$(mainsketch).resizable({
 			resize:function(event, ui){
-				$(tmp_canvas).css({'top':'0px'});
 				tmp_canvas.width = ui.size.width;
-				tmp_canvasheight = ui.size.height;
+				tmp_canvas.height = ui.size.height;
 				main_canvas.width = ui.size.width;
 				main_canvas.height = ui.size.height;
 
@@ -772,13 +773,18 @@ $(document).ready(function(){
 				// $('.canvasSize').toggleClass('canvas-size-show');
 				$('#canvas-size').html(ui.size.width + "px x " + ui.size.height +"px");
 
-
 				if (isConnected) {
 					socket.emit("canvasResizeFromPC", {canvasSizeWidth:ui.size.width, canvasSizeHeight:ui.size.height});
 				}
 			}
 		});
-
 		$(mainsketch).css("border", "3px dashed gray");
 	});
+
+	$(document).on("keyup", canvas, function(event) {
+	    if (event.keyCode === 13) {
+	        alert(1);
+	    }
+	});
+
 });

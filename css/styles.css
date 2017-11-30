@@ -489,6 +489,7 @@ table tr td span:hover{
 }
 
 #sketchpad .options-list{
+	z-index: 2;
 	position: absolute;
 	top: 30px;
 	height: 115px;
