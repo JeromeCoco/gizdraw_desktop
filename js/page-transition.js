@@ -185,7 +185,7 @@ $(document).ready(function(){
 	});
 
 	if ($('#randompin').html() == "") {
-		$('#randompin').html("<p style='color:red;font-size:20px;padding:10px;'>Connect your device to a network.</p>");
+		$('#randompin').html("<p style='font-size:17px;padding:10px;'>Connect your device to a network.</p>");
 	}
 
 	var convertSetFromIPToLetter = {
@@ -763,28 +763,28 @@ $(document).ready(function(){
 				tmp_canvas.height = ui.size.height;
 				main_canvas.width = ui.size.width;
 				main_canvas.height = ui.size.height;
+				canvasPic.src = canvasPicSrc;
 
-		        canvasPic.src = canvasPicSrc;
 		        canvasPic.onload = function () { 
 		        	ctx.clearRect(0, 0, canvas.width, canvas.height);
 		        	ctx.drawImage(canvasPic, 0, 0); 
 		        }
-				// console.log(ui.size.width + "" + ui.size.height);
-				// $('.canvasSize').toggleClass('canvas-size-show');
-				$('#canvas-size').html(ui.size.width + "px x " + ui.size.height +"px");
+
+		        $('#canvas-size').css("display", "block");
+				$('#canvas-size').html("w: " + ui.size.width + "px h: " + ui.size.height + "px");
 
 				if (isConnected) {
 					socket.emit("canvasResizeFromPC", {canvasSizeWidth:ui.size.width, canvasSizeHeight:ui.size.height});
 				}
 			}
 		});
+
 		$(mainsketch).css("border", "3px dashed gray");
 	});
 
-	$(document).on("keyup", canvas, function(event) {
+	/*$(document).on("keyup", canvas, function(event) {
 	    if (event.keyCode === 13) {
 	        alert(1);
 	    }
-	});
-
+	});*/
 });

@@ -105,8 +105,8 @@ hr#division{
     background-color: #f44336;
     margin: auto;
     padding: 0;
-    width: 360px;
-    height: 200px;
+    width: 385px;
+    height: 175px;
     0 11px 24px 0 rgba(0,0,0,0.9), 0 6px 20px 0 rgba(0,0,0,0.19)
     -webkit-animation-name: animatetop;
     -webkit-animation-duration: 0.4s;
@@ -212,7 +212,7 @@ hr#division{
     font-size: 15px;
     font-weight: bold;
     padding: 10px 20px;
-    background-color: #9f3520;
+    background-color: #cc352a;
     border-radius: 3px;
     margin-top: 15px;
     display: none;
@@ -229,7 +229,7 @@ hr#division{
 }
 
 .modal-body p:nth-child(1){
-	margin-top: 20px;
+	margin-top: 15px;
 	text-align: center;
 }
 
@@ -576,9 +576,14 @@ table tr td span:hover{
 	height: 100%;
 }
 
-/*.canvas-size-show {
-	display: block;
-}
 #canvas-size {
 	display: none;
-}*/
+	background: black;
+	color: white;
+    position: absolute;
+    right: 0;
+    top: 30px;
+    font-size: 16px;
+    font-weight: 100;
+    padding: 5px;
+}
