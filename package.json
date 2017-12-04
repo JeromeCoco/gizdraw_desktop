@@ -16,6 +16,7 @@
     "electron-winstaller": "^2.6.3"
   },
   "dependencies": {
+    "electron-canvas-to-buffer": "^2.0.0",
     "socket.io": "^2.0.3"
   }
 }

@@ -787,4 +787,23 @@ $(document).ready(function(){
 	        alert(1);
 	    }
 	});*/
+
+	$("#saveImage").click(function() {
+		var canvasBuffer = require('electron-canvas-to-buffer')
+		var fs = require('fs')
+
+		// as a buffer
+		var buffer = canvasBuffer(canvas, 'image/png')
+
+		// get PICTURES path
+		const electron = require('electron');
+		const app = electron.app;
+		console.log(app);
+
+		// write canvas to file
+		/*fs.writeFile(+'/GizDraw/sample.png', buffer, function (err) {
+  			throw err
+		})*/
+	});
+
 });

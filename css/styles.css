@@ -105,13 +105,20 @@ hr#division{
     background-color: #f44336;
     margin: auto;
     padding: 0;
-    width: 385px;
     height: 175px;
     0 11px 24px 0 rgba(0,0,0,0.9), 0 6px 20px 0 rgba(0,0,0,0.19)
     -webkit-animation-name: animatetop;
     -webkit-animation-duration: 0.4s;
     animation-name: animatetop;
     animation-duration: 0.4s
+}
+
+#enterPin .modal-content {
+	width: 385px;
+}
+
+#canvasOptions .modal-content {
+	width: 360px;
 }
 
 #canvasOptions .modal-content{
