@@ -594,3 +594,19 @@ table tr td span:hover{
     font-weight: 100;
     padding: 5px;
 }
+
+.resizeHintBar {
+	position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    background: #1b77bf;
+    color: white;
+    padding: 10px 0px;
+    font-size: 14px;
+    display: none;
+}
+
+.resizeHintBar img {
+	width: 12px;
+}

@@ -27,6 +27,7 @@ $(document).ready(function(){
 	var canvasPicSrc;
 	var cStep, cPushArray = new Array();
 	var canvasMainWidth, canvasMainHeight;
+	var resizeState = false;
 
 	var bgColor;
 	var bgIsColored = false;
@@ -755,8 +756,11 @@ $(document).ready(function(){
 	});
 
 	$('#resize').click(function(){
+		resizeState = true;
 		$(tmp_canvas).css({'top':'0px'});
 		$(".grid").css({'top':'0px'});
+		$(mainsketch).addClass("ui-resizable");
+		$(".ui-resizable-handle").css("display", "block");
 		$(mainsketch).resizable({
 			resize:function(event, ui){
 				tmp_canvas.width = ui.size.width;
@@ -780,13 +784,19 @@ $(document).ready(function(){
 		});
 
 		$(mainsketch).css("border", "3px dashed gray");
+		$(".resizeHintBar").fadeIn('slow');
 	});
 
-	/*$(document).on("keyup", canvas, function(event) {
-	    if (event.keyCode === 13) {
-	        alert(1);
+	$(document).on("keyup", canvas, function(event) {
+	    if (event.keyCode === 13 && resizeState == true) {
+	    	$('#canvas-size').css("display", "none");
+	    	$(".resizeHintBar").fadeOut('slow');
+	    	$(mainsketch).removeClass("ui-resizable");
+	    	$(mainsketch).css("border", "none");
+	    	$(tmp_canvas).css("top", "50px");
+	    	$(".ui-resizable-handle").css("display", "none");
 	    }
-	});*/
+	});
 
 	$("#saveImage").click(function() {
 		var canvasBuffer = require('electron-canvas-to-buffer')
