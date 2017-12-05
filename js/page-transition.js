@@ -41,6 +41,7 @@ $(document).ready(function(){
 		isConnected = true;
 
 		socket.on('sendtopc', function(data){
+			$("#status").removeClass("blink");
 			$("#status").html("Connected.");
 			$("#status").css("font-size", "20px");
 			$("#status").css("color", "white");
@@ -789,6 +790,7 @@ $(document).ready(function(){
 
 	$(document).on("keyup", canvas, function(event) {
 	    if (event.keyCode === 13 && resizeState == true) {
+	    	resizeState = false;
 	    	$('#canvas-size').css("display", "none");
 	    	$(".resizeHintBar").fadeOut('slow');
 	    	$(mainsketch).removeClass("ui-resizable");
@@ -799,21 +801,18 @@ $(document).ready(function(){
 	});
 
 	$("#saveImage").click(function() {
-		var canvasBuffer = require('electron-canvas-to-buffer')
-		var fs = require('fs')
+		var canvasBuffer = require('electron-canvas-to-buffer');
+		var fs = require('fs');
 
 		// as a buffer
-		var buffer = canvasBuffer(canvas, 'image/png')
-
-		// get PICTURES path
-		const electron = require('electron');
-		const app = electron.app;
-		console.log(app);
+		var buffer = canvasBuffer(canvas, 'image/png');
 
 		// write canvas to file
-		/*fs.writeFile(+'/GizDraw/sample.png', buffer, function (err) {
-  			throw err
-		})*/
+		fs.writeFile($("#canvasName").val()+'.png', buffer, function (err) {
+  			throw err;
+		});
+
+		alert("Image saved to device.");
 	});
 
 });

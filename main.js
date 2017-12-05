@@ -8,8 +8,7 @@ const url = require('url')
 let mainWindow
 
 function createWindow () {
-  
-  mainWindow = new BrowserWindow({width: 1100, height: 600})
+  mainWindow = new BrowserWindow({width: 960, height: 540})
   mainWindow.setMenu(null)
   
   mainWindow.loadURL(url.format({
