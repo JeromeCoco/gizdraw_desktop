@@ -791,6 +791,7 @@ $(document).ready(function(){
 	$(document).on("keyup", canvas, function(event) {
 	    if (event.keyCode === 13 && resizeState == true) {
 	    	resizeState = false;
+	    	$(".grid").css({'top':'50px'});
 	    	$('#canvas-size').css("display", "none");
 	    	$(".resizeHintBar").fadeOut('slow');
 	    	$(mainsketch).removeClass("ui-resizable");
