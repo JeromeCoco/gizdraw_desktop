@@ -808,6 +808,9 @@ $(document).ready(function(){
 		// as a buffer
 		var buffer = canvasBuffer(canvas, 'image/png');
 
+		// get path
+		const {app} = require('electron');
+
 		// write canvas to file
 		fs.writeFile($("#canvasName").val()+'.png', buffer, function (err) {
   			throw err;
@@ -816,4 +819,7 @@ $(document).ready(function(){
 		alert("Image saved to device.");
 	});
 
+	/*$(this).addEventListener("backbutton", function(){
+		alert("back");
+	}, false);*/
 });
