@@ -528,6 +528,30 @@ table tr td span:hover{
 	color: #878787;
 }
 
+#sketchpad .save-list{
+	z-index: 2;
+	position: absolute;
+	top: 30px;
+	height: 90px;
+	width: 85px;
+	background-color: #e8e6e6;
+	display: none;
+	box-shadow: 0px 15px 39px 2px #bbbaba
+}
+
+.show-save-options{
+	display: block !important;
+}
+
+.save-list .save-list-opt{
+	display: block;
+	margin: 10px;
+}
+
+.save-list-opt:hover{
+	color: #878787;
+}
+
 #btnFullScreenPreview {
 	content: url('../img/fullscreen.png');
 	width: 30px;

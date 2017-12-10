@@ -225,14 +225,14 @@ $(document).ready(function(){
     	pc.createDataChannel("");    //create a bogus data channel
     	pc.createOffer(pc.setLocalDescription.bind(pc), noop);    // create offer and set local description
     	pc.onicecandidate = function(ice){  //listen for candidate events
-        	if(!ice || !ice.candidate || !ice.candidate.candidate)  return;
-        	myIP = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/.exec(ice.candidate.candidate)[1];
-        	// split ip
-        	var splitIP = myIP.split(".");
-        	var part1 = splitIP[0], part2 = splitIP[1], part3 = splitIP[2], part4 = splitIP[3];
-        	// display to letters
-        	$('#randompin').html(convertSetFromIPToLetter[parseInt(part1)] + convertSetFromIPToLetter[parseInt(part2)] + convertSetFromIPToLetter[parseInt(part3)] + convertSetFromIPToLetter[parseInt(part4)]);
-        	pc.onicecandidate = noop;
+	        if(!ice || !ice.candidate || !ice.candidate.candidate)  return;
+	        var myIP = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/.exec(ice.candidate.candidate)[1];
+	        // split ip
+	        var splitIP = myIP.split(".");
+	        var part1 = splitIP[0], part2 = splitIP[1], part3 = splitIP[2], part4 = splitIP[3];
+	        // display to letters
+	        $('#randompin').html(convertSetFromIPToLetter[parseInt(part1)] + convertSetFromIPToLetter[parseInt(part2)] + convertSetFromIPToLetter[parseInt(part3)] + convertSetFromIPToLetter[parseInt(part4)]);
+	        pc.onicecandidate = noop;
     	};
 	}
 
@@ -670,6 +670,16 @@ $(document).ready(function(){
 
 	$("#options").click(function(){
 		$(".options-list").toggleClass("show-options");
+		if ($(".save-list").hasClass('show-save-options')) {
+			$(".save-list").toggleClass("show-save-options");
+		}
+	});
+
+	$("#saveImage").click(function(){
+		$(".save-list").toggleClass("show-save-options");
+		if ($(".options-list").hasClass('show-options')) {
+			$(".options-list").toggleClass("show-options");
+		}
 	});
 
 	$("#clear-canvas").click(function(){
@@ -801,7 +811,7 @@ $(document).ready(function(){
 	    }
 	});
 
-	$("#saveImage").click(function() {
+	$("#save-png").click(function() {
 		// as a buffer
 		var canvasBuffer = require('electron-canvas-to-buffer');
 		var buffer = canvasBuffer(canvas, 'image/png');

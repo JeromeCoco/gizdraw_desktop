@@ -4,7 +4,7 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
+    "start": "npm run start-desktopapp",
     "start-server": "node server.js",
     "start-desktopapp": "electron ."
   },
