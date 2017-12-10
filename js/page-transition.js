@@ -14,7 +14,6 @@ $(document).ready(function(){
 	var mainsketch = document.querySelector('#main-sketch');
 	var ctx = canvas.getContext('2d');
 	var isConnected = false;
-
 	var ppts = [];
 	var dataX, dataY;
 	var tmp_canvas, tmp_ctx;
@@ -28,7 +27,6 @@ $(document).ready(function(){
 	var cStep, cPushArray = new Array();
 	var canvasMainWidth, canvasMainHeight;
 	var resizeState = false;
-
 	var bgColor;
 	var bgIsColored = false;
 
@@ -39,7 +37,6 @@ $(document).ready(function(){
 	socket = io('http://localhost:3000');
 	socket.on("connect", function(){
 		isConnected = true;
-
 		socket.on('sendtopc', function(data){
 			$("#status").removeClass("blink");
 			$("#status").html("Connected.");
@@ -170,11 +167,9 @@ $(document).ready(function(){
 			$(".activeToolNotificationBar").toggleClass('toggleNotification');
 			$(".activeToolNotificationBar").fadeIn("fast");
 			$(".activeToolContainer").toggleClass("activeToolShow");
-
 			setTimeout(function(){
 				$(".activeToolContainer").css("display", "block");
 			}, 100);
-
 			setTimeout(function(){
 				$(".activeToolNotificationBar").toggleClass('toggleNotification');
 				$(".activeToolContainer").css("display", "none");
@@ -236,13 +231,13 @@ $(document).ready(function(){
     	};
 	}
 
-	function changePanel(){
+	function changePanel() {
 		$('.menu-item').removeClass('active');
 		$('.panel').removeClass('show');
 		$('.panel').addClass('hide');
 	}
 
-	$('#setCanvasColor').change(function(){
+	$('#setCanvasColor').change(function() {
 		var set = $(this).val();
 		if (set == "Color") {
 			colored = true;
@@ -254,42 +249,41 @@ $(document).ready(function(){
 		preview();
 	});
 
-	$('.disconnect-option').click(function(){
+	$('.disconnect-option').click(function() {
 		var confirmation = confirm("Are you sure you want to disconnect?");
-
 		if (confirmation) {
 			socket.emit("onDisconnectFromPC", "disconnect");
 			location.reload();
 		}
 	});
 
-	$('#recent').click(function(){
+	$('#recent').click(function() {
 		changePanel();
 		$(this).addClass('active');
 		$('#recent-panel').removeClass('hide');
 		$('#recent-panel').addClass('show');
 	});
 
-	$('#new-canvas').click(function(){
+	$('#new-canvas').click(function() {
 		changePanel();
 		$(this).addClass('active');
 		$('#setup-canvas-panel').removeClass('hide');
 		$('#setup-canvas-panel').addClass('show');
 	});
 
-	$('#settings').click(function(){
+	$('#settings').click(function() {
 		$(this).toggleClass('active');
 		$('.sub-settings').toggleClass('show-settings');
 	});
 
-	$('#about').click(function(){
+	$('#about').click(function() {
 		changePanel();
 		$(this).addClass('active');
 		$('#about-panel').removeClass('hide');
 		$('#about-panel').addClass('show');
 	});
 
-	$('#colorpick').change(function(){
+	$('#colorpick').change(function() {
 		$('#canvas-preview').css("background-color", $(this).val());
 	});
 
@@ -317,10 +311,9 @@ $(document).ready(function(){
 		}
 	}
 
-	$('#show-preview').click(function(){
+	$('#show-preview').click(function() {
 		var width;
 		var height;
-
 		if ($('#canvas-setup').val() == "Custom") {
 			width = $('#canvas-width').val();
 			height = $('#canvas-height').val();
@@ -340,9 +333,8 @@ $(document).ready(function(){
 		}
 	});
 
-	$('#canvas-width').change(function(){
+	$('#canvas-width').change(function() {
 		var width = $(this).val();
-
 		if (width <= 1000 && width >= 300) {
 			preview();
 			$(this).css("background-color", "#aaaaaa");
@@ -353,9 +345,8 @@ $(document).ready(function(){
 		}
 	});
 
-	$('#canvas-height').change(function(){
+	$('#canvas-height').change(function() {
 		var height = $(this).val();
-
 		if (height <= 550 && height >= 300) {
 			preview();
 			$(this).css("background-color", "#aaaaaa");
@@ -366,10 +357,9 @@ $(document).ready(function(){
 		}
 	});
 
-	$('#btnFullScreenPreview').click(function(){
+	$('#btnFullScreenPreview').click(function() {
 		$('#preview').toggleClass('showPreviewFull');
 		screenwidth = $('.showPreviewFull').width();
-
 		if (screenwidth > 100) {
 			$('#btnFullScreenPreview').css("content","url('img/minimize.png')");
 		} else {
@@ -377,9 +367,8 @@ $(document).ready(function(){
 		}
 	});
 
-	$('#create-canvas').click(function(){
+	$('#create-canvas').click(function() {
 		var canvasColor;
-
 		if ($("#setCanvasColor").val() == "White") {
 			canvasColor = "white";
 		} else if ($("#setCanvasColor").val() == "Color") {
@@ -388,9 +377,7 @@ $(document).ready(function(){
 
 		var width;
 		var height;
-
 		aspectRatioChange();
-
 		if ($('#canvas-setup').val() == "Custom") {
 			width = $('#canvas-width').val();
 			height = $('#canvas-height').val();
@@ -406,7 +393,6 @@ $(document).ready(function(){
 			canvasBackgroundColor: canvasColor
 		}
 
-		// Creating a tmp canvas
 		tmp_canvas = document.createElement('canvas');
 		tmp_ctx = tmp_canvas.getContext('2d');
 		tmp_canvas.id = 'tmp_canvas';
@@ -492,7 +478,7 @@ $(document).ready(function(){
 		tmp_ctx.stroke();
 	};
 
-	var onBrushPaint = function(){
+	var onBrushPaint = function() {
 		points.push({x: dataX, y: dataY});
 		if (points.length < 3) {
 			var b = points[0];
@@ -522,7 +508,6 @@ $(document).ready(function(){
 		switch(currpreset){
 			case 'preset-first':
 				ctx.globalCompositeOperation = 'source-over';
-				// var rgbaval = hexToRgbA(markerColor);
 				tmp_ctx.strokeStyle = markerColor;
 				tmp_ctx.fillStyle = markerColor;
 				tmp_ctx.shadowBlur = 0;
@@ -548,7 +533,7 @@ $(document).ready(function(){
 			break;
 		}
 	};
-	// Preset 1 TouchStart Function
+
 	var onPreset1 = function () {
 		// Saving all the points in an array
 		tmp_ctx.moveTo(points[points.length - 2].x, points[points.length - 2].y);
@@ -556,7 +541,6 @@ $(document).ready(function(){
 		tmp_ctx.stroke();
 
 		lastPoint = points[points.length-1];
-
 		for (var i = 0, len = points.length; i < len; i++) {
 		    var dx = points[i].x - lastPoint.x;
 		    var dy = points[i].y - lastPoint.y;
@@ -587,14 +571,11 @@ $(document).ready(function(){
 	  	var currentPoint = { x: dataX, y: dataY };
 	  	var dist = distanceBetween(lastPoint, currentPoint);
 	  	var angle = angleBetween(lastPoint, currentPoint);
-	  
 	  	for (var i = 0; i < dist; i+=5) {
 	    	x = lastPoint.x + (Math.sin(angle) * i);
 	    	y = lastPoint.y + (Math.cos(angle) * i);
-	    
 	    	var radgrad = ctx.createRadialGradient(x,y,5,x,y,10);
 	    	var rgbaval = hexToRgbA(markerColor);
-
 	    	radgrad.addColorStop(0, markerColor);
 	    	radgrad.addColorStop(0.5, rgbaval+',0.5)');
 	    	radgrad.addColorStop(1, rgbaval+',0)');
@@ -610,12 +591,10 @@ $(document).ready(function(){
 		ctx.moveTo(points[points.length - 2].x, points[points.length - 2].y);
 		ctx.lineTo(points[points.length - 1].x, points[points.length - 1].y);
 		ctx.stroke();
-
 		for (var i = 0, len = points.length; i < len; i++) {
 			dx = points[i].x - points[points.length-1].x;
 			dy = points[i].y - points[points.length-1].y;
 			d = dx * dx + dy * dy;
-
 			if (d < 2000 && Math.random() > d / 2000) {
 			  	ctx.beginPath();
 			  	var rgbaval = hexToRgbA(markerColor);
@@ -630,7 +609,7 @@ $(document).ready(function(){
 	};
 
 	// hex to rgba conversion
-	function hexToRgbA(hex){
+	function hexToRgbA(hex) {
 	    var c;
 	    if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
 	        c= hex.substring(1).split('');
@@ -664,25 +643,25 @@ $(document).ready(function(){
 	  return Math.atan2( point2.x - point1.x, point2.y - point1.y );
 	}
 
-	function resetCanvas(){
+	function resetCanvas() {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 	}
 
-	$("#options").click(function(){
+	$("#options").click(function() {
 		$(".options-list").toggleClass("show-options");
 		if ($(".save-list").hasClass('show-save-options')) {
 			$(".save-list").toggleClass("show-save-options");
 		}
 	});
 
-	$("#saveImage").click(function(){
+	$("#saveImage").click(function() {
 		$(".save-list").toggleClass("show-save-options");
 		if ($(".options-list").hasClass('show-options')) {
 			$(".options-list").toggleClass("show-options");
 		}
 	});
 
-	$("#clear-canvas").click(function(){
+	$("#clear-canvas").click(function() {
 		resetCanvas();
 		var cPushArray = new Array();
 		if (isConnected) {
@@ -690,7 +669,7 @@ $(document).ready(function(){
 		}
 	});
 
-	$("#canvas-setup").change(function(){
+	$("#canvas-setup").change(function() {
 		if ($(this).val() == "Custom") {
 			$('.aspect-ratio-opt').css("display","none");
 			$('.custom-opt').css("display","table-row");
@@ -700,12 +679,12 @@ $(document).ready(function(){
 		}
 	});
 
-	$("#aspect-ratio-size").change(function(){
+	$("#aspect-ratio-size").change(function() {
 		aspectRatioChange();
 		preview();
 	});
 
-	function aspectRatioChange(){
+	function aspectRatioChange() {
 		var aspectRatioSize = $("#aspect-ratio-size").val();
 		switch (aspectRatioSize) {
 			case "640 x 360":
@@ -731,7 +710,7 @@ $(document).ready(function(){
 		}
 	}
 
-	$("#changeBackground").click(function(){
+	$("#changeBackground").click(function() {
 		$("#canvasOptions").css("display", "block");
 	});
 
@@ -743,11 +722,11 @@ $(document).ready(function(){
 		}
 	});
 
-	$("#close-canvas-option").click(function(){
+	$("#close-canvas-option").click(function() {
 		$("#canvasOptions").css("display", "none");
 	});
 
-	$("#setBgColor").click(function(){
+	$("#setBgColor").click(function() {
 		var setColor = $("#custom-bg-color").val();
 		$("#canvasOptions").css("display", "none");
 
@@ -766,7 +745,7 @@ $(document).ready(function(){
 		}
 	});
 
-	$('#resize').click(function(){
+	$('#resize').click(function() {
 		resizeState = true;
 		$(tmp_canvas).css({'top':'0px'});
 		$(".grid").css({'top':'0px'});
@@ -793,7 +772,6 @@ $(document).ready(function(){
 				}
 			}
 		});
-
 		$(mainsketch).css("border", "3px dashed gray");
 		$(".resizeHintBar").fadeIn('slow');
 	});
@@ -812,21 +790,15 @@ $(document).ready(function(){
 	});
 
 	$("#save-png").click(function() {
-		// as a buffer
 		var canvasBuffer = require('electron-canvas-to-buffer');
 		var buffer = canvasBuffer(canvas, 'image/png');
-
-		// make folder
 		const {app} = require("electron").remote;
 		var fs = require('fs');
 		fs.mkdir(app.getPath('pictures') + "/GizDraw");
 
-		// write canvas to file
 		fs.writeFile(app.getPath('pictures') + "/GizDraw/" + $("#canvasName").val()+'.png', buffer, function (err) {
   			throw err;
 		});
-
 		alert("Image saved to device.");
 	});
-	
 });

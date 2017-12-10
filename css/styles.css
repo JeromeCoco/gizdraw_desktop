@@ -515,19 +515,6 @@ table tr td span:hover{
 	box-shadow: 0px 15px 39px 2px #bbbaba
 }
 
-.show-options{
-	display: block !important;
-}
-
-.options-list .options-list-opt{
-	display: block;
-	margin: 10px;
-}
-
-.options-list-opt:hover{
-	color: #878787;
-}
-
 #sketchpad .save-list{
 	z-index: 2;
 	position: absolute;
@@ -539,16 +526,16 @@ table tr td span:hover{
 	box-shadow: 0px 15px 39px 2px #bbbaba
 }
 
-.show-save-options{
+.show-options, .show-save-options{
 	display: block !important;
 }
 
-.save-list .save-list-opt{
+.options-list .options-list-opt, .save-list .save-list-opt{
 	display: block;
 	margin: 10px;
 }
 
-.save-list-opt:hover{
+.options-list-opt:hover, .save-list-opt:hover{
 	color: #878787;
 }
 

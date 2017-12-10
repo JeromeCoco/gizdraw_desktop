@@ -1,15 +1,13 @@
-$(document).ready(function(){
-
+$(document).ready(function() {
 	var canvasOptions = document.getElementById('canvasOptions');
 	var enterPin = document.getElementById('enterPin');
-
 	enterPin.style.display = "block";
 
-	$(".close").click(function(){
+	$(".close").click(function() {
 		enterPin.style.display = "none";
 	});
 
-	$('#create-canvas').click(function(){
+	$('#create-canvas').click(function() {
 		if ($('#canvasName').val() != "") {
 			$('#canvas-name-active').html($('#canvasName').val());
 			$('#menu').css("display", "none");
@@ -30,9 +28,8 @@ $(document).ready(function(){
 
 	const fs = require("fs");
 	const {dialog} = require("electron").remote;
-
-	$('.open').click(function(){
+	
+	$('.open').click(function() {
 		dialog.showOpenDialog();
 	});
-	
 })

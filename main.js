@@ -1,16 +1,13 @@
 const electron = require('electron')
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
-
 const path = require('path')
 const url = require('url')
-
 let mainWindow
 
 function createWindow () {
   mainWindow = new BrowserWindow({width: 960, height: 540})
   mainWindow.setMenu(null)
-  
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),
     protocol: 'file:',
@@ -18,7 +15,7 @@ function createWindow () {
   }))
 
   //Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  //mainWindow.webContents.openDevTools()
 
   mainWindow.on('closed', function () {
     mainWindow = null
