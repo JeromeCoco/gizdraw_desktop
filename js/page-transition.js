@@ -802,16 +802,12 @@ $(document).ready(function(){
 	});
 
 	$("#saveImage").click(function() {
-		var canvasBuffer = require('electron-canvas-to-buffer');
-		var fs = require('fs');
-
 		// as a buffer
+		var canvasBuffer = require('electron-canvas-to-buffer');
 		var buffer = canvasBuffer(canvas, 'image/png');
 
-		// get path
-		const {app} = require("electron").remote;
-
 		// make folder
+		const {app} = require("electron").remote;
 		var fs = require('fs');
 		fs.mkdir(app.getPath('pictures') + "/GizDraw");
 
@@ -822,8 +818,5 @@ $(document).ready(function(){
 
 		alert("Image saved to device.");
 	});
-
-	/*$(this).addEventListener("backbutton", function(){
-		alert("back");
-	}, false);*/
+	
 });
