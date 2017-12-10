@@ -799,6 +799,10 @@ $(document).ready(function(){
 		fs.writeFile(app.getPath('pictures') + "/GizDraw/" + $("#canvasName").val()+'.png', buffer, function (err) {
   			throw err;
 		});
-		alert("Image saved to device.");
+		$("#saveNotificationBar").fadeIn('slow');
+	});
+
+	$("#saveNotificationBar span").click(function() {
+		$("#saveNotificationBar").fadeOut('slow');
 	});
 });
