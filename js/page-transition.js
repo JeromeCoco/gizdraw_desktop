@@ -809,10 +809,14 @@ $(document).ready(function(){
 		var buffer = canvasBuffer(canvas, 'image/png');
 
 		// get path
-		const {app} = require('electron');
+		const {app} = require("electron").remote;
+
+		// make folder
+		var fs = require('fs');
+		fs.mkdir(app.getPath('pictures') + "/GizDraw");
 
 		// write canvas to file
-		fs.writeFile($("#canvasName").val()+'.png', buffer, function (err) {
+		fs.writeFile(app.getPath('pictures') + "/GizDraw/" + $("#canvasName").val()+'.png', buffer, function (err) {
   			throw err;
 		});
 
