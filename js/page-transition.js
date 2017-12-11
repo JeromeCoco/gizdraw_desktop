@@ -794,9 +794,22 @@ $(document).ready(function(){
 		var buffer = canvasBuffer(canvas, 'image/png');
 		const {app} = require("electron").remote;
 		var fs = require('fs');
-		fs.mkdir(app.getPath('pictures') + "/GizDraw");
 
+		fs.mkdir(app.getPath('pictures') + "/GizDraw");
 		fs.writeFile(app.getPath('pictures') + "/GizDraw/" + $("#canvasName").val()+'.png', buffer, function (err) {
+  			throw err;
+		});
+		$("#saveNotificationBar").fadeIn('slow');
+	});
+
+	$("#save-jpg").click(function() {
+		var canvasBuffer = require('electron-canvas-to-buffer');
+		var buffer = canvasBuffer(canvas, 'image/png');
+		const {app} = require("electron").remote;
+		var fs = require('fs');
+
+		fs.mkdir(app.getPath('pictures') + "/GizDraw");
+		fs.writeFile(app.getPath('pictures') + "/GizDraw/" + $("#canvasName").val()+'.jpg', buffer, function (err) {
   			throw err;
 		});
 		$("#saveNotificationBar").fadeIn('slow');
@@ -804,5 +817,11 @@ $(document).ready(function(){
 
 	$("#saveNotificationBar span").click(function() {
 		$("#saveNotificationBar").fadeOut('slow');
+	});
+
+	$("#openGizDrawFolder").click(function() {
+		const {app} = require("electron").remote;
+		const {shell} = require("electron");
+		shell.openItem(app.getPath('pictures') + "/GizDraw");
 	});
 });

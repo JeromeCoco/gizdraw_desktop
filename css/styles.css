@@ -653,3 +653,12 @@ table tr td span:hover{
 #saveNotificationBar span:hover {
 	cursor: pointer;
 }
+
+#saveNotificationBar div {
+	margin-top: 5px;
+	text-decoration: underline;
+}
+
+#saveNotificationBar div:hover{
+	cursor: pointer;
+}
