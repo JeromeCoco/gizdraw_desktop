@@ -649,16 +649,42 @@ $(document).ready(function(){
 
 	$("#options").click(function() {
 		$(".options-list").toggleClass("show-options");
-		if ($(".save-list").hasClass('show-save-options')) {
-			$(".save-list").toggleClass("show-save-options");
+		if ($(".canvas-list").hasClass('show-options') || $(".settings-list").hasClass('show-options')) {
+			$(".canvas-list").removeClass("show-options");
+			$(".settings-list").removeClass("show-options");
 		}
 	});
 
-	$("#saveImage").click(function() {
-		$(".save-list").toggleClass("show-save-options");
-		if ($(".options-list").hasClass('show-options')) {
-			$(".options-list").toggleClass("show-options");
+	$("#canvasMenu").click(function() {
+		$(".canvas-list").toggleClass("show-options");
+		if ($(".options-list").hasClass('show-options') || $(".settings-list").hasClass('show-options')) {
+			$(".options-list").removeClass("show-options");
+			$(".settings-list").removeClass("show-options");
 		}
+	});
+
+	$("#settingsMenu").click(function() {
+		$(".settings-list").toggleClass("show-options");
+		if ($(".canvas-list").hasClass('show-options') || $(".options-list").hasClass('show-options')) {
+			$(".canvas-list").removeClass("show-options");
+			$(".options-list").removeClass("show-options");
+		}
+	});
+
+	$("#saveAs").mouseover(function() {
+		$(".saveOptions").addClass('showSaveOps');
+	}).mouseleave(function() {
+		$(".saveOptions").removeClass('showSaveOps');
+	});
+
+	$(".saveOptions, .rotateOptions").mouseleave(function() {
+		$(this).removeClass('showSaveOps');
+	});
+
+	$("#rotate").mouseover(function() {
+		$(".rotateOptions").addClass('showRotateOps');
+	}).mouseleave(function() {
+		$(".rotateOptions").removeClass('showRotateOps');
 	});
 
 	$("#clear-canvas").click(function() {

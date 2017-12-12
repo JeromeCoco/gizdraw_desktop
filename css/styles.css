@@ -505,38 +505,73 @@ table tr td span:hover{
 	cursor: pointer;	
 }
 
+.drop{
+	z-index: 2;
+	position: absolute;
+	top: 30px;
+	background-color: #e8e6e6;
+	display: none;
+	box-shadow: 0px 15px 39px 2px #bbbaba
+}
+
 #sketchpad .options-list{
-	z-index: 2;
-	position: absolute;
-	top: 30px;
-	height: 115px;
-	background-color: #e8e6e6;
-	display: none;
-	box-shadow: 0px 15px 39px 2px #bbbaba
+	width: 115px;
+	height: 126px;
 }
 
-#sketchpad .save-list{
-	z-index: 2;
-	position: absolute;
-	top: 30px;
-	height: 90px;
-	width: 85px;
-	background-color: #e8e6e6;
-	display: none;
-	box-shadow: 0px 15px 39px 2px #bbbaba
+#sketchpad .canvas-list{
+	height: 127px;
+	width: 130px;
 }
 
-.show-options, .show-save-options{
+#sketchpad .settings-list{
+	height: 32px;
+	width: 145px;
+}
+
+.show-options{
 	display: block !important;
 }
 
-.options-list .options-list-opt, .save-list .save-list-opt{
+.options-list .options-list-opt, .canvas-list .canvas-list-opt, .settings-list .settings-list-opt{
 	display: block;
-	margin: 10px;
+	padding: 8px;
 }
 
-.options-list-opt:hover, .save-list-opt:hover{
-	color: #878787;
+.options-list-opt:hover, .canvas-list-opt:hover, .settings-list-opt:hover, #saveAs ul li:hover, .rotateOptions li:hover{
+	background: #d2d2d2;
+}
+
+.subMenu{
+	display: none;
+	position: absolute;
+	list-style: none;
+    background: #e8e6e6;
+    box-shadow: 0px 15px 39px 2px #bbbaba;
+}
+
+.saveOptions{
+    top: 64px;
+    left: 115px;
+    width: 80px;
+}
+
+.rotateOptions{
+    top: 64px;
+    left: 130px;
+    width: 115px;
+}
+
+.rotateOptions li{
+	padding: 8px;
+}
+
+.showSaveOps, .showRotateOps{
+	display: block;
+}
+
+#saveAs ul li{
+	padding: 8px;
 }
 
 #btnFullScreenPreview {

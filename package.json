@@ -4,7 +4,9 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "run-server" : "node server.js",
+    "run-desktop": "electron ."
   },
   "repository": "",
   "keywords": "",
