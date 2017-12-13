@@ -584,7 +584,7 @@ table tr td span:hover{
 	position: absolute;
     width: inherit;
     height: inherit;
-    top: 50px;
+    top: 0px;
 }
 
 #canvas-setup, #aspect-ratio-size, #setCanvasColor{
@@ -696,4 +696,21 @@ table tr td span:hover{
 
 #saveNotificationBar div:hover{
 	cursor: pointer;
+}
+
+#main-sketch, #tmp_canvas {
+    /**/-moz-transform:scale(1,1);-webkit-transform:scale(1,1);
+    transform:scale(1,1);
+    /**/-webkit-/*transition:all 600ms ease;-webkit-transition:all 600ms ease;
+    transition:all 600ms ease; */
+}
+
+#main-sketch[flipped] {
+    /**/-moz-transform:scale(-1,1);-webkit-transform:scale(-1,1);
+    transform:scale(-1,1);
+}
+
+#main-sketch[flippedVert] {
+    /**/-moz-transform:scale(1,-1);-webkit-transform:scale(-1,1);
+    transform:scale(1,-1);
 }

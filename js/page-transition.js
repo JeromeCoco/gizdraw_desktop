@@ -29,6 +29,7 @@ $(document).ready(function(){
 	var resizeState = false;
 	var bgColor;
 	var bgIsColored = false;
+	var rotation = 0;
 
 	$('.simple_color_live_preview').simpleColor({ livePreview: true, cellWidth: 5, cellHeight: 5 });
 
@@ -404,7 +405,7 @@ $(document).ready(function(){
 		$('#main-sketch').css('width', canvasDetails.canvasWidth);
 		mainsketch.appendChild(tmp_canvas);
 		$('#tmp_canvas').css("position","absolute");
-		$('#tmp_canvas').css("top","50px");
+		$('#tmp_canvas').css("top","0");
 		socket.emit("createCanvas", canvasDetails);
 	});
 
@@ -805,12 +806,10 @@ $(document).ready(function(){
 	$(document).on("keyup", canvas, function(event) {
 	    if (event.keyCode === 13 && resizeState == true) {
 	    	resizeState = false;
-	    	$(".grid").css({'top':'50px'});
 	    	$('#canvas-size').css("display", "none");
 	    	$(".resizeHintBar").fadeOut('slow');
 	    	$(mainsketch).removeClass("ui-resizable");
 	    	$(mainsketch).css("border", "none");
-	    	$(tmp_canvas).css("top", "50px");
 	    	$(".ui-resizable-handle").css("display", "none");
 	    }
 	});
@@ -850,4 +849,43 @@ $(document).ready(function(){
 		const {shell} = require("electron");
 		shell.openItem(app.getPath('pictures') + "/GizDraw");
 	});
+
+	jQuery.fn.rotate = function(degrees) {
+    	$(mainsketch).css({'-webkit-transform' : 'rotate('+ degrees +'deg)',
+    		'-moz-transform' : 'rotate('+ degrees +'deg)',
+    		'-ms-transform' : 'rotate('+ degrees +'deg)',
+    		'transform' : 'rotate('+ degrees +'deg)'
+    	});
+    	$(tmp_canvas).css({'top': '0px'});
+    	return $(mainsketch, tmp_canvas);
+	};
+
+	$('#rotate90').click(function(){
+		rotation += 90;
+   	    $(mainsketch).rotate(rotation);
+   	    if (isConnected) {
+			socket.emit("onSendRotationDegrees", rotation);
+		}
+	});
+
+	$('#rotate180').click(function(){
+		rotation += 180;
+   	    $(mainsketch).rotate(rotation);
+   	    if (isConnected) {
+			socket.emit("onSendRotationDegrees", rotation);
+		}
+	});
+
+	$('#flip-horizontal').click(function(){
+		if ($(mainsketch).attr('flipped'))
+			$(mainsketch).removeAttr('flipped');
+		else $(mainsketch).attr('flipped','flipped');
+	});
+
+	$('#flip-vertical').click(function(){
+		if ($(mainsketch).attr('flippedVert'))
+			$(mainsketch).removeAttr('flippedVert');
+		else $(mainsketch).attr('flippedVert','flippedVert');
+	});
+
 });
