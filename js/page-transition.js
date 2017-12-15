@@ -8,7 +8,7 @@ $(document).ready(function(){
 	var myIP;
 	var socket;
 	var currTool = "pencil";
-	var markerWidth = 5;	
+	var markerWidth;	
 	var markerColor = "#000000";
 	var canvas = document.querySelector('#main_canvas');
 	var mainsketch = document.querySelector('#main-sketch');
@@ -133,6 +133,7 @@ $(document).ready(function(){
 					tmp_ctx.shadowBlur = 0;
 					tmp_ctx.lineJoin = 'round';
 					tmp_ctx.lineCap = 'round';
+					tmp_ctx.lineWidth = markerWidth;
 					onPaint();
 				break;
 				case 'eraser':
@@ -517,6 +518,7 @@ $(document).ready(function(){
 			case 'preset-second':
 				tmp_ctx.strokeStyle = markerColor;
 				ctx.globalCompositeOperation = 'source-over';
+				tmp_ctx.lineJoin = tmp_ctx.lineCap = 'round';
 				onPreset2();
 			break;
 			case 'preset-third':
