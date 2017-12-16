@@ -111,4 +111,7 @@ io.sockets.on('connection', function (socket) {
     socket.on("onSendRotationDegrees", function(data){
         socket.broadcast.emit("onReceiveRotationDegrees", data);
     });
+    socket.on("onSendEventLog", function(data){
+        socket.broadcast.emit("onReceiveEventLog", data);
+    });
 });

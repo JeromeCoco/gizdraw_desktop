@@ -714,3 +714,82 @@ table tr td span:hover{
     /**/-moz-transform:scale(1,-1);-webkit-transform:scale(-1,1);
     transform:scale(1,-1);
 }
+
+.event-logs-container{
+	display: none;
+	overflow-y: auto;
+	position: absolute;
+    top: 30px;
+    right: 0;
+    background: #121212;
+    color: white;
+    padding: 20px;
+    width: 250px;
+    height: 200px;
+    box-shadow: 3px 16px 100px 0px black;
+    border-bottom-left-radius: 5px;
+}
+
+.event-logs-container div{
+	text-align: center;
+    margin-top: 60px;
+    font-size: 14px;
+}
+
+.event-logs-container div img{
+	width: 35px;
+    display: block;
+    margin: auto;
+    margin-bottom: 10px;
+}
+
+.showHistory {
+	display: block;
+}
+
+.event-logs-container ul{
+	list-style: none;
+}
+
+.event-logs-container ul li:first-child{
+	margin-top: -5px;
+}
+
+.event-logs-container ul li{
+	background: #212121;
+    height: 50px;
+    padding-left: 10px;
+    border: 1px solid #444;
+    font-size: 14px;
+    margin-top: 7px;
+}
+
+.event-logs-container ul li img{
+	border-radius: 50%;
+	width: 30px;
+	position: relative;
+    top: 10px;
+}
+
+#toggleHistory{
+	float: right;
+}
+
+#toggleHistory img{
+	width: 10px;
+}
+
+.event-logs-container::-webkit-scrollbar-track{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+
+.event-logs-container::-webkit-scrollbar{
+	width: 12px;
+	background-color: #F5F5F5;
+}
+
+.event-logs-container::-webkit-scrollbar-thumb{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #555;
+}

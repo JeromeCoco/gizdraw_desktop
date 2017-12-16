@@ -176,7 +176,7 @@
 								<li id="save-jpg">.jpg</li>
 							</ul>
 						</li>
-						<li class="options-list-opt">Save as .gdw</li>
+						<li class="options-list-opt" id="save-gdw">Save as .gdw</li>
 					</ul>
 				</li>
 				<li class="main-menu-opt" id="canvasMenu">
@@ -202,6 +202,7 @@
 						<li class="settings-list-opt">Disconnect Device</li>
 					</ul>
 				</li>
+				<li class="main-menu-opt" id="toggleHistory"> <img src="img/arrow-down.svg"> History Logs</li>
 			</ul>
 			<div id="main-sketch">
 				<canvas id="main_canvas"></canvas>
@@ -229,6 +230,12 @@
 			<div id="saveNotificationBar">
 				&#128427; Image saved to device. <span>&#215;</span>
 				<div id="openGizDrawFolder">Open GizDraw Folder</div>
+			</div>
+			<div class="event-logs-container">
+				<div><img src="img/history.svg"> No history logs to show.</div>
+				<ul>
+
+				</ul>
 			</div>
 		</div>
 		<div class="panel" id="about-panel">
