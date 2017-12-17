@@ -18,7 +18,7 @@ $(document).ready(function(){
 	var dataX, dataY;
 	var tmp_canvas, tmp_ctx;
 	var touchstate;
-	var currpreset = "preset-first";
+	var currpreset = "first-preset";
 	var points = [], isDrawing, lastPoint;
 	var brushstate;
 	var xdata, ydata;
@@ -515,31 +515,25 @@ $(document).ready(function(){
 		);
 
 		switch(currpreset){
-			case 'preset-first':
+			case 'first-preset':
 				ctx.globalCompositeOperation = 'source-over';
 				tmp_ctx.strokeStyle = markerColor;
 				tmp_ctx.fillStyle = markerColor;
 				tmp_ctx.shadowBlur = 0;
 				onPreset1();
 			break;
-			case 'preset-second':
+			case 'second-preset':
 				tmp_ctx.strokeStyle = markerColor;
 				ctx.globalCompositeOperation = 'source-over';
 				tmp_ctx.lineJoin = tmp_ctx.lineCap = 'round';
 				onPreset2();
 			break;
-			case 'preset-third':
-				lastPoint = { x: dataX, y: dataY };
-				ctx.strokeStyle = markerColor;
-				ctx.globalCompositeOperation = 'source-over';
-				onPreset3();
-			break;
-			case 'preset-fourth':
+			case 'third-preset':
 				ctx.strokeStyle = markerColor;
 				ctx.globalCompositeOperation = 'source-over';
 				ctx.lineWidth = 1;
 	 			ctx.lineJoin = tmp_ctx.lineCap = 'round';
-				onPreset4();
+				onPreset3();
 			break;
 		}
 	};
@@ -578,26 +572,7 @@ $(document).ready(function(){
 	};
 
 	var onPreset3 = function () {
-	  	var currentPoint = { x: dataX, y: dataY };
-	  	var dist = distanceBetween(lastPoint, currentPoint);
-	  	var angle = angleBetween(lastPoint, currentPoint);
-	  	for (var i = 0; i < dist; i+=5) {
-	    	x = lastPoint.x + (Math.sin(angle) * i);
-	    	y = lastPoint.y + (Math.cos(angle) * i);
-	    	var radgrad = ctx.createRadialGradient(x,y,5,x,y,10);
-	    	var rgbaval = hexToRgbA(markerColor);
-	    	radgrad.addColorStop(0, markerColor);
-	    	radgrad.addColorStop(0.5, rgbaval+',0.5)');
-	    	radgrad.addColorStop(1, rgbaval+',0)');
-	    	tmp_ctx.shadowBlur = 0;
-	    	ctx.fillStyle = radgrad;
-	    	ctx.fillRect(x-15, y-15, 30, 30);
-	  	}
-		lastPoint = currentPoint;
-	};
-
-	var onPreset4 = function () {
-		ctx.beginPath();
+	  	ctx.beginPath();
 		ctx.moveTo(points[points.length - 2].x, points[points.length - 2].y);
 		ctx.lineTo(points[points.length - 1].x, points[points.length - 1].y);
 		ctx.stroke();
