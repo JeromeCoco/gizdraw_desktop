@@ -106,7 +106,6 @@ hr#division{
     margin: auto;
     padding: 0;
     height: 175px;
-    0 11px 24px 0 rgba(0,0,0,0.9), 0 6px 20px 0 rgba(0,0,0,0.19)
     -webkit-animation-name: animatetop;
     -webkit-animation-duration: 0.4s;
     animation-name: animatetop;
@@ -796,4 +795,66 @@ table tr td span:hover{
 	background-color: #121212;
 	border: 1px solid #444;
 	border-radius: 15px;
+}
+
+#createNewCanvasModal .modal-content {
+	width: 355px;
+}
+
+#createNewCanvasModal .modal-content{
+	background-color: white;
+	height: 355px;
+	width: 430px;
+	border-radius: 3px;
+}
+
+#createNewCanvasModal .modal-content .modal-body{
+	height: 430px;
+	width: 410px;
+}
+
+#createNewCanvasModal .modal-content .modal-body img{
+	width: 25px;
+    position: absolute;
+    left: 417px;
+    top: -8px;
+    cursor: pointer;
+}
+
+#createNewCanvasModal .modal-content .modal-body div{
+	background: white;
+    margin-left: -16px;
+    padding: 15px;
+    font-size: 18px;
+    background: #e8e8e8;
+    width: 400px;
+    margin-top: -2px;
+    margin-bottom: 10px;
+}
+
+#createCanvasTableModal tr td input{
+	margin-left: -5px;
+	width: 200px;
+	color: #a7a7a7;
+    background: none;
+    border: 1px solid #a7a7a7;
+}
+
+#createCanvasTableModal tr td select{
+	margin-left: -5px;
+    background: none;
+    border: 1px solid #a7a7a7;
+    color: gray;
+    width: 215px;
+}
+
+#createCanvasTableModal tr td:first-child{
+	float: right;
+	position: relative;
+    top: 6px;
+}
+
+#createCanvasTableModal tr td button{
+	width: 210px;
+    float: left;
 }

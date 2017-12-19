@@ -10,7 +10,7 @@ io.sockets.on('connection', function (socket) {
 
     socket.on("sender", function(data){
         socket.broadcast.emit("sendtopc", data);
-    })
+    });
 
     socket.on("createCanvas", function(data){
         socket.broadcast.emit("createCanvasToMobile", data);
@@ -122,5 +122,9 @@ io.sockets.on('connection', function (socket) {
 
     socket.on("cPushArraySend", function(data){
         socket.broadcast.emit("cPushArrayReceive", data);
+    });
+
+    socket.on("canvasDetailsSend", function(data){
+        socket.broadcast.emit("canvasDetailsReceive");
     });
 });

@@ -167,7 +167,7 @@
 				<li class="main-menu-opt" id="options">
 					File
 					<ul class="options-list drop">
-						<li class="options-list-opt">Create New...</li>
+						<li class="options-list-opt" id="createNew">Create New...</li>
 						<li class="options-list-opt open" id="openFileOnSketch">Open</li>
 						<li class="options-list-opt" id="saveAs">
 							Save as...
@@ -199,7 +199,7 @@
 				<li class="main-menu-opt" id="settingsMenu">
 					Settings
 					<ul class="settings-list drop">
-						<li class="settings-list-opt">Disconnect Device</li>
+						<li class="settings-list-opt disconnect-option">Disconnect Device</li>
 					</ul>
 				</li>
 				<li class="main-menu-opt" id="toggleHistory"> <img src="img/arrow-down.svg"> History Logs</li>
@@ -301,6 +301,58 @@
       				</select>
       				<input type="color" id="custom-bg-color" />
       				<button id="setBgColor">Set Background</button>
+    			</div>
+  			</div>
+		</div>
+		<div id="createNewCanvasModal" class="modal">
+  			<div class="modal-content">
+    			<div class="modal-body">
+    				<img id="close-create-new" src="img/close-button.png">
+      				<div>Create New Canvas</div>
+      				<table id="createCanvasTableModal">
+      					<tr>
+      						<td>Canvas Name:</td>
+      						<td><input type="text" value="MyCanvas"/></td>
+      					</tr>
+      					<tr>
+      						<td>Setup:</td>
+      						<td>
+      							<select>
+      								<option>Custom</option>
+      								<option>Aspect Ratio</option>
+      							</select>
+      						</td>
+      					</tr>
+      					<tr>
+      						<td>Width:</td>
+      						<td>
+      							<input id="canvas-width" type="number" value="300" step="25" min="300" max="1000" /> px
+      						</td>
+      					</tr>
+      					<tr>
+      						<td>Height:</td>
+      						<td>
+      							<input id="canvas-height" type="number" value="300" step="25" min="300" max="550" /> px
+      						</td>
+      					</tr>
+      					<tr>
+      						<td>Background:</td>
+      						<td>
+      							<select>
+      								<option>White</option>
+      								<option>Transparent</option>
+      								<option>Color</option>
+      								<option>Paper Texture</option>
+      							</select>
+      						</td>
+      					</tr>
+      					<tr>
+      						<td></td>
+      						<td>
+      							<button id="create-canvas">Create</button>
+      						</td>
+      					</tr>
+      				</table>
     			</div>
   			</div>
 		</div>

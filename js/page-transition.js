@@ -27,7 +27,7 @@ $(document).ready(function(){
 	var cStep, cPushArray = new Array();
 	var canvasMainWidth, canvasMainHeight;
 	var resizeState = false;
-	var bgColor;
+	var bgColor = "#FFF";
 	var bgIsColored = false;
 	var rotation = 0;
 	var canvasSize;
@@ -199,6 +199,10 @@ $(document).ready(function(){
 			for (var i = 0; i <= data.length; i++) {
 				gdwObject[i] = data[i];
 			}
+
+			gdwObject['width'] = canvas.width;
+			gdwObject['height'] = canvas.height;
+			gdwObject['bgColor'] = bgColor;
 
 			data = JSON.stringify(gdwObject, null, 2);
 
@@ -420,7 +424,8 @@ $(document).ready(function(){
 			canvasName: $("#canvasName").val(),
 			canvasWidth: width,
 			canvasHeight: height,
-			canvasBackgroundColor: canvasColor
+			canvasBackgroundColor: canvasColor,
+			state: "create"
 		}
 
 		tmp_canvas = document.createElement('canvas');
@@ -746,6 +751,10 @@ $(document).ready(function(){
 		$("#canvasOptions").css("display", "block");
 	});
 
+	$("#createNew").click(function() {
+		$("#createNewCanvasModal").css("display", "block");
+	});
+
 	$("#select-canvas-option").change(function(){
 		if ($(this).val() == "Color") {
 			$('#custom-bg-color').fadeIn('slow');
@@ -756,6 +765,10 @@ $(document).ready(function(){
 
 	$("#close-canvas-option").click(function() {
 		$("#canvasOptions").css("display", "none");
+	});
+
+	$("#close-create-new").click(function() {
+		$("#createNewCanvasModal").css("display", "none");
 	});
 
 	$("#setBgColor").click(function() {
@@ -907,4 +920,63 @@ $(document).ready(function(){
 		}
 		$(".event-logs-container").toggleClass('showHistory');
 	});
+
+	$('.open').click(function() {
+		const fs = require("fs");
+		const {dialog} = require("electron").remote;
+		dialog.showOpenDialog(function (fileNames) {
+			if (fileNames === undefined) return;
+  			var fileName = fileNames[0];
+  			var stringFileName = String(fileName);
+  			var splitPath = stringFileName.split("\\");
+  			$('#canvas-name-active').html(splitPath[splitPath.length-1]);
+  			fs.readFile(fileName, 'utf-8', function (err, data) {
+    			var convertedData = JSON.parse(data);
+    			// console.log(Object.keys(convertedData).length);
+    			// var tempcanvas = document.querySelector('#tmp_canvas');
+    			// tempcanvas.style.display = "none";
+
+				$('#menu').css("display", "none");
+				$('#file').css("display", "none");
+				$('#setup-canvas-panel').addClass('hide');
+				$('#main-sketch').css('display', "block");
+				$('#sketchpad').css('display', "block");
+				$('body').css("background-color", "#d2d2d2");
+
+				tmp_canvas = document.createElement('canvas');
+				tmp_ctx = tmp_canvas.getContext('2d');
+				tmp_canvas.id = 'tmp_canvas2';
+				var objectLength = String(Object.keys(convertedData).length);
+				canvas.width = convertedData["width"];
+				canvas.height = convertedData["height"];
+				tmp_canvas.width = convertedData["width"];
+				tmp_canvas.height = convertedData["height"];
+				$('#main-sketch').css('height', convertedData["height"]);
+				$('#main-sketch').css('width', convertedData["width"]);
+				mainsketch.appendChild(tmp_canvas);
+				$('#tmp_canvas2').css("position","absolute");
+				$('#tmp_canvas2').css("top","0");
+				canvasPic.src = convertedData[objectLength-4];
+				$('#main-sketch').css('background-color', convertedData["bgColor"]);
+				canvasPic.onload = function (){ 
+		        	ctx.clearRect(0, 0, canvas.width, canvas.height);
+		        	ctx.drawImage(canvasPic, 0, 0); 
+		        }
+		        // delete convertedData["width"];
+		        // delete convertedData["height"];
+		        var canvasDetails = {
+					canvasName: $("#canvasName").val(),
+					canvasWidth: convertedData["width"],
+					canvasHeight: convertedData["height"],
+					canvasBackgroundColor: convertedData["bgColor"],
+					canvasSrc: convertedData[objectLength-4],
+					canvasArray: convertedData,
+					canvasArrayLength: Object.keys(convertedData).length,
+					state: "open"
+				}
+				socket.emit("createCanvas", canvasDetails);
+  			});
+  		});
+	});
+	
 });
