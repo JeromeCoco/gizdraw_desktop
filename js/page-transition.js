@@ -31,6 +31,7 @@ $(document).ready(function(){
 	var bgIsColored = false;
 	var rotation = 0;
 	var canvasSize;
+	var createLevel;
 	$('.simple_color_live_preview').simpleColor({ livePreview: true, cellWidth: 5, cellHeight: 5 });
 
 	generateIP();
@@ -43,7 +44,7 @@ $(document).ready(function(){
 			$("#status").html("Connected.");
 			$("#status").css("font-size", "20px");
 			$("#status").css("color", "white");
-			$(".modal-content").css("height", "120px");
+			$("#enterPin .modal-content").css("height", "120px");
 			$(".above-text").css("display", "none");
 			$("#randompin").css("display", "none");
 			$(".close").css("display", "block");
@@ -194,7 +195,21 @@ $(document).ready(function(){
 			const {app} = require("electron").remote;
 			var fs = require('fs');
 			var gdwObject = new Object();
-			var data;
+			var image;
+			var saveName;
+
+			switch (createLevel) {
+				case 'open':
+					var splitGdw = $("#canvas-name-active").html().split('.');
+					saveName = splitGdw[0];
+					break;
+				case 'form1':
+					saveName = $("#canvasName").val();
+					break;
+				case 'form2':
+					saveName = $("#canvasName2").val();
+					break;
+			}
 
 			for (var i = 0; i <= data.length; i++) {
 				gdwObject[i] = data[i];
@@ -204,10 +219,10 @@ $(document).ready(function(){
 			gdwObject['height'] = canvas.height;
 			gdwObject['bgColor'] = bgColor;
 
-			data = JSON.stringify(gdwObject, null, 2);
+			image = JSON.stringify(gdwObject, null, 2);
 
 			fs.mkdir(app.getPath('pictures') + "/GizDraw");
-			fs.writeFile(app.getPath('pictures') + "/GizDraw/" + $("#canvasName").val()+'.gdw', data, function (err) {
+			fs.writeFile(app.getPath('pictures') + "/GizDraw/" + saveName +'.gdw', image, function (err) {
   				throw err;
 			});
 
@@ -402,6 +417,7 @@ $(document).ready(function(){
 	});
 
 	$('#create-canvas').click(function() {
+		createLevel = 'form1';
 		var canvasColor;
 		if ($("#setCanvasColor").val() == "White") {
 			canvasColor = "white";
@@ -425,7 +441,8 @@ $(document).ready(function(){
 			canvasWidth: width,
 			canvasHeight: height,
 			canvasBackgroundColor: canvasColor,
-			state: "create"
+			state: "create",
+			createVersion: "first"
 		}
 
 		tmp_canvas = document.createElement('canvas');
@@ -440,6 +457,51 @@ $(document).ready(function(){
 		mainsketch.appendChild(tmp_canvas);
 		$('#tmp_canvas').css("position","absolute");
 		$('#tmp_canvas').css("top","0");
+		socket.emit("createCanvas", canvasDetails);
+	});
+
+	$('#create-canvas2').click(function() {
+		createLevel = 'form2';
+		var canvasColor;
+		if ($("#changeBackground2").val() == "White") {
+			canvasColor = "white";
+		} else if ($("#changeBackground2").val() == "Color") {
+			canvasColor = $(".custom-bg-color2").val();
+		}
+
+		var width;
+		var height;
+		aspectRatioChange();
+		if ($('#canvasOption2').val() == "Custom") {
+			width = $('#canvas-width2').val();
+			height = $('#canvas-height2').val();
+		} else {
+			width = canvasMainWidth;
+			height = canvasMainHeight;
+		}
+
+		var canvasDetails = {
+			canvasName: $("#canvasName2").val(),
+			canvasWidth: width,
+			canvasHeight: height,
+			canvasBackgroundColor: canvasColor,
+			state: "create",
+			createVersion: "second"
+		}
+
+		/*tmp_canvas = document.createElement('canvas');
+		tmp_ctx = tmp_canvas.getContext('2d');
+		tmp_canvas.id = 'tmp_canvas';*/
+		tmp_canvas.width = canvasDetails.canvasWidth;
+		tmp_canvas.height = canvasDetails.canvasHeight;
+		canvas.height = canvasDetails.canvasHeight;
+		canvas.width = canvasDetails.canvasWidth;
+		$('#main-sketch').css('height', canvasDetails.canvasHeight);
+		$('#main-sketch').css('width', canvasDetails.canvasWidth);
+		mainsketch.appendChild(tmp_canvas);
+		$('#tmp_canvas').css("position","absolute");
+		$('#tmp_canvas').css("top","0");
+		$("#createNewCanvasModal").css("display", "none");
 		socket.emit("createCanvas", canvasDetails);
 	});
 
@@ -943,9 +1005,12 @@ $(document).ready(function(){
 				$('#sketchpad').css('display', "block");
 				$('body').css("background-color", "#d2d2d2");
 
-				tmp_canvas = document.createElement('canvas');
-				tmp_ctx = tmp_canvas.getContext('2d');
-				tmp_canvas.id = 'tmp_canvas2';
+				if (document.getElementsByTagName("canvas").length < 2) {
+					tmp_canvas = document.createElement('canvas');
+					tmp_ctx = tmp_canvas.getContext('2d');
+					tmp_canvas.id = 'tmp_canvas2';
+				}
+				
 				var objectLength = String(Object.keys(convertedData).length);
 				canvas.width = convertedData["width"];
 				canvas.height = convertedData["height"];
@@ -975,8 +1040,29 @@ $(document).ready(function(){
 					state: "open"
 				}
 				socket.emit("createCanvas", canvasDetails);
+				createLevel = 'open';
   			});
   		});
+	});
+
+	$("#canvasOption2").change(function() {
+		if ($(this).val() == "Custom") {
+			$('#customSize2').css("display","none");
+			$('.fixedSize2').css("display","table-row");
+		} else {
+			$('#customSize2').css("display","table-row");
+			$('.fixedSize2').css("display","none");
+		}
+	});
+
+	$("#changeBackground2").change(function() {
+		if ($(this).val() == "Color") {
+			$('#createCanvasTableModal tr td .custom-bg-color2').css('display', 'block');
+			$("#createCanvasTableModal tr td button").css("margin-top", "-17px");
+		} else {
+			$('#createCanvasTableModal tr td .custom-bg-color2').css('display', 'none');
+			$("#createCanvasTableModal tr td button").css("margin-top", "0");
+		}
 	});
 	
 });

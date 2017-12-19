@@ -312,44 +312,57 @@
       				<table id="createCanvasTableModal">
       					<tr>
       						<td>Canvas Name:</td>
-      						<td><input type="text" value="MyCanvas"/></td>
+      						<td><input id="canvasName2" type="text" value="MyCanvas"/></td>
       					</tr>
       					<tr>
       						<td>Setup:</td>
       						<td>
-      							<select>
+      							<select id="canvasOption2">
       								<option>Custom</option>
-      								<option>Aspect Ratio</option>
+      								<option>Aspect Ratio(16:9)</option>
       							</select>
       						</td>
       					</tr>
-      					<tr>
+      					<tr id="customSize2">
+							<td>Canvas Size:</td>
+							<td>
+								<select id="aspect-ratio-size">
+									<option>640 x 360</option>
+									<option>768 x 432</option>
+									<option>800 x 450</option>
+									<option>896 x 504</option>
+									<option>960 x 540</option>
+								</select>
+							</td>
+						</tr>
+      					<tr class="fixedSize2">
       						<td>Width:</td>
       						<td>
-      							<input id="canvas-width" type="number" value="300" step="25" min="300" max="1000" /> px
+      							<input id="canvas-width2" type="number" value="300" step="25" min="300" max="1000" /> px
       						</td>
       					</tr>
-      					<tr>
+      					<tr class="fixedSize2">
       						<td>Height:</td>
       						<td>
-      							<input id="canvas-height" type="number" value="300" step="25" min="300" max="550" /> px
+      							<input id="canvas-height2" type="number" value="300" step="25" min="300" max="550" /> px
       						</td>
       					</tr>
       					<tr>
       						<td>Background:</td>
       						<td>
-      							<select>
+      							<select id="changeBackground2">
       								<option>White</option>
       								<option>Transparent</option>
       								<option>Color</option>
       								<option>Paper Texture</option>
       							</select>
+      							<input type="color" class="custom-bg-color2"/>
       						</td>
       					</tr>
       					<tr>
       						<td></td>
       						<td>
-      							<button id="create-canvas">Create</button>
+      							<button id="create-canvas2">Create</button>
       						</td>
       					</tr>
       				</table>

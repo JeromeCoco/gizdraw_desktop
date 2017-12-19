@@ -797,10 +797,6 @@ table tr td span:hover{
 	border-radius: 15px;
 }
 
-#createNewCanvasModal .modal-content {
-	width: 355px;
-}
-
 #createNewCanvasModal .modal-content{
 	background-color: white;
 	height: 355px;
@@ -837,13 +833,13 @@ table tr td span:hover{
 	width: 200px;
 	color: #a7a7a7;
     background: none;
-    border: 1px solid #a7a7a7;
+    border: 1px solid gray;
 }
 
 #createCanvasTableModal tr td select{
 	margin-left: -5px;
     background: none;
-    border: 1px solid #a7a7a7;
+    border: 1px solid gray;
     color: gray;
     width: 215px;
 }
@@ -857,4 +853,19 @@ table tr td span:hover{
 #createCanvasTableModal tr td button{
 	width: 210px;
     float: left;
+}
+
+#customSize2{
+	display: none;
+}
+
+#createCanvasTableModal tr td .custom-bg-color2{
+	display: none;
+	border: none;
+    width: 35px;
+    height: 35px;
+    float: right;
+    position: relative;
+    top: -7px;
+    margin-left: 3px;
 }

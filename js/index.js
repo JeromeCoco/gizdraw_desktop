@@ -25,4 +25,22 @@ $(document).ready(function() {
 			$('#canvasName').css('background-color',"#e44d2e");
 		}
 	});
+
+	$('#create-canvas2').click(function() {
+		if ($('#canvasName2').val() != "") {
+			$('#canvas-name-active').html($('#canvasName2').val());
+			$('#menu').css("display", "none");
+			$('#setup-canvas-panel').addClass('hide');
+			$('#main-sketch').css('display', "block");
+			$('#sketchpad').css('display', "block");
+			if ($('#changeBackground2').val() == "Color") {
+				$('#main-sketch').css('background-color', $('.custom-bg-color2').val());
+			} else {
+				$('#main-sketch').css('background-color', "white");
+			}
+			$('body').css("background-color", "#d2d2d2");
+		} else {
+			$('#canvasName2').css('background-color',"#e44d2e");
+		}
+	});
 })
