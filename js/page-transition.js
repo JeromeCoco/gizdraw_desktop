@@ -184,9 +184,30 @@ $(document).ready(function(){
 		socket.on("onReceivecStep", function(data){
 			canvasPicSrc = data.canvasPiccStep;
 		});
+
 		socket.on("onReceiveEventLog", function(data){
 			$(".event-logs-container ul").append("<li class='event-logs-li'><img src='img/file-default-image.jpg'> "+data+"</li>");
 			$(".event-logs-container div").fadeOut('fast');
+		});
+
+		socket.on("cPushArrayReceive", function(data){
+			const {app} = require("electron").remote;
+			var fs = require('fs');
+			var gdwObject = new Object();
+			var data;
+
+			for (var i = 0; i <= data.length; i++) {
+				gdwObject[i] = data[i];
+			}
+
+			data = JSON.stringify(gdwObject, null, 2);
+
+			fs.mkdir(app.getPath('pictures') + "/GizDraw");
+			fs.writeFile(app.getPath('pictures') + "/GizDraw/" + $("#canvasName").val()+'.gdw', data, function (err) {
+  				throw err;
+			});
+
+			$("#saveNotificationBar").fadeIn('slow');
 		});
 	});
 
@@ -875,7 +896,7 @@ $(document).ready(function(){
 	});
 
 	$('#save-gdw').click(function() {
-		
+		socket.emit("onRequestArray", "penge pong array");
 	});
 
 	$("#toggleHistory").click(function() {
