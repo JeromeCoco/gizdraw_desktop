@@ -153,6 +153,7 @@ $(document).ready(function(){
 
 		socket.on("onDisconnectToPC", function(data){
 			location.reload();
+			isConnected = false;
 		});
 		
 		socket.on("onBgChangeToPC", function(data){
@@ -192,43 +193,48 @@ $(document).ready(function(){
 		});
 
 		socket.on("cPushArrayReceive", function(data){
-			const {app} = require("electron").remote;
-			var fs = require('fs');
-			var gdwObject = new Object();
-			var image;
-			var saveName;
-
-			switch (createLevel) {
-				case 'open':
-					var splitGdw = $("#canvas-name-active").html().split('.');
-					saveName = splitGdw[0];
-					break;
-				case 'form1':
-					saveName = $("#canvasName").val();
-					break;
-				case 'form2':
-					saveName = $("#canvasName2").val();
-					break;
-			}
-
-			for (var i = 0; i <= data.length; i++) {
-				gdwObject[i] = data[i];
-			}
-
-			gdwObject['width'] = canvas.width;
-			gdwObject['height'] = canvas.height;
-			gdwObject['bgColor'] = bgColor;
-
-			image = JSON.stringify(gdwObject, null, 2);
-
-			fs.mkdir(app.getPath('pictures') + "/GizDraw");
-			fs.writeFile(app.getPath('pictures') + "/GizDraw/" + saveName +'.gdw', image, function (err) {
-  				throw err;
-			});
-
-			$("#saveNotificationBar").fadeIn('slow');
+			saveGdw(data);
 		});
 	});
+
+	function saveGdw(data) {
+		const {app} = require("electron").remote;
+		var fs = require('fs');
+		var gdwObject = new Object();
+		var image;
+		var saveName;
+
+		switch (createLevel) {
+			case 'open':
+				var splitGdw = $("#canvas-name-active").html().split('.');
+				saveName = splitGdw[0];
+				break;
+			case 'form1':
+				saveName = $("#canvasName").val();
+				break;
+			case 'form2':
+				saveName = $("#canvasName2").val();
+				break;
+		}
+
+		for (var i = 0; i <= data.length; i++) {
+			gdwObject[i] = data[i];
+		}
+
+		gdwObject['width'] = canvas.width;
+		gdwObject['height'] = canvas.height;
+		gdwObject['bgColor'] = bgColor;
+
+		image = JSON.stringify(gdwObject, null, 2);
+
+		fs.mkdir(app.getPath('pictures') + "/GizDraw");
+		fs.writeFile(app.getPath('pictures') + "/GizDraw/" + saveName +'.gdw', image, function (err) {
+				throw err;
+		});
+
+		$("#saveNotificationBar").fadeIn('slow');
+		$("#canvas-name-active").html($("#canvas-name-active").html() + ".gdw");
+	}
 
 	if ($('#randompin').html() == "") {
 		$('#randompin').html("<p style='font-size:17px;padding:10px;'>Connect your device to a network.</p>");
@@ -303,6 +309,7 @@ $(document).ready(function(){
 		if (confirmation) {
 			socket.emit("onDisconnectFromPC", "disconnect");
 			location.reload();
+			isConnected = false;
 		}
 	});
 
@@ -884,6 +891,7 @@ $(document).ready(function(){
 	});
 
 	$(document).on("keyup", canvas, function(event) {
+		// enter [confirm resize]
 	    if (event.keyCode === 13 && resizeState == true) {
 	    	resizeState = false;
 	    	$('#canvas-size').css("display", "none");
@@ -894,6 +902,22 @@ $(document).ready(function(){
 	    	$(".event-logs-container ul").append("<li class='event-logs-li'><img src='img/file-default-image.jpg'> Resize Canvas: "+canvasSize+"</li>");
 	    	$(".event-logs-container div").fadeOut('fast');
 	    }
+
+	    // ctrl + n [create new modal]
+	    if (event.keyCode == 78 && event.ctrlKey == true && $("#enterPin").css("display") == "none" && $("#menu").css("display") == "none") {
+	    	$("#createNewCanvasModal").css("display", "block");
+	    }
+
+	    // ctrl + o [open file]
+	    if (event.keyCode == 79 && event.ctrlKey == true && $("#enterPin").css("display") == "none") {
+	    	openFileGdw();
+	    }
+
+	    // ctrl + s [save gdw]
+	    if (event.keyCode == 83 && event.ctrlKey == true && $("#enterPin").css("display") == "none" && $("#menu").css("display") == "none") {
+
+	    }
+
 	});
 
 	$("#save-png").click(function() {
@@ -902,8 +926,22 @@ $(document).ready(function(){
 		const {app} = require("electron").remote;
 		var fs = require('fs');
 
+		var saveName;
+		switch (createLevel) {
+			case 'open':
+				var splitGdw = $("#canvas-name-active").html().split('.');
+				saveName = splitGdw[0];
+				break;
+			case 'form1':
+				saveName = $("#canvasName").val();
+				break;
+			case 'form2':
+				saveName = $("#canvasName2").val();
+				break;
+		}
+
 		fs.mkdir(app.getPath('pictures') + "/GizDraw");
-		fs.writeFile(app.getPath('pictures') + "/GizDraw/" + $("#canvasName").val()+'.png', buffer, function (err) {
+		fs.writeFile(app.getPath('pictures') + "/GizDraw/" + saveName +'.png', buffer, function (err) {
   			throw err;
 		});
 		$("#saveNotificationBar").fadeIn('slow');
@@ -915,8 +953,22 @@ $(document).ready(function(){
 		const {app} = require("electron").remote;
 		var fs = require('fs');
 
+		var saveName;
+		switch (createLevel) {
+			case 'open':
+				var splitGdw = $("#canvas-name-active").html().split('.');
+				saveName = splitGdw[0];
+				break;
+			case 'form1':
+				saveName = $("#canvasName").val();
+				break;
+			case 'form2':
+				saveName = $("#canvasName2").val();
+				break;
+		}
+
 		fs.mkdir(app.getPath('pictures') + "/GizDraw");
-		fs.writeFile(app.getPath('pictures') + "/GizDraw/" + $("#canvasName").val()+'.jpg', buffer, function (err) {
+		fs.writeFile(app.getPath('pictures') + "/GizDraw/" + saveName +'.jpg', buffer, function (err) {
   			throw err;
 		});
 		$("#saveNotificationBar").fadeIn('slow');
@@ -983,7 +1035,7 @@ $(document).ready(function(){
 		$(".event-logs-container").toggleClass('showHistory');
 	});
 
-	$('.open').click(function() {
+	function openFileGdw() {
 		const fs = require("fs");
 		const {dialog} = require("electron").remote;
 		dialog.showOpenDialog(function (fileNames) {
@@ -1043,7 +1095,9 @@ $(document).ready(function(){
 				createLevel = 'open';
   			});
   		});
-	});
+	}
+
+	$('.open').click(openFileGdw);
 
 	$("#canvasOption2").change(function() {
 		if ($(this).val() == "Custom") {
