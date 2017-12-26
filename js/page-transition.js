@@ -32,6 +32,7 @@ $(document).ready(function(){
 	var rotation = 0;
 	var canvasSize;
 	var createLevel;
+
 	$('.simple_color_live_preview').simpleColor({ livePreview: true, cellWidth: 5, cellHeight: 5 });
 
 	generateIP();
@@ -171,14 +172,16 @@ $(document).ready(function(){
 			$(".activeToolNotificationBar").toggleClass('toggleNotification');
 			$(".activeToolNotificationBar").fadeIn("fast");
 			$(".activeToolContainer").toggleClass("activeToolShow");
+
 			setTimeout(function(){
 				$(".activeToolContainer").css("display", "block");
 			}, 100);
+
 			setTimeout(function(){
 				$(".activeToolNotificationBar").toggleClass('toggleNotification');
 				$(".activeToolContainer").css("display", "none");
 			}, 2000);
-			// $('.event-logs-li').html(data);
+			
 			$(".event-logs-container ul").append("<li class='event-logs-li'><img src='img/file-default-image.jpg'> Change Tool: "+data+"</li>");
 			$(".event-logs-container div").fadeOut('fast');
 		});
@@ -196,6 +199,26 @@ $(document).ready(function(){
 			saveGdw(data);
 		});
 	});
+
+	// list recent files
+	try {
+		var fs = require('fs');
+		fs.readFile('gizdraw.data', 'utf-8', function (err, data) {
+			var list = JSON.parse(data);
+			if (Object.keys(list).length == 0) {
+				console.log("wala pang laman");
+			} else {
+				for (var i = 1; i <= Object.keys(list).length; i++) {
+					$("#welcomeMessage").css("display", "none");
+					var fileName = list["file"+i]["file_name"];
+					var fileLocation = list["file"+i]["file_location"];
+					$("#file").append('<div class="file-item" id="file'+i+'"> <img src="img/file-default-image.jpg"> <p>'+fileName+'</p> </div> '); 
+				}
+			}
+		});
+	} catch(e) {
+		console.log("wala pang laman");
+	}
 
 	function saveGdw(data) {
 		const {app} = require("electron").remote;
@@ -229,7 +252,7 @@ $(document).ready(function(){
 
 		fs.mkdir(app.getPath('pictures') + "/GizDraw");
 		fs.writeFile(app.getPath('pictures') + "/GizDraw/" + saveName +'.gdw', image, function (err) {
-				throw err;
+			throw err;
 		});
 
 		$("#saveNotificationBar").fadeIn('slow');
@@ -304,14 +327,16 @@ $(document).ready(function(){
 		preview();
 	});
 
-	$('.disconnect-option').click(function() {
+	function disconnectDevice() {
 		var confirmation = confirm("Are you sure you want to disconnect?");
 		if (confirmation) {
 			socket.emit("onDisconnectFromPC", "disconnect");
 			location.reload();
 			isConnected = false;
 		}
-	});
+	}
+
+	$('.disconnect-option').click(disconnectDevice);
 
 	$('#recent').click(function() {
 		changePanel();
@@ -496,9 +521,6 @@ $(document).ready(function(){
 			createVersion: "second"
 		}
 
-		/*tmp_canvas = document.createElement('canvas');
-		tmp_ctx = tmp_canvas.getContext('2d');
-		tmp_canvas.id = 'tmp_canvas';*/
 		tmp_canvas.width = canvasDetails.canvasWidth;
 		tmp_canvas.height = canvasDetails.canvasHeight;
 		canvas.height = canvasDetails.canvasHeight;
@@ -509,6 +531,7 @@ $(document).ready(function(){
 		$('#tmp_canvas').css("position","absolute");
 		$('#tmp_canvas').css("top","0");
 		$("#createNewCanvasModal").css("display", "none");
+		clearLogs();
 		socket.emit("createCanvas", canvasDetails);
 	});
 
@@ -908,19 +931,46 @@ $(document).ready(function(){
 	    	$("#createNewCanvasModal").css("display", "block");
 	    }
 
+	    // ctrl + b [set background]
+	    if (event.keyCode == 66 && event.ctrlKey == true && $("#enterPin").css("display") == "none" && $("#menu").css("display") == "none") {
+	    	$("#canvasOptions").css("display", "block");
+	    }
+
+	    // ctrl + d [disconnect]
+	    if (event.keyCode == 68 && event.ctrlKey == true && $("#enterPin").css("display") == "none" && $("#menu").css("display") == "none") {
+	    	disconnectDevice();
+	    }
+
+	    // ctrl + e [clear canvas]
+	    if (event.keyCode == 69 && event.ctrlKey == true && $("#enterPin").css("display") == "none" && $("#menu").css("display") == "none") {
+	    	resetCanvas();
+			var cPushArray = new Array();
+			socket.emit("onClearCanvasFromPC", "clear canvas");
+	    }
+
+	    // ctrl + shift + j [save jpg]
+	    if (event.keyCode == 74 && event.ctrlKey == true && event.shiftKey == true && $("#enterPin").css("display") == "none" && $("#menu").css("display") == "none") {
+	    	saveJPG();
+	    }
+
 	    // ctrl + o [open file]
 	    if (event.keyCode == 79 && event.ctrlKey == true && $("#enterPin").css("display") == "none") {
 	    	openFileGdw();
 	    }
 
+	    // ctrl + shift + p [save PNG]
+	    if (event.keyCode == 80 && event.ctrlKey == true && event.shiftKey == true && $("#enterPin").css("display") == "none") {
+	    	savePNG();
+	    }
+
 	    // ctrl + s [save gdw]
 	    if (event.keyCode == 83 && event.ctrlKey == true && $("#enterPin").css("display") == "none" && $("#menu").css("display") == "none") {
-
+	    	socket.emit("onRequestArray", "penge pong array");
 	    }
 
 	});
 
-	$("#save-png").click(function() {
+	function savePNG() {
 		var canvasBuffer = require('electron-canvas-to-buffer');
 		var buffer = canvasBuffer(canvas, 'image/png');
 		const {app} = require("electron").remote;
@@ -945,9 +995,11 @@ $(document).ready(function(){
   			throw err;
 		});
 		$("#saveNotificationBar").fadeIn('slow');
-	});
+	}
 
-	$("#save-jpg").click(function() {
+	$("#save-png").click(savePNG);
+
+	function saveJPG() {
 		var canvasBuffer = require('electron-canvas-to-buffer');
 		var buffer = canvasBuffer(canvas, 'image/png');
 		const {app} = require("electron").remote;
@@ -972,7 +1024,9 @@ $(document).ready(function(){
   			throw err;
 		});
 		$("#saveNotificationBar").fadeIn('slow');
-	});
+	}
+
+	$("#save-jpg").click(saveJPG);
 
 	$("#saveNotificationBar span").click(function() {
 		$("#saveNotificationBar").fadeOut('slow');
@@ -1043,13 +1097,59 @@ $(document).ready(function(){
   			var fileName = fileNames[0];
   			var stringFileName = String(fileName);
   			var splitPath = stringFileName.split("\\");
+
+  			var newPath = "";
+			for (var i = 0; i < splitPath.length; i++) {
+				if (i == 0) {
+					newPath = splitPath[i];
+				} else {
+					newPath += "/"+splitPath[i];
+				}
+			}
+
   			$('#canvas-name-active').html(splitPath[splitPath.length-1]);
+
+  			// for reading writing recent open file
+  			fs.readFile('gizdraw.data', 'utf-8', function (err, data) {
+				if (data == undefined) {
+					var newList = new Object();
+					newList = {
+						'file1': {
+							'file_name':splitPath[splitPath.length-1],
+							'file_location':newPath
+						},
+					};
+
+					var newListString = JSON.stringify(newList, null, 2);
+					fs.writeFile('gizdraw.data', newListString, function (err) {
+						console.log("from write only:" + newListString);
+					});
+				} else {
+					var recentList = JSON.parse(data);
+					var hasSame = false;
+					for (i = 1; i <= Object.keys(recentList).length; i++) {
+						if (newPath === String(recentList['file'+i]['file_location'])) {
+							hasSame = true;
+						}
+					}
+
+					if (hasSame == false) {
+						recentList['file'+(Object.keys(recentList).length+1)] = {
+							'file_name':splitPath[splitPath.length-1],
+							'file_location':newPath
+						};
+
+						var newListString = JSON.stringify(recentList, null, 2);
+						fs.writeFile('gizdraw.data', newListString, function (err) {
+							console.log("from read to write:" + newListString);
+						});
+					}
+				}
+			});
+
+  			// for reading gdw file
   			fs.readFile(fileName, 'utf-8', function (err, data) {
     			var convertedData = JSON.parse(data);
-    			// console.log(Object.keys(convertedData).length);
-    			// var tempcanvas = document.querySelector('#tmp_canvas');
-    			// tempcanvas.style.display = "none";
-
 				$('#menu').css("display", "none");
 				$('#file').css("display", "none");
 				$('#setup-canvas-panel').addClass('hide');
@@ -1079,8 +1179,7 @@ $(document).ready(function(){
 		        	ctx.clearRect(0, 0, canvas.width, canvas.height);
 		        	ctx.drawImage(canvasPic, 0, 0); 
 		        }
-		        // delete convertedData["width"];
-		        // delete convertedData["height"];
+
 		        var canvasDetails = {
 					canvasName: $("#canvasName").val(),
 					canvasWidth: convertedData["width"],
@@ -1091,8 +1190,10 @@ $(document).ready(function(){
 					canvasArrayLength: Object.keys(convertedData).length,
 					state: "open"
 				}
+
 				socket.emit("createCanvas", canvasDetails);
 				createLevel = 'open';
+				clearLogs();
   			});
   		});
 	}
@@ -1118,5 +1219,10 @@ $(document).ready(function(){
 			$("#createCanvasTableModal tr td button").css("margin-top", "0");
 		}
 	});
+
+	function clearLogs() {
+		$(".event-logs-container ul").html(" ");
+		$(".event-logs-container div").fadeIn("fast");
+	}
 	
 });
