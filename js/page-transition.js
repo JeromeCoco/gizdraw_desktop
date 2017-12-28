@@ -203,22 +203,33 @@ $(document).ready(function(){
 	// list recent files
 	try {
 		var fs = require('fs');
-		fs.readFile('gizdraw.data', 'utf-8', function (err, data) {
+		var reader = fs.readFile('gizdraw.data', 'utf-8', function (err, data) {
 			var list = JSON.parse(data);
-			if (Object.keys(list).length == 0) {
-				console.log("wala pang laman");
-			} else {
-				for (var i = 1; i <= Object.keys(list).length; i++) {
-					$("#welcomeMessage").css("display", "none");
-					var fileName = list["file"+i]["file_name"];
-					var fileLocation = list["file"+i]["file_location"];
-					$("#file").append('<div class="file-item" id="file'+i+'"> <img src="img/file-default-image.jpg"> <p>'+fileName+'</p> </div> '); 
-				}
+			$("#welcomeMessage").css("display", "none");
+			for (var i = 1; i <= Object.keys(list).length; i++) {
+				var fileName = list["file"+i]["file_name"];
+				var fileLocation = list["file"+i]["file_location"];
+				$("#file").append('<div class="file-item" id="file'+i+'"> <img src="img/file-default-image.jpg"> <p>'+fileName+'</p> <p>'+fileLocation+'</p> </div> '); 
 			}
 		});
 	} catch(e) {
-		console.log("wala pang laman");
+		$("#file").append("<p id='welcomeMessage'><b>Giz</b>Draw</p>");
 	}
+	
+	if(reader == undefined){
+		$("#file").append("<p id='welcomeMessage'><b>Giz</b>Draw</p>");
+	}
+
+	$(document).on( "click", ".file-item", function(){
+		var selectedFile = $(this).attr('id');
+		fs.readFile('gizdraw.data', 'utf-8', function (err, data) {
+			var list = JSON.parse(data);
+			var fileName = list[selectedFile]["file_name"];
+			var fileLocation = list[selectedFile]["file_location"];
+			$("#canvas-name-active").html(fileName);
+			gdwReader(fileLocation);
+		});
+	});
 
 	function saveGdw(data) {
 		const {app} = require("electron").remote;
@@ -227,10 +238,13 @@ $(document).ready(function(){
 		var image;
 		var saveName;
 
+		console.log(createLevel);
+
 		switch (createLevel) {
 			case 'open':
 				var splitGdw = $("#canvas-name-active").html().split('.');
 				saveName = splitGdw[0];
+				console.log(saveName);
 				break;
 			case 'form1':
 				saveName = $("#canvasName").val();
@@ -256,7 +270,7 @@ $(document).ready(function(){
 		});
 
 		$("#saveNotificationBar").fadeIn('slow');
-		$("#canvas-name-active").html($("#canvas-name-active").html() + ".gdw");
+		$("#canvas-name-active").html(saveName + ".gdw");
 	}
 
 	if ($('#randompin').html() == "") {
@@ -1148,54 +1162,58 @@ $(document).ready(function(){
 			});
 
   			// for reading gdw file
-  			fs.readFile(fileName, 'utf-8', function (err, data) {
-    			var convertedData = JSON.parse(data);
-				$('#menu').css("display", "none");
-				$('#file').css("display", "none");
-				$('#setup-canvas-panel').addClass('hide');
-				$('#main-sketch').css('display', "block");
-				$('#sketchpad').css('display', "block");
-				$('body').css("background-color", "#d2d2d2");
-
-				if (document.getElementsByTagName("canvas").length < 2) {
-					tmp_canvas = document.createElement('canvas');
-					tmp_ctx = tmp_canvas.getContext('2d');
-					tmp_canvas.id = 'tmp_canvas2';
-				}
-				
-				var objectLength = String(Object.keys(convertedData).length);
-				canvas.width = convertedData["width"];
-				canvas.height = convertedData["height"];
-				tmp_canvas.width = convertedData["width"];
-				tmp_canvas.height = convertedData["height"];
-				$('#main-sketch').css('height', convertedData["height"]);
-				$('#main-sketch').css('width', convertedData["width"]);
-				mainsketch.appendChild(tmp_canvas);
-				$('#tmp_canvas2').css("position","absolute");
-				$('#tmp_canvas2').css("top","0");
-				canvasPic.src = convertedData[objectLength-4];
-				$('#main-sketch').css('background-color', convertedData["bgColor"]);
-				canvasPic.onload = function (){ 
-		        	ctx.clearRect(0, 0, canvas.width, canvas.height);
-		        	ctx.drawImage(canvasPic, 0, 0); 
-		        }
-
-		        var canvasDetails = {
-					canvasName: $("#canvasName").val(),
-					canvasWidth: convertedData["width"],
-					canvasHeight: convertedData["height"],
-					canvasBackgroundColor: convertedData["bgColor"],
-					canvasSrc: convertedData[objectLength-4],
-					canvasArray: convertedData,
-					canvasArrayLength: Object.keys(convertedData).length,
-					state: "open"
-				}
-
-				socket.emit("createCanvas", canvasDetails);
-				createLevel = 'open';
-				clearLogs();
-  			});
+  			gdwReader(fileName);
   		});
+	}
+
+	function gdwReader(fileLocation) {
+		fs.readFile(fileLocation, 'utf-8', function (err, data) {
+			var convertedData = JSON.parse(data);
+			$('#menu').css("display", "none");
+			$('#file').css("display", "none");
+			$('#setup-canvas-panel').addClass('hide');
+			$('#main-sketch').css('display', "block");
+			$('#sketchpad').css('display', "block");
+			$('body').css("background-color", "#d2d2d2");
+
+			if (document.getElementsByTagName("canvas").length < 2) {
+				tmp_canvas = document.createElement('canvas');
+				tmp_ctx = tmp_canvas.getContext('2d');
+				tmp_canvas.id = 'tmp_canvas2';
+			}
+			
+			var objectLength = String(Object.keys(convertedData).length);
+			canvas.width = convertedData["width"];
+			canvas.height = convertedData["height"];
+			tmp_canvas.width = convertedData["width"];
+			tmp_canvas.height = convertedData["height"];
+			$('#main-sketch').css('height', convertedData["height"]);
+			$('#main-sketch').css('width', convertedData["width"]);
+			mainsketch.appendChild(tmp_canvas);
+			$('#tmp_canvas2').css("position","absolute");
+			$('#tmp_canvas2').css("top","0");
+			canvasPic.src = convertedData[objectLength-4];
+			$('#main-sketch').css('background-color', convertedData["bgColor"]);
+			canvasPic.onload = function (){ 
+	        	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	        	ctx.drawImage(canvasPic, 0, 0); 
+	        }
+
+	        var canvasDetails = {
+				canvasName: $("#canvasName").val(),
+				canvasWidth: convertedData["width"],
+				canvasHeight: convertedData["height"],
+				canvasBackgroundColor: convertedData["bgColor"],
+				canvasSrc: convertedData[objectLength-4],
+				canvasArray: convertedData,
+				canvasArrayLength: Object.keys(convertedData).length,
+				state: "open"
+			}
+
+			socket.emit("createCanvas", canvasDetails);
+			createLevel = 'open';
+			clearLogs();
+		});
 	}
 
 	$('.open').click(openFileGdw);

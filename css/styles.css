@@ -54,9 +54,26 @@ a{
 	width: 85%;
 }
 
+.file-item:hover{
+	cursor: pointer;
+}
+
+#welcomeMessage{
+	border-bottom: 1px solid #e2e2e2;
+	position: absolute;
+    left: 30%;
+    top: 30%;
+    color: rgb(226, 226, 226);
+    font-size: 100px;
+}
+
+#welcomeMessage b {
+	color: #d8d8d8;
+}
+
 #file .file-item{
 	display: inline-block;
-	margin: 35px 40px;
+	margin: 35px 35px;
 }
 
 #file .file-item img:hover{
@@ -73,6 +90,7 @@ a{
 	text-align: center;
 	color: gray;
 	margin-top: 5px;
+	font-size: 9px;
 }
 
 hr#division{
