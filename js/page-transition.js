@@ -5,8 +5,7 @@ $(document).ready(function(){
 	$('#colorpick').addClass('hide');
 	$('#sketchpad').css("display", "none");
 	var colored = false;
-	var myIP;
-	var socket;
+	var myIP, socket;
 	var currTool = "pencil";
 	var markerWidth;	
 	var markerColor = "#000000";
@@ -17,10 +16,9 @@ $(document).ready(function(){
 	var ppts = [];
 	var dataX, dataY;
 	var tmp_canvas, tmp_ctx;
-	var touchstate;
+	var touchstate, brushstate;
 	var currpreset = "first-preset";
 	var points = [], isDrawing, lastPoint;
-	var brushstate;
 	var xdata, ydata;
 	var canvasPic = new Image();
 	var canvasPicSrc;
@@ -30,10 +28,10 @@ $(document).ready(function(){
 	var bgColor = "#FFF";
 	var bgIsColored = false;
 	var rotation = 0;
-	var canvasSize;
-	var createLevel;
+	var canvasSize, createLevel;
 
 	$('.simple_color_live_preview').simpleColor({ livePreview: true, cellWidth: 5, cellHeight: 5 });
+	$("#enterPin").css("display", "block");
 
 	generateIP();
 
@@ -229,6 +227,10 @@ $(document).ready(function(){
 			$("#canvas-name-active").html(fileName);
 			gdwReader(fileLocation);
 		});
+	});
+
+	$(".close").click(function() {
+		$("#enterPin").css("display", "none");
 	});
 
 	function saveGdw(data) {
@@ -428,28 +430,42 @@ $(document).ready(function(){
 		}
 	});
 
-	$('#canvas-width').change(function() {
-		var width = $(this).val();
+	function checkWidth(control, width, button) {
 		if (width <= 1000 && width >= 300) {
 			preview();
-			$(this).css("background-color", "#aaaaaa");
-			$('#create-canvas').css("display", "block");
+			control.css("background-color", "#aaaaaa");
+			button.css("display", "block");
 		} else {
-			$(this).css("background-color", "#e44d2e");
-			$('#create-canvas').css("display", "none");
+			control.css("background-color", "rgb(105, 105, 105)");
+			button.css("display", "none");
 		}
+	}
+
+	$('#canvas-width').change(function() {
+		checkWidth($(this), $(this).val(), $('#create-canvas'));
 	});
 
-	$('#canvas-height').change(function() {
-		var height = $(this).val();
+	$('#canvas-width2').change(function() {
+		checkWidth($(this), $(this).val(), $('#create-canvas2'));
+	});
+
+	function checkHeight(control, height, button) {
 		if (height <= 550 && height >= 300) {
 			preview();
-			$(this).css("background-color", "#aaaaaa");
-			$('#create-canvas').css("display", "block");
+			control.css("background-color", "#aaaaaa");
+			button.css("display", "block");
 		} else {
-			$(this).css("background-color", "#e44d2e");
-			$('#create-canvas').css("display", "none");
+			control.css("background-color", "rgb(105, 105, 105)");
+			button.css("display", "none");
 		}
+	}
+
+	$('#canvas-height').change(function() {
+		checkHeight($(this), $(this).val(), $('#create-canvas'));
+	});
+
+	$('#canvas-height2').change(function() {
+		checkHeight($(this), $(this).val(), $('#create-canvas2'));
 	});
 
 	$('#btnFullScreenPreview').click(function() {
@@ -462,91 +478,129 @@ $(document).ready(function(){
 		}
 	});
 
+	function setupDesktopView() {
+		$('#menu').css("display", "none");
+		$('#setup-canvas-panel').addClass('hide');
+		$('#main-sketch').css('display', "block");
+		$('#sketchpad').css('display', "block");
+		$('body').css("background-color", "#d2d2d2");
+	}
+
 	$('#create-canvas').click(function() {
-		createLevel = 'form1';
-		var canvasColor;
-		if ($("#setCanvasColor").val() == "White") {
-			canvasColor = "white";
-		} else if ($("#setCanvasColor").val() == "Color") {
-			canvasColor = $("#colorpick").val();
-		}
+		if ($('#canvasName').val() != "") {
+			// setup on desktop
+			$('#canvas-name-active').html($('#canvasName').val());
+			setupDesktopView();
+			if ($('#setCanvasColor').val() == "Color") {
+				$('#main-sketch').css('background-color', $('#colorpick').val());
+			} else {
+				$('#main-sketch').css('background-color', "white");
+			}
+			$('#canvasName').css('background-color',"#aaaaaa");
 
-		var width;
-		var height;
-		aspectRatioChange();
-		if ($('#canvas-setup').val() == "Custom") {
-			width = $('#canvas-width').val();
-			height = $('#canvas-height').val();
+			// setup on mobile
+			createLevel = 'form1';
+			var canvasColor;
+			if ($("#setCanvasColor").val() == "White") {
+				canvasColor = "white";
+			} else if ($("#setCanvasColor").val() == "Color") {
+				canvasColor = $("#colorpick").val();
+			}
+
+			var width;
+			var height;
+			aspectRatioChange();
+			if ($('#canvas-setup').val() == "Custom") {
+				width = $('#canvas-width').val();
+				height = $('#canvas-height').val();
+			} else {
+				width = canvasMainWidth;
+				height = canvasMainHeight;
+			}
+
+			var canvasDetails = {
+				canvasName: $("#canvasName").val(),
+				canvasWidth: width,
+				canvasHeight: height,
+				canvasBackgroundColor: canvasColor,
+				state: "create",
+				createVersion: "first"
+			}
+
+			tmp_canvas = document.createElement('canvas');
+			tmp_ctx = tmp_canvas.getContext('2d');
+			tmp_canvas.id = 'tmp_canvas';
+			tmp_canvas.width = canvasDetails.canvasWidth;
+			tmp_canvas.height = canvasDetails.canvasHeight;
+			canvas.height = canvasDetails.canvasHeight;
+			canvas.width = canvasDetails.canvasWidth;
+			$('#main-sketch').css('height', canvasDetails.canvasHeight);
+			$('#main-sketch').css('width', canvasDetails.canvasWidth);
+			mainsketch.appendChild(tmp_canvas);
+			$('#tmp_canvas').css("position","absolute");
+			$('#tmp_canvas').css("top","0");
+			socket.emit("createCanvas", canvasDetails);
 		} else {
-			width = canvasMainWidth;
-			height = canvasMainHeight;
+			$('#canvasName').css('background-color', "rgb(105, 105, 105)");
 		}
-
-		var canvasDetails = {
-			canvasName: $("#canvasName").val(),
-			canvasWidth: width,
-			canvasHeight: height,
-			canvasBackgroundColor: canvasColor,
-			state: "create",
-			createVersion: "first"
-		}
-
-		tmp_canvas = document.createElement('canvas');
-		tmp_ctx = tmp_canvas.getContext('2d');
-		tmp_canvas.id = 'tmp_canvas';
-		tmp_canvas.width = canvasDetails.canvasWidth;
-		tmp_canvas.height = canvasDetails.canvasHeight;
-		canvas.height = canvasDetails.canvasHeight;
-		canvas.width = canvasDetails.canvasWidth;
-		$('#main-sketch').css('height', canvasDetails.canvasHeight);
-		$('#main-sketch').css('width', canvasDetails.canvasWidth);
-		mainsketch.appendChild(tmp_canvas);
-		$('#tmp_canvas').css("position","absolute");
-		$('#tmp_canvas').css("top","0");
-		socket.emit("createCanvas", canvasDetails);
 	});
 
 	$('#create-canvas2').click(function() {
-		createLevel = 'form2';
-		var canvasColor;
-		if ($("#changeBackground2").val() == "White") {
-			canvasColor = "white";
-		} else if ($("#changeBackground2").val() == "Color") {
-			canvasColor = $(".custom-bg-color2").val();
-		}
+		if ($('#canvasName2').val() != "") {
+			// setup on desktop
+			$('#canvas-name-active').html($('#canvasName2').val());
+			setupDesktopView();
+			if ($('#changeBackground2').val() == "Color") {
+				$('#main-sketch').css('background-color', $('.custom-bg-color2').val());
+			} else {
+				$('#main-sketch').css('background-color', "white");
+			}
 
-		var width;
-		var height;
-		aspectRatioChange();
-		if ($('#canvasOption2').val() == "Custom") {
-			width = $('#canvas-width2').val();
-			height = $('#canvas-height2').val();
+			// setup on mobile
+			createLevel = 'form2';
+			var canvasColor;
+			if ($("#changeBackground2").val() == "White") {
+				canvasColor = "white";
+			} else if ($("#changeBackground2").val() == "Color") {
+				canvasColor = $(".custom-bg-color2").val();
+			}
+
+			var width;
+			var height;
+			aspectRatioChange();
+			if ($('#canvasOption2').val() == "Custom") {
+				width = $('#canvas-width2').val();
+				height = $('#canvas-height2').val();
+			} else {
+				width = canvasMainWidth;
+				height = canvasMainHeight;
+			}
+
+			var canvasDetails = {
+				canvasName: $("#canvasName2").val(),
+				canvasWidth: width,
+				canvasHeight: height,
+				canvasBackgroundColor: canvasColor,
+				state: "create",
+				createVersion: "second"
+			}
+
+			tmp_canvas.width = canvasDetails.canvasWidth;
+			tmp_canvas.height = canvasDetails.canvasHeight;
+			canvas.height = canvasDetails.canvasHeight;
+			canvas.width = canvasDetails.canvasWidth;
+			$('#main-sketch').css('height', canvasDetails.canvasHeight);
+			$('#main-sketch').css('width', canvasDetails.canvasWidth);
+			mainsketch.appendChild(tmp_canvas);
+			$('#tmp_canvas').css("position","absolute");
+			$('#tmp_canvas').css("top","0");
+			$("#createNewCanvasModal").css("display", "none");
+			clearLogs();
+			socket.emit("createCanvas", canvasDetails);
 		} else {
-			width = canvasMainWidth;
-			height = canvasMainHeight;
+			$('#canvasName2').css('background-color',"rgb(105, 105, 105)");
 		}
 
-		var canvasDetails = {
-			canvasName: $("#canvasName2").val(),
-			canvasWidth: width,
-			canvasHeight: height,
-			canvasBackgroundColor: canvasColor,
-			state: "create",
-			createVersion: "second"
-		}
-
-		tmp_canvas.width = canvasDetails.canvasWidth;
-		tmp_canvas.height = canvasDetails.canvasHeight;
-		canvas.height = canvasDetails.canvasHeight;
-		canvas.width = canvasDetails.canvasWidth;
-		$('#main-sketch').css('height', canvasDetails.canvasHeight);
-		$('#main-sketch').css('width', canvasDetails.canvasWidth);
-		mainsketch.appendChild(tmp_canvas);
-		$('#tmp_canvas').css("position","absolute");
-		$('#tmp_canvas').css("top","0");
-		$("#createNewCanvasModal").css("display", "none");
-		clearLogs();
-		socket.emit("createCanvas", canvasDetails);
 	});
 
 	var onPaint = function() {

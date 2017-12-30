@@ -1,333 +1,332 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>GizDraw</title>
-		<link rel="stylesheet" type="text/css" href="css/styles.css">
-		<link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
-	</head>
-	<body>
-		<div id="menu">
-			<div class="menu-container">
-				<div class="menu-item active" id="recent">Recent</div>
-				<div class="menu-item" id="new-canvas">New canvas...</div>
-				<div class="menu-item open" id="open-file">Open file...</div>
-				<div class="menu-item" id="settings">Settings</div>
-				<div class="sub-settings">
-					<ul>
-						<li class="disconnect-option" id="connect-new">Connect new device...</li>
-						<li class="disconnect-option" id="disconnect">Disconnect device...</li>
-					</ul>
-				</div>
-				<hr id="division">
-				<div class="menu-item" id="about">About GizDraw</div>
-			</div>
-		</div>
-		<div class="panel" id="recent-panel">
-			<div id="file">
-				
-			</div>
-		</div>
-		<div class="panel" id="setup-canvas-panel">
-			<div id="setup">
-				<p>Set Up Canvas Details</p>
-				<table>
-					<tr>
-						<td>
-							<div>Canvas Name:</div>
-						</td>
-						<td>
-							<input value="MyCanvas" id="canvasName" type="text"/>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<div>Setup:</div>
-						</td>
-						<td>
-							<select id="canvas-setup">
-								<option>Custom</option>
-								<option>Aspect Ratio(16:9)</option>
-							</select>
-						</td>
-					</tr>
-					<tr class="aspect-ratio-opt">
-						<td>
-							<div>Canvas Size:</div>
-						</td>
-						<td>
-							<select id="aspect-ratio-size">
-								<option>640 x 360</option>
-								<option>768 x 432</option>
-								<option>800 x 450</option>
-								<option>896 x 504</option>
-								<option>960 x 540</option>
-							</select>
-						</td>
-					</tr>
-					<tr class="custom-opt">
-						<td>
-							<div>Width:</div>
-						</td>
-						<td>
-							<input id="canvas-width" type="number" value="300" step="25" min="300" max="1000" /> px
-						</td>
-					</tr>
-					<tr class="custom-opt">
-						<td>
-							<div>Height:</div>
-						</td>
-						<td>
-							<input id="canvas-height" type="number" value="300" step="25" min="300" max="550" /> px
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<div>Background:</div>
-						</td>
-						<td>
-							<select id="setCanvasColor">
-								<option>White</option>
-								<option>Transparent</option>
-								<option>Color</option>
-								<option>Paper Texture</option>
-							</select>
-							<input class='simple_color_live_preview' value='#000' name="penColor" id="colorpick"/>
-						</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td>
-							<button id="create-canvas">Create</button>
-							<span id="show-preview">Show Preview</span>
-						</td>
-					</tr>
-				</table>
-			</div>
-			<div id="preview">
-				<span id="btnFullScreenPreview">
-					
-				</span>
-				<div id="canvas-preview">
+    <head>
+        <title>GizDraw</title>
+        <link rel="stylesheet" type="text/css" href="css/styles.css">
+        <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
+    </head>
+    <body>
+        <div id="menu">
+            <div class="menu-container">
+                <div class="menu-item active" id="recent">Recent</div>
+                <div class="menu-item" id="new-canvas">New canvas...</div>
+                <div class="menu-item open" id="open-file">Open file...</div>
+                <div class="menu-item" id="settings">Settings</div>
+                <div class="sub-settings">
+                    <ul>
+                        <li class="disconnect-option" id="connect-new">Connect new device...</li>
+                        <li class="disconnect-option" id="disconnect">Disconnect device...</li>
+                    </ul>
+                </div>
+                <hr id="division">
+                <div class="menu-item" id="about">About GizDraw</div>
+            </div>
+        </div>
+        <div class="panel" id="recent-panel">
+            <div id="file">
+                
+            </div>
+        </div>
+        <div class="panel" id="setup-canvas-panel">
+            <div id="setup">
+                <p>Set Up Canvas Details</p>
+                <table>
+                    <tr>
+                        <td>
+                            <div>Canvas Name:</div>
+                        </td>
+                        <td>
+                            <input value="MyCanvas" id="canvasName" type="text"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div>Setup:</div>
+                        </td>
+                        <td>
+                            <select id="canvas-setup">
+                                <option>Custom</option>
+                                <option>Aspect Ratio(16:9)</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr class="aspect-ratio-opt">
+                        <td>
+                            <div>Canvas Size:</div>
+                        </td>
+                        <td>
+                            <select id="aspect-ratio-size">
+                                <option>640 x 360</option>
+                                <option>768 x 432</option>
+                                <option>800 x 450</option>
+                                <option>896 x 504</option>
+                                <option>960 x 540</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr class="custom-opt">
+                        <td>
+                            <div>Width:</div>
+                        </td>
+                        <td>
+                            <input id="canvas-width" type="number" value="300" step="25" min="300" max="1000" /> px
+                        </td>
+                    </tr>
+                    <tr class="custom-opt">
+                        <td>
+                            <div>Height:</div>
+                        </td>
+                        <td>
+                            <input id="canvas-height" type="number" value="300" step="25" min="300" max="550" /> px
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div>Background:</div>
+                        </td>
+                        <td>
+                            <select id="setCanvasColor">
+                                <option>White</option>
+                                <option>Transparent</option>
+                                <option>Color</option>
+                                <option>Paper Texture</option>
+                            </select>
+                            <input class='simple_color_live_preview' value='#000' name="penColor" id="colorpick"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <button id="create-canvas">Create</button>
+                            <span id="show-preview">Show Preview</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div id="preview">
+                <span id="btnFullScreenPreview">
+                    
+                </span>
+                <div id="canvas-preview">
 
-				</div>
-			</div>
-		</div>
-		<div class="panel" id="sketchpad">
-			<ul id="main-menu">
-				<li class="main-menu-opt"><b id="canvas-name-active"></b></li>
-				<li class="main-menu-opt" id="options">
-					File
-					<ul class="options-list drop">
-						<li class="options-list-opt" id="createNew">Create <u>N</u>ew...</li>
-						<li class="options-list-opt open" id="openFileOnSketch"><u>O</u>pen...</li>
-						<li class="options-list-opt" id="saveAs">
-							Save as <span>&#187;</span>
-							<ul class="subMenu saveOptions">
-								<li id="save-png">.<u>p</u>ng</li>
-								<li id="save-jpg">.<u>j</u>pg</li>
-							</ul>
-						</li>
-						<li class="options-list-opt" id="save-gdw"><u>S</u>ave as .gdw</li>
-					</ul>
-				</li>
-				<li class="main-menu-opt" id="canvasMenu">
-					Canvas
-					<ul class="canvas-list drop">
-						<li class="canvas-list-opt" id="clear-canvas">Cl<u>e</u>ar Canvas</li>
-						<li class="canvas-list-opt" id="changeBackground">Set <u>B</u>ackground</li>
-						<li class="canvas-list-opt" id="rotate">
-							Rotate <span>&#187;</span>
-							<ul class="subMenu rotateOptions">
-								<li id="rotate-cw">Rotate Clockwise</li>
-								<li id="rotate-ccw">Rotate Counter Clockwise</li>
-								<li id="flip-vertical">Flip Vertical</li>
-								<li id="flip-horizontal">Flip Horizontal</li>
-							</ul>
-						</li>
-						<li class="canvas-list-opt" id="resize">Resize</li>
-					</ul>
-				</li>
-				<li class="main-menu-opt" id="settingsMenu">
-					Settings
-					<ul class="settings-list drop">
-						<li class="settings-list-opt disconnect-option"><u>D</u>isconnect Device</li>
-						<li class="settings-list-opt"><u>H</u>elp</li>
-					</ul>
-				</li>
-				<li class="main-menu-opt" id="toggleHistory"> <img src="img/arrow-down.svg"> History Logs</li>
-			</ul>
-			<div id="main-sketch">
-				<canvas id="main_canvas"></canvas>
-				<svg class="grid" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-					<defs>
-	  					<pattern id="smallGrid" width="8" height="8" patternUnits="userSpaceOnUse">
-	    					<path d="M 8 0 L 0 0 0 8" fill="none" stroke="gray" stroke-width="0.5"/>
-	  					</pattern>
-	  					<pattern id="grids" width="80" height="80" patternUnits="userSpaceOnUse">
-	    					<rect width="80" height="80" fill="url(#smallGrid)"/>
-	    					<path d="M 80 0 L 0 0 0 80" fill="none" stroke="gray" stroke-width="1"/>
-	  					</pattern>
-					</defs>
-					<rect width="100%" height="100%" fill="url(#grids)" />
-				</svg>
-			</div>
-			<div class="activeToolNotificationBar">
-				<img class="activeToolContainer" src="img/logo2.png">
-				<p class="activeToolContainer">Active Tool: <b id="activeTool">Pencil</b></p>
-			</div>
-			<span id="canvas-size" class="canvasSize"> ... </span>
-			<div class="resizeHintBar">
-				Press <img src="img/enter-arrow.svg"/> <u>ENTER</u>  to keep changes. (Press <u>ESC</u> to cancel.)
-			</div>
-			<div id="saveNotificationBar">
-				&#128427; Image saved to device. <span>&#215;</span>
-				<div id="openGizDrawFolder">Open GizDraw Folder</div>
-			</div>
-			<div class="event-logs-container">
-				<div><img src="img/history.svg"> No history logs to show.</div>
-				<ul>
-					
-				</ul>
-			</div>
-		</div>
-		<div class="panel" id="about-panel">
-			<div id="about-content">
-				<div>
-					<p>About GizDraw</p>
-					<hr/>
-					<img src="img/logo2.png">
-					<span>
-						GizDraw was developed by students from the University of Caloocan City, North Campus. It is created with Apache Cordova and Electron that uses Chromium and Node.JS Technology. Both desktop and mobile application of GizDraw is created using HTML5. The goal of the application is to provide an efficient sketchpad for students to create artwork by using a mobile device.
-					</span>
-				</div>
-			</div>
-			<div id="developers">
-				<p>
-					The Developers
-				</p>
-				<div class="card">
-  					<div class="container">
-  						<img src="img/girl.png" width="100%">
-    					<h5><b>Krizia Mae Olazo</b></h5> 
-    					<p id="task">Programmer</p> 
-  					</div>
-				</div>
-				<div class="card">
-  					<div class="container">
-  						<img src="img/boy.png" width="100%">
-    					<h5><b>Aeron Isog</b></h5> 
-    					<p id="task">Programmer</p> 
-  					</div>
-				</div>
-				<div class="card">
-  					<div class="container">
-  						<img src="img/man.png" width="100%">
-    					<h5><b>Jerome Coco</b></h5> 
-    					<p id="task">UI / UX Designer</p> 
-  					</div>
-				</div>
-				<br/>
-			</div>
-			<p id="copyright">Unpublished work. &copy; 2017 GizDraw.</p>
-		</div>
-		<div id="enterPin" class="modal">
-  			<div class="modal-content">
-    			<div class="modal-body">
-      				<p class="above-text">Please enter this <b>CODE</b> to your mobile device.</p>
-      				<p id="randompin"></p>
-      				<p id="status" class="blink">Waiting for connection...</p>
-      				<div class="close">Close</div>
-    			</div>
-  			</div>
-		</div>
-		<div id="canvasOptions" class="modal">
-  			<div class="modal-content">
-    			<div class="modal-body">
-    				<img id="close-canvas-option" src="img/close-button.png">
-      				<div>Choose Canvas Background</div>
-      				<select id="select-canvas-option">
-      					<option>Transparent</option>
-      					<option>White</option>
-      					<option>Color</option>
-      					<option>Paper Texture</option>
-      				</select>
-      				<input type="color" id="custom-bg-color" />
-      				<button id="setBgColor">Set Background</button>
-    			</div>
-  			</div>
-		</div>
-		<div id="createNewCanvasModal" class="modal">
-  			<div class="modal-content">
-    			<div class="modal-body">
-    				<img id="close-create-new" src="img/close-button.png">
-      				<div>Create New Canvas</div>
-      				<table id="createCanvasTableModal">
-      					<tr>
-      						<td>Canvas Name:</td>
-      						<td><input id="canvasName2" type="text" value="MyCanvas"/></td>
-      					</tr>
-      					<tr>
-      						<td>Setup:</td>
-      						<td>
-      							<select id="canvasOption2">
-      								<option>Custom</option>
-      								<option>Aspect Ratio(16:9)</option>
-      							</select>
-      						</td>
-      					</tr>
-      					<tr id="customSize2">
-							<td>Canvas Size:</td>
-							<td>
-								<select id="aspect-ratio-size">
-									<option>640 x 360</option>
-									<option>768 x 432</option>
-									<option>800 x 450</option>
-									<option>896 x 504</option>
-									<option>960 x 540</option>
-								</select>
-							</td>
-						</tr>
-      					<tr class="fixedSize2">
-      						<td>Width:</td>
-      						<td>
-      							<input id="canvas-width2" type="number" value="300" step="25" min="300" max="1000" /> px
-      						</td>
-      					</tr>
-      					<tr class="fixedSize2">
-      						<td>Height:</td>
-      						<td>
-      							<input id="canvas-height2" type="number" value="300" step="25" min="300" max="550" /> px
-      						</td>
-      					</tr>
-      					<tr>
-      						<td>Background:</td>
-      						<td>
-      							<select id="changeBackground2">
-      								<option>White</option>
-      								<option>Transparent</option>
-      								<option>Color</option>
-      								<option>Paper Texture</option>
-      							</select>
-      							<input type="color" class="custom-bg-color2"/>
-      						</td>
-      					</tr>
-      					<tr>
-      						<td></td>
-      						<td>
-      							<button id="create-canvas2">Create</button>
-      						</td>
-      					</tr>
-      				</table>
-    			</div>
-  			</div>
-		</div>
-		<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
-		<script src="js/jquery-3.1.1.min.js"></script>
-		<script src="js/jquery.simple-color.js"></script>
-		<script src="js/index.js"></script>
-		<script src="js/socket.io.js"></script>
-		<script src="js/page-transition.js"></script>
-		<script src="js/jquery-ui.js"></script>
-		<script>if (window.module) module = window.module;</script>
-	</body>
+                </div>
+            </div>
+        </div>
+        <div class="panel" id="sketchpad">
+            <ul id="main-menu">
+                <li class="main-menu-opt"><b id="canvas-name-active"></b></li>
+                <li class="main-menu-opt" id="options">
+                    File
+                    <ul class="options-list drop">
+                        <li class="options-list-opt" id="createNew">Create <u>N</u>ew...</li>
+                        <li class="options-list-opt open" id="openFileOnSketch"><u>O</u>pen...</li>
+                        <li class="options-list-opt" id="saveAs">
+                            Save as <span>&#187;</span>
+                            <ul class="subMenu saveOptions">
+                                <li id="save-png">.<u>p</u>ng</li>
+                                <li id="save-jpg">.<u>j</u>pg</li>
+                            </ul>
+                        </li>
+                        <li class="options-list-opt" id="save-gdw"><u>S</u>ave as .gdw</li>
+                    </ul>
+                </li>
+                <li class="main-menu-opt" id="canvasMenu">
+                    Canvas
+                    <ul class="canvas-list drop">
+                        <li class="canvas-list-opt" id="clear-canvas">Cl<u>e</u>ar Canvas</li>
+                        <li class="canvas-list-opt" id="changeBackground">Set <u>B</u>ackground</li>
+                        <li class="canvas-list-opt" id="rotate">
+                            Rotate <span>&#187;</span>
+                            <ul class="subMenu rotateOptions">
+                                <li id="rotate-cw">Rotate Clockwise</li>
+                                <li id="rotate-ccw">Rotate Counter Clockwise</li>
+                                <li id="flip-vertical">Flip Vertical</li>
+                                <li id="flip-horizontal">Flip Horizontal</li>
+                            </ul>
+                        </li>
+                        <li class="canvas-list-opt" id="resize">Resize</li>
+                    </ul>
+                </li>
+                <li class="main-menu-opt" id="settingsMenu">
+                    Settings
+                    <ul class="settings-list drop">
+                        <li class="settings-list-opt disconnect-option"><u>D</u>isconnect Device</li>
+                        <li class="settings-list-opt"><u>H</u>elp</li>
+                    </ul>
+                </li>
+                <li class="main-menu-opt" id="toggleHistory"> <img src="img/arrow-down.svg"> History Logs</li>
+            </ul>
+            <div id="main-sketch">
+                <canvas id="main_canvas"></canvas>
+                <svg class="grid" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <pattern id="smallGrid" width="8" height="8" patternUnits="userSpaceOnUse">
+                            <path d="M 8 0 L 0 0 0 8" fill="none" stroke="gray" stroke-width="0.5"/>
+                        </pattern>
+                        <pattern id="grids" width="80" height="80" patternUnits="userSpaceOnUse">
+                            <rect width="80" height="80" fill="url(#smallGrid)"/>
+                            <path d="M 80 0 L 0 0 0 80" fill="none" stroke="gray" stroke-width="1"/>
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#grids)" />
+                </svg>
+            </div>
+            <div class="activeToolNotificationBar">
+                <img class="activeToolContainer" src="img/logo2.png">
+                <p class="activeToolContainer">Active Tool: <b id="activeTool">Pencil</b></p>
+            </div>
+            <span id="canvas-size" class="canvasSize"> ... </span>
+            <div class="resizeHintBar">
+                Press <img src="img/enter-arrow.svg"/> <u>ENTER</u>  to keep changes. (Press <u>ESC</u> to cancel.)
+            </div>
+            <div id="saveNotificationBar">
+                &#128427; Image saved to device. <span>&#215;</span>
+                <div id="openGizDrawFolder">Open GizDraw Folder</div>
+            </div>
+            <div class="event-logs-container">
+                <div><img src="img/history.svg"> No history logs to show.</div>
+                <ul>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="panel" id="about-panel">
+            <div id="about-content">
+                <div>
+                    <p>About GizDraw</p>
+                    <hr/>
+                    <span>
+                        GizDraw was developed by students from the University of Caloocan City, North Campus. It is created with Apache Cordova and Electron that uses Chromium and Node.JS Technology. Both desktop and mobile application of GizDraw is created using HTML5. The goal of the application is to provide an efficient sketchpad for students to create artwork by using a mobile device.
+                        <br/>
+                        Unpublished work. &copy; 2017 <b>GizDraw</b>.
+                    </span>
+                </div>
+            </div>
+            <div id="developers">
+                <p>
+                    The Developers
+                </p>
+                <div class="card">
+                    <div class="container">
+                        <img src="img/user.svg" width="100%">
+                        <h5><b>Krizia Mae Olazo</b></h5> 
+                        <p id="task">Programmer</p> 
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="container">
+                        <img src="img/user.svg" width="100%">
+                        <h5><b>Aeron Isog</b></h5> 
+                        <p id="task">Programmer</p> 
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="container">
+                        <img src="img/user.svg" width="100%">
+                        <h5><b>Jerome Coco</b></h5> 
+                        <p id="task">UI / UX Designer</p> 
+                    </div>
+                </div>
+                <br/>
+            </div>
+        </div>
+        <div id="enterPin" class="modal">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p class="above-text">Please enter this <b>CODE</b> to your mobile device.</p>
+                    <p id="randompin"></p>
+                    <p id="status" class="blink">Waiting for connection...</p>
+                    <div class="close">Close</div>
+                </div>
+            </div>
+        </div>
+        <div id="canvasOptions" class="modal">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img id="close-canvas-option" src="img/close-button.png">
+                    <div>Choose Canvas Background</div>
+                    <select id="select-canvas-option">
+                        <option>Transparent</option>
+                        <option>White</option>
+                        <option>Color</option>
+                        <option>Paper Texture</option>
+                    </select>
+                    <input type="color" id="custom-bg-color" />
+                    <button id="setBgColor">Set Background</button>
+                </div>
+            </div>
+        </div>
+        <div id="createNewCanvasModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img id="close-create-new" src="img/close-button.png">
+                    <div>Create New Canvas</div>
+                    <table id="createCanvasTableModal">
+                        <tr>
+                            <td>Canvas Name:</td>
+                            <td><input id="canvasName2" type="text" value="MyCanvas"/></td>
+                        </tr>
+                        <tr>
+                            <td>Setup:</td>
+                            <td>
+                                <select id="canvasOption2">
+                                    <option>Custom</option>
+                                    <option>Aspect Ratio(16:9)</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr id="customSize2">
+                            <td>Canvas Size:</td>
+                            <td>
+                                <select id="aspect-ratio-size">
+                                    <option>640 x 360</option>
+                                    <option>768 x 432</option>
+                                    <option>800 x 450</option>
+                                    <option>896 x 504</option>
+                                    <option>960 x 540</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr class="fixedSize2">
+                            <td>Width:</td>
+                            <td>
+                                <input id="canvas-width2" type="number" value="300" step="25" min="300" max="1000" /> px
+                            </td>
+                        </tr>
+                        <tr class="fixedSize2">
+                            <td>Height:</td>
+                            <td>
+                                <input id="canvas-height2" type="number" value="300" step="25" min="300" max="550" /> px
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Background:</td>
+                            <td>
+                                <select id="changeBackground2">
+                                    <option>White</option>
+                                    <option>Transparent</option>
+                                    <option>Color</option>
+                                    <option>Paper Texture</option>
+                                </select>
+                                <input type="color" class="custom-bg-color2"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <button id="create-canvas2">Create</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+        <script src="js/jquery-3.1.1.min.js"></script>
+        <script src="js/jquery.simple-color.js"></script>
+        <script src="js/socket.io.js"></script>
+        <script src="js/page-transition.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <script>if (window.module) module = window.module;</script>
+    </body>
 </html>
