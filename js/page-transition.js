@@ -1,13 +1,8 @@
 $(document).ready(function(){
-	$('#recent-panel').addClass('show');
-	$('#setup-canvas-panel').addClass('hide');
-	$('#about-panel').addClass('hide');
-	$('#colorpick').addClass('hide');
-	$('#sketchpad').css("display", "none");
 	var colored = false;
 	var myIP, socket;
 	var currTool = "pencil";
-	var markerWidth;	
+	var markerWidth;
 	var markerColor = "#000000";
 	var canvas = document.querySelector('#main_canvas');
 	var mainsketch = document.querySelector('#main-sketch');
@@ -32,6 +27,11 @@ $(document).ready(function(){
 
 	$('.simple_color_live_preview').simpleColor({ livePreview: true, cellWidth: 5, cellHeight: 5 });
 	$("#enterPin").css("display", "block");
+	$('#recent-panel').addClass('show');
+	$('#setup-canvas-panel').addClass('hide');
+	$('#about-panel').addClass('hide');
+	$('#colorpick').addClass('hide');
+	$('#sketchpad').css("display", "none");
 
 	generateIP();
 
@@ -93,20 +93,20 @@ $(document).ready(function(){
 
 		socket.on('onUndoReceive', function (data) {
 			canvasPic.src = data;
-			canvasPic.onload = function (){ 
+			canvasPic.onload = function (){
 	        	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	        	ctx.drawImage(canvasPic, 0, 0); 
+	        	ctx.drawImage(canvasPic, 0, 0);
 	        }
 		});
 
 		socket.on('onRedoReceive', function (data) {
 			canvasPic.src = data;
-			canvasPic.onload = function (){ 
+			canvasPic.onload = function (){
 	        	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	        	ctx.drawImage(canvasPic, 0, 0); 
+	        	ctx.drawImage(canvasPic, 0, 0);
 	        }
 		});
-		
+
 		socket.on('onSendGridToPC', function (data) {
 			if (data == "showGrid") {
 				$('.grid').css('display','none');
@@ -154,7 +154,7 @@ $(document).ready(function(){
 			location.reload();
 			isConnected = false;
 		});
-		
+
 		socket.on("onBgChangeToPC", function(data){
 			bgColor = data.bgColor;
 			bgIsColored = data.bgIsColored;
@@ -179,7 +179,7 @@ $(document).ready(function(){
 				$(".activeToolNotificationBar").toggleClass('toggleNotification');
 				$(".activeToolContainer").css("display", "none");
 			}, 2000);
-			
+
 			$(".event-logs-container ul").append("<li class='event-logs-li'><img src='img/file-default-image.jpg'> Change Tool: "+data+"</li>");
 			$(".event-logs-container div").fadeOut('fast');
 		});
@@ -207,13 +207,13 @@ $(document).ready(function(){
 			for (var i = 1; i <= Object.keys(list).length; i++) {
 				var fileName = list["file"+i]["file_name"];
 				var fileLocation = list["file"+i]["file_location"];
-				$("#file").append('<div class="file-item" id="file'+i+'"> <img src="img/file-default-image.jpg"> <p>'+fileName+'</p> <p>'+fileLocation+'</p> </div> '); 
+				$("#file").append('<div class="file-item" id="file'+i+'"> <img src="img/file-default-image.jpg"> <p>'+fileName+'</p> <p>'+fileLocation+'</p> </div> ');
 			}
 		});
 	} catch(e) {
 		$("#file").append("<p id='welcomeMessage'><b>Giz</b>Draw</p>");
 	}
-	
+
 	if(reader == undefined){
 		$("#file").append("<p id='welcomeMessage'><b>Giz</b>Draw</p>");
 	}
@@ -310,7 +310,7 @@ $(document).ready(function(){
 
 	function generateIP() {
 		window.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;   //compatibility for firefox and chrome
-    	var pc = new RTCPeerConnection({iceServers:[]}), noop = function(){};      
+    	var pc = new RTCPeerConnection({iceServers:[]}), noop = function(){};
     	pc.createDataChannel("");    //create a bogus data channel
     	pc.createOffer(pc.setLocalDescription.bind(pc), noop);    // create offer and set local description
     	pc.onicecandidate = function(ice){  //listen for candidate events
@@ -392,7 +392,7 @@ $(document).ready(function(){
 			width = canvasMainWidth;
 			height = canvasMainHeight;
 		}
-		
+
 		$('#preview').css("display", "inline-block");
 		$('#canvas-preview').css("width", width);
 		$('#canvas-preview').css("height", height);
@@ -474,7 +474,7 @@ $(document).ready(function(){
 		if (screenwidth > 100) {
 			$('#btnFullScreenPreview').css("content","url('img/minimize.png')");
 		} else {
-			$('#btnFullScreenPreview').css("content","url('img/fullscreen.png')");	
+			$('#btnFullScreenPreview').css("content","url('img/fullscreen.png')");
 		}
 	});
 
@@ -808,7 +808,7 @@ $(document).ready(function(){
 	function distanceBetween(point1, point2) {
 	  return Math.sqrt(Math.pow(point2.x - point1.x, 2) + Math.pow(point2.y - point1.y, 2));
 	}
-	
+
 	// brush preset 3 configuring angle between points
 	function angleBetween(point1, point2) {
 	  return Math.atan2( point2.x - point1.x, point2.y - point1.y );
@@ -927,6 +927,10 @@ $(document).ready(function(){
 		$("#canvasOptions").css("display", "none");
 	});
 
+	$("#close-help").click(function() {
+		$("#helpModal").css("display", "none");
+	});
+
 	$("#close-create-new").click(function() {
 		$("#createNewCanvasModal").css("display", "none");
 	});
@@ -964,9 +968,9 @@ $(document).ready(function(){
 				main_canvas.height = ui.size.height;
 				canvasPic.src = canvasPicSrc;
 
-		        canvasPic.onload = function () { 
+		        canvasPic.onload = function () {
 		        	ctx.clearRect(0, 0, canvas.width, canvas.height);
-		        	ctx.drawImage(canvasPic, 0, 0); 
+		        	ctx.drawImage(canvasPic, 0, 0);
 		        }
 
 		        $('#canvas-size').css("display", "block");
@@ -980,6 +984,18 @@ $(document).ready(function(){
 		$(mainsketch).css("border", "3px dashed gray");
 		$(".resizeHintBar").fadeIn('slow');
 	});
+
+	function removeDropdown() {
+		if ($('.options-list').hasClass('show-options')) {
+    		$('.options-list').toggleClass('show-options');
+    	}
+    	if ($('.canvas-list').hasClass('show-options')) {
+    		$('.canvas-list').toggleClass('show-options');
+    	}
+    	if ($('.settings-list').hasClass('show-options')) {
+    		$('.settings-list').toggleClass('show-options');
+    	}
+	}
 
 	$(document).on("keyup", canvas, function(event) {
 		// enter [confirm resize]
@@ -996,11 +1012,13 @@ $(document).ready(function(){
 
 	    // ctrl + n [create new modal]
 	    if (event.keyCode == 78 && event.ctrlKey == true && $("#enterPin").css("display") == "none" && $("#menu").css("display") == "none") {
+	    	removeDropdown();
 	    	$("#createNewCanvasModal").css("display", "block");
 	    }
 
 	    // ctrl + b [set background]
 	    if (event.keyCode == 66 && event.ctrlKey == true && $("#enterPin").css("display") == "none" && $("#menu").css("display") == "none") {
+	    	removeDropdown();
 	    	$("#canvasOptions").css("display", "block");
 	    }
 
@@ -1016,8 +1034,15 @@ $(document).ready(function(){
 			socket.emit("onClearCanvasFromPC", "clear canvas");
 	    }
 
+	    // ctrl + h [show help]
+	    if (event.keyCode == 72 && event.ctrlKey == true && $("#enterPin").css("display") == "none" && $("#menu").css("display") == "none") {
+	    	$("#helpModal").css("display", "block");
+			removeDropdown();
+	    }
+
 	    // ctrl + shift + j [save jpg]
 	    if (event.keyCode == 74 && event.ctrlKey == true && event.shiftKey == true && $("#enterPin").css("display") == "none" && $("#menu").css("display") == "none") {
+	    	removeDropdown();
 	    	saveJPG();
 	    }
 
@@ -1028,11 +1053,13 @@ $(document).ready(function(){
 
 	    // ctrl + shift + p [save PNG]
 	    if (event.keyCode == 80 && event.ctrlKey == true && event.shiftKey == true && $("#enterPin").css("display") == "none") {
+	    	removeDropdown();
 	    	savePNG();
 	    }
 
 	    // ctrl + s [save gdw]
 	    if (event.keyCode == 83 && event.ctrlKey == true && $("#enterPin").css("display") == "none" && $("#menu").css("display") == "none") {
+	    	removeDropdown();
 	    	socket.emit("onRequestArray", "penge pong array");
 	    }
 
@@ -1106,30 +1133,42 @@ $(document).ready(function(){
 		shell.openItem(app.getPath('pictures') + "/GizDraw");
 	});
 
-	jQuery.fn.rotate = function(degrees) {
-    	$(mainsketch).css({'-webkit-transform' : 'rotate('+ degrees +'deg)',
-    		'-moz-transform' : 'rotate('+ degrees +'deg)',
-    		'-ms-transform' : 'rotate('+ degrees +'deg)',
-    		'transform' : 'rotate('+ degrees +'deg)'
-    	});
-    	$(tmp_canvas).css({'top': '0px'});
-    	return $(mainsketch, tmp_canvas);
-	};
+	function rotateBase64Image90Degree(canvasPicSrc) {
+		canvasPicSrc = canvas.toDataURL();
+	 	canvasPic.src = canvasPicSrc;
+	  	canvasPic.onload = function() {
+	  		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		    canvas.width = canvasPic.height;
+		    canvas.height = canvasPic.width;
+		  	ctx.save();
+		    ctx.translate(canvasPic.width/2,canvasPic.height/2);
+		    ctx.rotate(90 * Math.PI / 180);
+		    ctx.drawImage(canvasPic, -(canvasPic.height/2), -(canvasPic.width/2)); 
+		    ctx.restore();
+	  	};
+	}
 
-	$('#rotate90').click(function() {
-		rotation += 90;
-   	    $(mainsketch).rotate(rotation);
-   	    if (isConnected) {
-			socket.emit("onSendRotationDegrees", rotation);
-		}
+	function rotateBase64ImageNeg90Degree(canvasPicSrc) {
+	  	canvasPicSrc = canvas.toDataURL();
+	  	canvasPic.src = canvasPicSrc;
+	  	canvasPic.onload = function() {
+		  	ctx.clearRect(0, 0, canvas.width, canvas.height);
+		    canvas.width = canvasPic.height;
+		    canvas.height = canvasPic.width;
+		  	ctx.save();
+		    ctx.translate(canvasPic.width/2,canvasPic.height/2);
+		    ctx.rotate(-90 * Math.PI / 180);
+		    ctx.drawImage(canvasPic, -(canvasPic.height/2), -(canvasPic.width/2)); 
+		    ctx.restore();
+	  	};
+	}
+
+	$('#rotate-cw').click(function() {
+		rotateBase64Image90Degree(canvasPicSrc);
 	});
 
-	$('#rotate180').click(function() {
-		rotation += 180;
-   	    $(mainsketch).rotate(rotation);
-   	    if (isConnected) {
-			socket.emit("onSendRotationDegrees", rotation);
-		}
+	$('#rotate-ccw').click(function() {
+		rotateBase64ImageNeg90Degree(canvasPicSrc);
 	});
 
 	$('#flip-horizontal').click(function() {
@@ -1235,7 +1274,7 @@ $(document).ready(function(){
 				tmp_ctx = tmp_canvas.getContext('2d');
 				tmp_canvas.id = 'tmp_canvas2';
 			}
-			
+
 			var objectLength = String(Object.keys(convertedData).length);
 			canvas.width = convertedData["width"];
 			canvas.height = convertedData["height"];
@@ -1248,9 +1287,9 @@ $(document).ready(function(){
 			$('#tmp_canvas2').css("top","0");
 			canvasPic.src = convertedData[objectLength-4];
 			$('#main-sketch').css('background-color', convertedData["bgColor"]);
-			canvasPic.onload = function (){ 
+			canvasPic.onload = function (){
 	        	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	        	ctx.drawImage(canvasPic, 0, 0); 
+	        	ctx.drawImage(canvasPic, 0, 0);
 	        }
 
 	        var canvasDetails = {
@@ -1296,5 +1335,9 @@ $(document).ready(function(){
 		$(".event-logs-container ul").html(" ");
 		$(".event-logs-container div").fadeIn("fast");
 	}
-	
+
+	$("#showHelp").click(function() {
+		$("#helpModal").css("display", "block");
+
+	});
 });

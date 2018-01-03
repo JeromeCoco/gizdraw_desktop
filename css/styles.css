@@ -7,7 +7,6 @@ body{
 	font-family: "Arial";
 }
 
-/*css transition*/
 .show{
 	display: block;
 }
@@ -16,7 +15,6 @@ body{
 	display: none;
 }
 
-/*recent.html*/
 #menu{
 	background-color: #f44336;
 	width: 15%;
@@ -101,8 +99,6 @@ hr#division{
   	background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
 }
 
-/*modal*/
-
 .modal {
     display: none;
     position: fixed;
@@ -118,7 +114,6 @@ hr#division{
     border-radius: 5px;
 }
 
-/* Modal Content */
 .modal-content {
     position: relative;
     background-color: #f44336;
@@ -143,6 +138,28 @@ hr#division{
 @keyframes fade {
   	0%,100% { opacity: 0 }
   	50% { opacity: 1 }
+}
+
+#helpModal .modal-content {
+	width: 360px;
+}
+
+#helpModal .modal-content{
+	background-color: white;
+	height: 360px;
+	border-radius: 3px;
+}
+
+#helpModal .modal-content .modal-body{
+	height: 360px;
+}
+
+#helpModal .modal-content .modal-body img{
+	width: 25px;
+    position: absolute;
+    left: 345px;
+    top: -8px;
+    cursor: pointer;
 }
 
 #canvasOptions .modal-content {
@@ -214,8 +231,6 @@ hr#division{
 	border-radius: 5px;
 }
 
-
-/* Add Animation */
 @-webkit-keyframes animatetop {
     from {left:-300px; opacity:0} 
     to {left:0; opacity:1}
@@ -225,14 +240,12 @@ hr#division{
     from {left:-300px; opacity:0}
     to {left:0; opacity:1}
 }
-/* Random IP */
 
 #randompin{
 	background-color: white;
 	font-size: 30px;
 }
 
-/* status*/
 #status{
 	color: white;
 	text-align:center;
@@ -240,7 +253,6 @@ hr#division{
 	font-size: 16px;
 }
 
-/* The Close Button */
 .close {
     color: white;
     text-align: center;
@@ -282,7 +294,6 @@ hr#division{
 	color: gray;
 }
 
-/*new-canvas.html*/
 #setup-canvas-panel{
 	position: absolute;
 	top: 0;
@@ -510,7 +521,7 @@ table tr td span:hover{
 }
 
 #sketchpad #main-menu .main-menu-opt:hover{
-	cursor: pointer;	
+	cursor: pointer;
 }
 
 .drop{
@@ -733,18 +744,18 @@ table tr td span:hover{
 	position: absolute;
     top: 30px;
     right: 0;
-    background: #bbbbbb;
-    color: #888787;
+    background: #212121;
+    color: white;
     padding: 20px;
     width: 260px;
     height: 180px;
     box-shadow: 3px 16px 100px 0px #adadad;
-    border-bottom-left-radius: 5px;
+    border-bottom-left-radius: 15px;
 }
 
 .event-logs-container div{
 	text-align: center;
-    margin-top: 60px;
+    margin-top: 50px;
     font-size: 14px;
 }
 
@@ -769,10 +780,9 @@ table tr td span:hover{
 
 .event-logs-container ul li{
 	border-radius: 30px;
-	background: #abaaaa;
+	background: #121212;
     height: 50px;
     padding-left: 10px;
-    border: 1px solid #9c9b9b;
     font-size: 14px;
     margin-top: 7px;
     color: white;
@@ -795,19 +805,19 @@ table tr td span:hover{
 
 .event-logs-container::-webkit-scrollbar-track{
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	background-color: #9c9b9b;
+	background-color: #212121;
 	border-radius: 15px;
 }
 
 .event-logs-container::-webkit-scrollbar{
 	width: 12px;
-	background-color: #abaaaa;
+	background-color: #121212;
 	border-radius: 15px;
 }
 
 .event-logs-container::-webkit-scrollbar-thumb{
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-	background-color: #abaaaa;
+	background-color: #121212;
 	border-radius: 15px;
 }
 
@@ -882,4 +892,21 @@ table tr td span:hover{
     position: relative;
     top: -7px;
     margin-left: 3px;
+}
+
+#helpModal div div p{
+	font-size: 15px;
+    padding: 10px;
+    color: gray;
+    background: #e4e3e3;
+}
+
+#helpModal div div table{
+	margin-top: 10px;
+    color: gray;
+    font-size: 15px;
+}
+
+#helpModal div div table tr:nth-child(3){
+	border-bottom: 1px solid gray !important;
 }

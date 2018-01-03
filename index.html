@@ -24,7 +24,7 @@
         </div>
         <div class="panel" id="recent-panel">
             <div id="file">
-                
+
             </div>
         </div>
         <div class="panel" id="setup-canvas-panel">
@@ -105,7 +105,7 @@
             </div>
             <div id="preview">
                 <span id="btnFullScreenPreview">
-                    
+
                 </span>
                 <div id="canvas-preview">
 
@@ -151,7 +151,7 @@
                     Settings
                     <ul class="settings-list drop">
                         <li class="settings-list-opt disconnect-option"><u>D</u>isconnect Device</li>
-                        <li class="settings-list-opt"><u>H</u>elp</li>
+                        <li class="settings-list-opt" id="showHelp"><u>H</u>elp</li>
                     </ul>
                 </li>
                 <li class="main-menu-opt" id="toggleHistory"> <img src="img/arrow-down.svg"> History Logs</li>
@@ -186,7 +186,7 @@
             <div class="event-logs-container">
                 <div><img src="img/history.svg"> No history logs to show.</div>
                 <ul>
-                    
+
                 </ul>
             </div>
         </div>
@@ -209,22 +209,22 @@
                 <div class="card">
                     <div class="container">
                         <img src="img/user.svg" width="100%">
-                        <h5><b>Krizia Mae Olazo</b></h5> 
-                        <p id="task">Programmer</p> 
+                        <h5><b>Krizia Mae Olazo</b></h5>
+                        <p id="task">Programmer</p>
                     </div>
                 </div>
                 <div class="card">
                     <div class="container">
                         <img src="img/user.svg" width="100%">
-                        <h5><b>Aeron Isog</b></h5> 
-                        <p id="task">Programmer</p> 
+                        <h5><b>Aeron Isog</b></h5>
+                        <p id="task">Programmer</p>
                     </div>
                 </div>
                 <div class="card">
                     <div class="container">
                         <img src="img/user.svg" width="100%">
-                        <h5><b>Jerome Coco</b></h5> 
-                        <p id="task">UI / UX Designer</p> 
+                        <h5><b>Jerome Coco</b></h5>
+                        <p id="task">UI / UX Designer</p>
                     </div>
                 </div>
                 <br/>
@@ -253,6 +253,48 @@
                     </select>
                     <input type="color" id="custom-bg-color" />
                     <button id="setBgColor">Set Background</button>
+                </div>
+            </div>
+        </div>
+        <div id="helpModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img id="close-help" src="img/close-button.png">
+                    <p>Shortcut Keys</p>
+                    <table>
+                        <tr>
+                            <td>Ctrl + N</td>
+                            <td>[Create New Canvas]</td>
+                        </tr>
+                        <tr>
+                            <td>Ctrl + O</td>
+                            <td>[Open File]</td>
+                        </tr>
+                        <tr>
+                            <td>Ctrl + S</td>
+                            <td>[Save .gdw File]</td>
+                        </tr>
+                        <tr>
+                            <td>Ctrl + Shift + P</td>
+                            <td>[Save .png File]</td>
+                        </tr>
+                        <tr>
+                            <td>Ctrl + Shift + J</td>
+                            <td>[Save .jpg File]</td>
+                        </tr>
+                        <tr>
+                            <td>Ctrl + E</td>
+                            <td>[Clear Canvas]</td>
+                        </tr>
+                        <tr>
+                            <td>Ctrl + B</td>
+                            <td>[Set Background]</td>
+                        </tr>
+                        <tr>
+                            <td>Ctrl + D</td>
+                            <td>[Disconnect Device]</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>

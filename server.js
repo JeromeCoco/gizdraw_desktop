@@ -66,7 +66,7 @@ io.sockets.on('connection', function (socket) {
 
     socket.on("cStep", function(data){
         socket.broadcast.emit("cStepReceive", data);
-    }); 
+    });
 
     socket.on("onSendGrid", function(data){
         socket.broadcast.emit("onSendGridToPC", data);
@@ -97,15 +97,15 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on("changeToolFromMobile", function(data){
-       socket.broadcast.emit("changeToolToPC", data); 
+       socket.broadcast.emit("changeToolToPC", data);
     });
 
     socket.on("canvasResizeFromPC", function(data){
-       socket.broadcast.emit("onCanvasResizeToMobile", data); 
+       socket.broadcast.emit("onCanvasResizeToMobile", data);
     });
 
     socket.on("onSendcStep", function(data){
-       socket.broadcast.emit("onReceivecStep", data);  
+       socket.broadcast.emit("onReceivecStep", data);
     });
 
     socket.on("onSendRotationDegrees", function(data){
