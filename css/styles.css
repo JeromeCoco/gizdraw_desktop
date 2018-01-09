@@ -116,7 +116,7 @@ hr#division{
 
 .modal-content {
     position: relative;
-    background-color: #f44336;
+    background-color: white;
     margin: auto;
     padding: 0;
     height: 175px;
@@ -128,6 +128,7 @@ hr#division{
 
 #enterPin .modal-content {
 	width: 385px;
+	border-radius: 10px;
 }
 
 .blink {
@@ -226,9 +227,12 @@ hr#division{
 }
 
 .above-text{
-	color: white;
-	padding: 10px;
-	border-radius: 5px;
+	position: relative;
+    left: -16px;
+    background: white;
+    width: 355px;
+    top: -17px;
+    padding: 15px;
 }
 
 @-webkit-keyframes animatetop {
@@ -242,15 +246,21 @@ hr#division{
 }
 
 #randompin{
-	background-color: white;
-	font-size: 30px;
+	border-radius: 0px;
+	background: #e0e0e0;
+    position: relative;
+    left: -16px;
+    top: -26px;
+    text-align: center;
+    padding: 15px;
+    font-size: 30px;
+    width: 355px;
 }
 
 #status{
-	color: white;
-	text-align:center;
-	margin-top: 20px;
-	font-size: 16px;
+	text-align: center;
+    margin-top: -10px;
+    font-size: 17px;
 }
 
 .close {
@@ -266,7 +276,7 @@ hr#division{
 }
 
 .close:hover, .close:focus {
-    background-color: #e97057;
+    background-color: #d0d0d0;
     cursor: pointer;
 }
 
@@ -696,7 +706,7 @@ table tr td span:hover{
     top: 40px;
     right: 0;
     padding: 10px;
-    background: #4CAF50;
+    background: #212121;
     color: white;
     font-size: 15px;
     box-shadow: 0px 0px 38px -12px black;
@@ -744,12 +754,12 @@ table tr td span:hover{
 	position: absolute;
     top: 30px;
     right: 0;
-    background: #212121;
-    color: white;
+    background: #e8e8e8;
+    color: black;
     padding: 20px;
     width: 260px;
     height: 180px;
-    box-shadow: 3px 16px 100px 0px #adadad;
+    box-shadow: 1px 20px 100px 0px #adadad;
     border-bottom-left-radius: 15px;
 }
 
@@ -757,6 +767,7 @@ table tr td span:hover{
 	text-align: center;
     margin-top: 50px;
     font-size: 14px;
+    color: #828282;
 }
 
 .event-logs-container div img{
@@ -780,12 +791,12 @@ table tr td span:hover{
 
 .event-logs-container ul li{
 	border-radius: 30px;
-	background: #121212;
+	background: #dedddd;
     height: 50px;
     padding-left: 10px;
     font-size: 14px;
     margin-top: 7px;
-    color: white;
+    color: #828282;
 }
 
 .event-logs-container ul li img{
@@ -805,19 +816,19 @@ table tr td span:hover{
 
 .event-logs-container::-webkit-scrollbar-track{
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	background-color: #212121;
+	background-color: #e8e8e8e;
 	border-radius: 15px;
 }
 
 .event-logs-container::-webkit-scrollbar{
 	width: 12px;
-	background-color: #121212;
+	background-color: #e8e8e8;
 	border-radius: 15px;
 }
 
 .event-logs-container::-webkit-scrollbar-thumb{
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-	background-color: #121212;
+	background-color: #dedddd;
 	border-radius: 15px;
 }
 

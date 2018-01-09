@@ -41,12 +41,16 @@ $(document).ready(function(){
 		socket.on('sendtopc', function(data){
 			$("#status").removeClass("blink");
 			$("#status").html("Connected.");
+			$("#status").css("margin-top", "22px");
 			$("#status").css("font-size", "20px");
-			$("#status").css("color", "white");
+			$("#status").css("color", "#212121");
 			$("#enterPin .modal-content").css("height", "120px");
+			$("#enterPin .modal-content").css("border-radius", "5px");
 			$(".above-text").css("display", "none");
 			$("#randompin").css("display", "none");
 			$(".close").css("display", "block");
+			$(".close").css("color", "#212121");
+			$(".close").css("background", "#e4e4e4");
 		});
 
 		socket.on('sendActiveToolToPC', function(data){
@@ -240,8 +244,6 @@ $(document).ready(function(){
 		var image;
 		var saveName;
 
-		console.log(createLevel);
-
 		switch (createLevel) {
 			case 'open':
 				var splitGdw = $("#canvas-name-active").html().split('.');
@@ -265,6 +267,12 @@ $(document).ready(function(){
 		gdwObject['bgColor'] = bgColor;
 
 		image = JSON.stringify(gdwObject, null, 2);
+
+		var convertedImage;
+		for (var i = 0; i < image.length; i++) {
+			convertedImage += image[i].charCodeAt(0).toString(2);
+		}
+		console.log(convertedImage);
 
 		fs.mkdir(app.getPath('pictures') + "/GizDraw");
 		fs.writeFile(app.getPath('pictures') + "/GizDraw/" + saveName +'.gdw', image, function (err) {
@@ -1216,7 +1224,7 @@ $(document).ready(function(){
 
   			$('#canvas-name-active').html(splitPath[splitPath.length-1]);
 
-  			// for reading writing recent open file
+  			// for reading / writing recent open file
   			fs.readFile('gizdraw.data', 'utf-8', function (err, data) {
 				if (data == undefined) {
 					var newList = new Object();
