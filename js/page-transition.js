@@ -284,7 +284,7 @@ $(document).ready(function(){
 	}
 
 	if ($('#randompin').html() == "") {
-		$('#randompin').html("<p style='font-size:17px;padding:10px;'>Connect your device to a network.</p>");
+		$('#randompin').html("<p style='margin-top:4px;font-size:17px;padding:10px;'>Connect your device to a network.</p>");
 	}
 
 	var convertSetFromIPToLetter = {
@@ -876,11 +876,13 @@ $(document).ready(function(){
 
 	$("#canvas-setup").change(function() {
 		if ($(this).val() == "Custom") {
-			$('.aspect-ratio-opt').css("display","none");
-			$('.custom-opt').css("display","table-row");
+			$('.aspect-ratio-opt').css("display", "none");
+			$('.custom-opt').css("display", "table-row");
+			$('.simpleColorDisplay, .simpleColorChooser').css("margin-top", "0px");
 		} else {
-			$('.aspect-ratio-opt').css("display","table-row");
-			$('.custom-opt').css("display","none");
+			$('.aspect-ratio-opt').css("display", "table-row");
+			$('.custom-opt').css("display", "none");
+			$('.simpleColorDisplay, .simpleColorChooser').css("margin-top", "-50px");
 		}
 	});
 
@@ -974,7 +976,7 @@ $(document).ready(function(){
 				tmp_canvas.height = ui.size.height;
 				main_canvas.width = ui.size.width;
 				main_canvas.height = ui.size.height;
-				canvasPic.src = canvasPicSrc;
+				canvasPic.src = canvas.toDataURL();
 
 		        canvasPic.onload = function () {
 		        	ctx.clearRect(0, 0, canvas.width, canvas.height);
