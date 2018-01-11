@@ -2,5 +2,9 @@
   "file1": {
     "file_name": "smile.gdw",
     "file_location": "C:/Users/jerom/Pictures/GizDraw/smile.gdw"
+  },
+  "file2": {
+    "file_name": "yes.gdw",
+    "file_location": "C:/Users/jerom/Pictures/GizDraw/yes.gdw"
   }
 }
