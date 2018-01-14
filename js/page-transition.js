@@ -200,6 +200,18 @@ $(document).ready(function(){
 		socket.on("cPushArrayReceive", function(data){
 			saveGdw(data);
 		});
+
+		socket.on("receiveImageToPCFromMobile", function(data){
+			var image = new Image();
+			image.src = data.image;
+			tmp_canvas.width = data.width;
+			tmp_canvas.height = data.height;
+			canvas.width = data.width;
+			canvas.height = data.height;
+			$("#main-sketch").css({height: data.height+'px',width: data.width+'px'});;
+			ctx.drawImage(image, 0, 0);
+		});
+
 	});
 
 	// list recent files
@@ -1348,6 +1360,6 @@ $(document).ready(function(){
 
 	$("#showHelp").click(function() {
 		$("#helpModal").css("display", "block");
-
 	});
+	
 });

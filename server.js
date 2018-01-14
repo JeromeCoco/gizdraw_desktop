@@ -127,4 +127,9 @@ io.sockets.on('connection', function (socket) {
     socket.on("canvasDetailsSend", function(data){
         socket.broadcast.emit("canvasDetailsReceive");
     });
+
+    socket.on("sendImageToPCFromMobile", function(data){
+        socket.broadcast.emit("receiveImageToPCFromMobile", data);
+    });
+
 });
