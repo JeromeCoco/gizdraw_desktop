@@ -75,7 +75,7 @@ a{
 }
 
 #file .file-item img:hover{
-	box-shadow: 0 2px 8px 0 gray;
+	box-shadow: 9px 9px 0px 0 #e4e4e4;
 	cursor: pointer;
 }
 

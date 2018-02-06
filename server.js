@@ -125,11 +125,18 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on("canvasDetailsSend", function(data){
-        socket.broadcast.emit("canvasDetailsReceive");
+        socket.broadcast.emit("canvasDetailsReceive", data);
     });
 
     socket.on("sendImageToPCFromMobile", function(data){
         socket.broadcast.emit("receiveImageToPCFromMobile", data);
     });
 
+    socket.on("sendLogFunctions", function(data){
+        socket.broadcast.emit("receiveLogFunctions", data);
+    });
+
+    socket.on("sendLogStep", function(data){
+        socket.broadcast.emit("receiveLogStep", data);
+    })
 });

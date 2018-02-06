@@ -23,7 +23,12 @@ $(document).ready(function(){
 	var bgColor = "#FFF";
 	var bgIsColored = false;
 	var rotation = 0;
-	var canvasSize, createLevel;
+	var canvasSize, createLevel, canvasSizeH, canvasSizeW;
+	var canvasSendSrc;
+	var cStepLength;
+	var logcStep;
+	var toolLog;
+	var logDetails, logCount = 0, logNum, logLength, logId;
 
 	$('.simple_color_live_preview').simpleColor({ livePreview: true, cellWidth: 5, cellHeight: 5 });
 	$("#enterPin").css("display", "block");
@@ -34,6 +39,12 @@ $(document).ready(function(){
 	$('#sketchpad').css("display", "none");
 
 	generateIP();
+
+	function removeElement(elementId) {
+	    // Removes an element from the document
+	    var element = document.getElementById(elementId);
+	    element.parentNode.removeChild(element);
+	}
 
 	socket = io('http://localhost:3000');
 	socket.on("connect", function(){
@@ -59,10 +70,24 @@ $(document).ready(function(){
 
 		socket.on('onTouchStartToPC', function(data){
 			touchstate = data;
+
 		});
 
 		socket.on('onTouchEndToPC', function(data){
-			touchstate = data;
+			touchstate = data.drawState;
+			var logstep = parseInt(data.logstep);
+			// console.log("loop till "+cStepLength);
+			// console.log(logstep+1);
+			var first = true;
+			if (logstep > -2){
+				for (i = logNum; i <= logCount; i++) {
+					if(!first){
+				    	$("li[data-log-count="+i+"]").remove();
+				    }
+				    first=false;
+				}
+			}
+			ctx.stroke();
 			ctx.drawImage(tmp_canvas, 0, 0);
 			tmp_ctx.clearRect(0, 0, tmp_canvas.width, tmp_canvas.height);
 			ppts = [];
@@ -131,6 +156,7 @@ $(document).ready(function(){
 			dataY = data.y;
 			switch (currTool) {
 				case 'pencil':
+					toolLog = "Draw";
 					ctx.globalCompositeOperation = 'source-over';
 					tmp_ctx.strokeStyle = markerColor;
 					tmp_ctx.fillStyle = markerColor;
@@ -141,10 +167,16 @@ $(document).ready(function(){
 					onPaint();
 				break;
 				case 'eraser':
+					toolLog = "Erase";
 					onErase();
 				break;
 				case 'brush':
+					toolLog = "Draw";
 					onBrushPaint();
+				break;
+				case 'line':
+					toolLog = "Draw";
+					onDrawLine();
 				break;
 			}
 		});
@@ -152,6 +184,8 @@ $(document).ready(function(){
 		socket.on("onClearCanvasToPC", function(data){
 			resetCanvas();
 			var cPushArray = new Array();
+			$('.event-logs-li').remove();
+			$(".event-logs-container div").fadeIn('fast');
 		});
 
 		socket.on("onDisconnectToPC", function(data){
@@ -184,17 +218,19 @@ $(document).ready(function(){
 				$(".activeToolContainer").css("display", "none");
 			}, 2000);
 
-			$(".event-logs-container ul").append("<li class='event-logs-li'><img src='img/file-default-image.jpg'> Change Tool: "+data+"</li>");
-			$(".event-logs-container div").fadeOut('fast');
+			logDetails = "Change Tool: "+data;
+			var logidcnt = 1;
+			logidcnt++;
+			logId = "ct"+logidcnt;
+			appendli(logDetails, logId, canvas.width, canvas.height, null);
 		});
 
 		socket.on("onReceivecStep", function(data){
 			canvasPicSrc = data.canvasPiccStep;
+			// console.log(canvasPicSrc);
 		});
 
 		socket.on("onReceiveEventLog", function(data){
-			$(".event-logs-container ul").append("<li class='event-logs-li'><img src='img/file-default-image.jpg'> "+data+"</li>");
-			$(".event-logs-container div").fadeOut('fast');
 		});
 
 		socket.on("cPushArrayReceive", function(data){
@@ -212,6 +248,13 @@ $(document).ready(function(){
 			ctx.drawImage(image, 0, 0);
 		});
 
+		socket.on("receiveLogFunctions", function(data){
+			logId = data.lcStep;
+			logDetails = "Draw";
+			appendli(logDetails, logId, canvas.width, canvas.height, data.lcanvasSrc);
+			$("#"+logId).attr('data-cStep', data.lcStep);
+			cStepLength = data.lcStep;
+		});
 	});
 
 	// list recent files
@@ -284,7 +327,7 @@ $(document).ready(function(){
 		for (var i = 0; i < image.length; i++) {
 			convertedImage += image[i].charCodeAt(0).toString(2);
 		}
-		console.log(convertedImage);
+		/*console.log(convertedImage);*/
 
 		fs.mkdir(app.getPath('pictures') + "/GizDraw");
 		fs.writeFile(app.getPath('pictures') + "/GizDraw/" + saveName +'.gdw', image, function (err) {
@@ -605,15 +648,7 @@ $(document).ready(function(){
 				createVersion: "second"
 			}
 
-			tmp_canvas.width = canvasDetails.canvasWidth;
-			tmp_canvas.height = canvasDetails.canvasHeight;
-			canvas.height = canvasDetails.canvasHeight;
-			canvas.width = canvasDetails.canvasWidth;
-			$('#main-sketch').css('height', canvasDetails.canvasHeight);
-			$('#main-sketch').css('width', canvasDetails.canvasWidth);
-			mainsketch.appendChild(tmp_canvas);
-			$('#tmp_canvas').css("position","absolute");
-			$('#tmp_canvas').css("top","0");
+			setCanvasSize(canvasDetails.canvasWidth, canvasDetails.canvasHeight);
 			$("#createNewCanvasModal").css("display", "none");
 			clearLogs();
 			socket.emit("createCanvas", canvasDetails);
@@ -799,6 +834,18 @@ $(document).ready(function(){
 		}
 	};
 
+	var onDrawLine = function() {
+		var pptsl = ppts.length-1;
+		// console.log(ppts);
+		ppts.push({x: dataX, y: dataY});
+		ctx.lineWidth = markerWidth;
+		ctx.strokeStyle = markerColor;
+		ctx.beginPath();
+		ctx.moveTo(ppts[0].x, ppts[0].y);
+		ctx.lineTo(ppts[pptsl].x, ppts[pptsl].y);
+
+	};
+
 	// hex to rgba conversion
 	function hexToRgbA(hex) {
 	    var c;
@@ -884,6 +931,8 @@ $(document).ready(function(){
 		if (isConnected) {
 			socket.emit("onClearCanvasFromPC", "clear canvas");
 		}
+		$('.event-logs-li').remove();
+		$(".event-logs-container div").fadeIn('fast');
 	});
 
 	$("#canvas-setup").change(function() {
@@ -978,31 +1027,70 @@ $(document).ready(function(){
 
 	$('#resize').click(function() {
 		resizeState = true;
+		var mainSketch = mainsketch;
 		$(tmp_canvas).css({'top':'0px'});
 		$(".grid").css({'top':'0px'});
 		$(mainsketch).addClass("ui-resizable");
 		$(".ui-resizable-handle").css("display", "block");
-		$(mainsketch).resizable({
-			resize:function(event, ui){
-				tmp_canvas.width = ui.size.width;
-				tmp_canvas.height = ui.size.height;
-				main_canvas.width = ui.size.width;
-				main_canvas.height = ui.size.height;
-				canvasPic.src = canvas.toDataURL();
 
-		        canvasPic.onload = function () {
-		        	ctx.clearRect(0, 0, canvas.width, canvas.height);
-		        	ctx.drawImage(canvasPic, 0, 0);
-		        }
+		if (tmp_canvas.width <= 300 && tmp_canvas.height <= 300 && main_canvas.height <= 300 && main_canvas.width <= 300 ) {
+			$(mainsketch).resizable({
+				resize:function(event, ui){
+					//limit resize
+					// $(tmp_canvas).resizable(parseInt($(tmp_canvas).height(),15)-10);
+					// $(main_canvas).resizable(parseInt($(main_canvas).height(),15)-10);
+					// $(main_canvas).resizable(parseInt($(tmp_canvas).width(),15)-10);
+					// $(main_canvas).resizable(parseInt($(main_canvas).width(),15)-10);
+					setCanvasSize(ui.size.width, ui.size.height);
+					canvasPic.src = canvasPicSrc;
 
-		        $('#canvas-size').css("display", "block");
-				$('#canvas-size').html("w: " + ui.size.width + "px h: " + ui.size.height + "px");
-				canvasSize = ui.size.width+" x "+ui.size.height;
-				if (isConnected) {
-					socket.emit("canvasResizeFromPC", {canvasSizeWidth:ui.size.width, canvasSizeHeight:ui.size.height});
+			        canvasPic.onload = function () { 
+			        	ctx.clearRect(0, 0, canvas.width, canvas.height);
+			        	ctx.drawImage(canvasPic, 0, 0); 
+			        }
+
+			        $('#canvas-size').css("display", "block");
+					$('#canvas-size').html("w: " + ui.size.width + "px h: " + ui.size.height + "px");
+					canvasSize = ui.size.width+" x "+ui.size.height;
+					canvasSizeW = ui.size.width;
+					canvasSizeH = ui.size.height;
+					if (isConnected) {
+						socket.emit("canvasResizeFromPC", {canvasSizeWidth:ui.size.width, canvasSizeHeight:ui.size.height});
+					}
 				}
-			}
-		});
+			});
+		}
+		if (tmp_canvas.width >= 300 <= 600 && tmp_canvas.height >= 300 <= 600 && main_canvas.height >= 300 <= 600 && main_canvas.width >= 300 <= 600 ) {
+			$(mainsketch).resizable({
+				minWidth:parseInt($(tmp_canvas,main_canvas).width(),10)-200,
+				minHeight:parseInt($(tmp_canvas,main_canvas).height(),10)-200,
+				stop:function(event, ui){
+					tmp_canvas.width = ui.size.width;
+					tmp_canvas.height = ui.size.height;
+					main_canvas.width = ui.size.width;
+					main_canvas.height = ui.size.height;
+					//limit resize
+					// $(tmp_canvas).resizable(parseInt($(tmp_canvas).height(),10)-200);
+					// $(main_canvas).resizable(parseInt($(main_canvas).height(),10)-200);
+					// $(main_canvas).resizable(parseInt($(tmp_canvas).width(),10)-200);
+					// $(main_canvas).resizable(parseInt($(main_canvas).width(),10)-200);
+					canvasPic.src = canvasPicSrc;
+
+			        canvasPic.onload = function () { 
+			        	ctx.clearRect(0, 0, canvas.width, canvas.height);
+			        	ctx.drawImage(canvasPic, 0, 0); 
+			        }
+
+			        $('#canvas-size').css("display", "block");
+					$('#canvas-size').html("w: " + ui.size.width + "px h: " + ui.size.height + "px");
+					canvasSize = ui.size.width+" x "+ui.size.height;
+					if (isConnected) {
+						socket.emit("canvasResizeFromPC", {canvasSizeWidth:ui.size.width, canvasSizeHeight:ui.size.height});
+					}
+				}
+			});
+
+		}
 		$(mainsketch).css("border", "3px dashed gray");
 		$(".resizeHintBar").fadeIn('slow');
 	});
@@ -1028,8 +1116,9 @@ $(document).ready(function(){
 	    	$(mainsketch).removeClass("ui-resizable");
 	    	$(mainsketch).css("border", "none");
 	    	$(".ui-resizable-handle").css("display", "none");
-	    	$(".event-logs-container ul").append("<li class='event-logs-li'><img src='img/file-default-image.jpg'> Resize Canvas: "+canvasSize+"</li>");
-	    	$(".event-logs-container div").fadeOut('fast');
+	    	logDetails = "Resize Canvas: " +canvasSize;
+			logId = "resized-log";
+	    	appendli(logDetails, logId, canvasSizeW, canvasSizeH, canvas.toDataURL());
 	    }
 
 	    // ctrl + n [create new modal]
@@ -1361,5 +1450,49 @@ $(document).ready(function(){
 	$("#showHelp").click(function() {
 		$("#helpModal").css("display", "block");
 	});
+
+	$(document).on("click", ".event-logs-li", function(){
+		canvasSendSrc = $(this).attr('data-base64');
+		var cnvsW = $(this).attr('data-canvas-width');
+		var cnvsH = $(this).attr('data-canvas-height');
+		canvasPic.src = canvasSendSrc;
+        canvasPic.onload = function () {
+        	ctx.clearRect(0, 0, canvas.width, canvas.height);
+        	ctx.drawImage(canvasPic, 0, 0);
+        }
+        logNum = $(this).attr('data-log-count');
+        setCanvasSize(cnvsW, cnvsH);
+        var loglistId = $(this).attr('id');
+        if(isConnected){
+        	socket.emit("canvasDetailsSend", {cnvsSrc:canvasSendSrc, cnvsW:cnvsW, cnvsH:cnvsH});
+        	socket.emit("sendLogStep", $(this).attr('data-cStep'));
+        }
+        $('.events-log-li').css('opacity', '1');
+        logcStep = parseInt($(this).attr('data-cStep'))+1;
+        for (i = 0; i <= logCount; i++) {
+        	$("li[data-log-count="+i+"]").css('opacity','1');
+        }
+        for (i = logNum; i <= logCount; i++){
+        	$("li[data-log-count="+i+"]").css('opacity','0.5');
+        }
+
+	});
 	
+	var appendli = function(logdtls, logkeyid, cW, cH, cS){
+		logCount++;
+		$(".event-logs-container ul").append("<li class='event-logs-li' id='"+logkeyid+"' data-log-count='"+logCount+"' data-canvas-width='"+cW+"' data-canvas-height='"+cH+"' data-base64='"+cS+"'><img src='img/file-default-image.jpg'>"+logdtls+"</li>");
+	    $(".event-logs-container div").fadeOut('fast');
+	};
+
+	var setCanvasSize = function(cW, cH){
+		canvas.width = cW;
+        canvas.height = cH;
+        tmp_canvas.width = cW;
+        tmp_canvas.height = cH;
+        $('#main-sketch').css('height', cH);
+		$('#main-sketch').css('width', cW);
+		mainsketch.appendChild(tmp_canvas);
+		$('#tmp_canvas').css("position","absolute");
+		$('#tmp_canvas').css("top","0");
+	};	
 });
