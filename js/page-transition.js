@@ -29,6 +29,7 @@ $(document).ready(function(){
 	var logcStep;
 	var toolLog;
 	var logDetails, logCount = 0, logNum, logLength, logId;
+	var prvX, prvY, gridState = false, snap;
 
 	$('.simple_color_live_preview').simpleColor({ livePreview: true, cellWidth: 5, cellHeight: 5 });
 	$("#enterPin").css("display", "block");
@@ -41,7 +42,6 @@ $(document).ready(function(){
 	generateIP();
 
 	function removeElement(elementId) {
-	    // Removes an element from the document
 	    var element = document.getElementById(elementId);
 	    element.parentNode.removeChild(element);
 	}
@@ -57,8 +57,7 @@ $(document).ready(function(){
 			$("#status").css("color", "#212121");
 			$("#enterPin .modal-content").css("height", "120px");
 			$("#enterPin .modal-content").css("border-radius", "5px");
-			$(".above-text").css("display", "none");
-			$("#randompin").css("display", "none");
+			$(".above-text, #randompin, #option-qr, #qrcode").css("display", "none");
 			$(".close").css("display", "block");
 			$(".close").css("color", "#212121");
 			$(".close").css("background", "#e4e4e4");
@@ -69,8 +68,9 @@ $(document).ready(function(){
 		});
 
 		socket.on('onTouchStartToPC', function(data){
-			touchstate = data;
-
+			touchstate = data.state;
+			prvX = data.mX;
+			prvY = data.mY;
 		});
 
 		socket.on('onTouchEndToPC', function(data){
@@ -141,6 +141,7 @@ $(document).ready(function(){
 				$('.grid').css('display','none');
 			} else {
 				$('.grid').css('display','block');
+				gridState = true;
 			}
 		});
 
@@ -164,7 +165,15 @@ $(document).ready(function(){
 					tmp_ctx.lineJoin = 'round';
 					tmp_ctx.lineCap = 'round';
 					tmp_ctx.lineWidth = markerWidth;
-					onPaint();
+					if(gridState){
+						if(snap <= 2){
+							onSnap();
+						} else {
+							onPaint();
+						}
+					} else {
+						onPaint();
+					}
 				break;
 				case 'eraser':
 					toolLog = "Erase";
@@ -255,6 +264,11 @@ $(document).ready(function(){
 			$("#"+logId).attr('data-cStep', data.lcStep);
 			cStepLength = data.lcStep;
 		});
+
+
+		socket.on("receiveSnap", function(data){
+			snap = data;
+		});
 	});
 
 	// list recent files
@@ -340,6 +354,8 @@ $(document).ready(function(){
 
 	if ($('#randompin').html() == "") {
 		$('#randompin').html("<p style='margin-top:4px;font-size:17px;padding:10px;'>Connect your device to a network.</p>");
+		$("#status, #option-qr").css("display", "none");
+		$("#enterPin .modal-content").css("height", "130px");
 	}
 
 	var convertSetFromIPToLetter = {
@@ -383,7 +399,15 @@ $(document).ready(function(){
 	        var splitIP = myIP.split(".");
 	        var part1 = splitIP[0], part2 = splitIP[1], part3 = splitIP[2], part4 = splitIP[3];
 	        // display to letters
+	        $("#status, #option-qr").css("display", "block");
+			$("#enterPin .modal-content").css("height", "410px");
 	        $('#randompin').html(convertSetFromIPToLetter[parseInt(part1)] + convertSetFromIPToLetter[parseInt(part2)] + convertSetFromIPToLetter[parseInt(part3)] + convertSetFromIPToLetter[parseInt(part4)]);
+			var stringPin = convertSetFromIPToLetter[parseInt(part1)] + convertSetFromIPToLetter[parseInt(part2)] + convertSetFromIPToLetter[parseInt(part3)] + convertSetFromIPToLetter[parseInt(part4)] + ' ';
+	        $("#qrcode").qrcode({
+			    width: 128,
+			    height: 128,
+			    text: stringPin
+			});
 	        pc.onicecandidate = noop;
     	};
 	}
@@ -843,9 +867,25 @@ $(document).ready(function(){
 		ctx.beginPath();
 		ctx.moveTo(ppts[0].x, ppts[0].y);
 		ctx.lineTo(ppts[pptsl].x, ppts[pptsl].y);
-
 	};
 
+	var onSnap = function() {
+		var pptsl = ppts.length-1;
+		ppts.push({x: dataX, y: dataY});
+		ctx.lineWidth = markerWidth;
+		ctx.strokeStyle = markerColor;
+		ctx.lineJoin = "round";
+		ctx.lineCap = "round";
+		ctx.beginPath();
+		var dx = dataX - prvX;
+		var dy = dataY - prvY;
+		ctx.moveTo(ppts[0].x, ppts[0].y);
+		if(Math.abs(dx)> Math.abs(dy)){
+			ctx.lineTo(dataX, prvY);
+		} else {
+			ctx.lineTo(prvX, dataY);
+		}
+	};
 	// hex to rgba conversion
 	function hexToRgbA(hex) {
 	    var c;
@@ -1380,12 +1420,10 @@ $(document).ready(function(){
 			$('#sketchpad').css('display', "block");
 			$('body').css("background-color", "#d2d2d2");
 
-			if (document.getElementsByTagName("canvas").length < 2) {
-				tmp_canvas = document.createElement('canvas');
-				tmp_ctx = tmp_canvas.getContext('2d');
-				tmp_canvas.id = 'tmp_canvas2';
-			}
-
+			tmp_canvas = document.createElement('canvas');
+			tmp_ctx = tmp_canvas.getContext('2d');
+			tmp_canvas.id = 'tmp_canvas2';
+			
 			var objectLength = String(Object.keys(convertedData).length);
 			canvas.width = convertedData["width"];
 			canvas.height = convertedData["height"];

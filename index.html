@@ -235,6 +235,8 @@
                 <div class="modal-body">
                     <p class="above-text">Please enter this <b>CODE</b> to your mobile device.</p>
                     <p id="randompin"></p>
+                    <p id="option-qr">Or scan the <b>QR CODE</b> below.</p>
+                    <div id="qrcode"></div>
                     <p id="status" class="blink">Waiting for connection...</p>
                     <div class="close">Close</div>
                 </div>
@@ -365,6 +367,7 @@
         </div>
         <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
         <script src="js/jquery-3.1.1.min.js"></script>
+        <script src="js/jquery-qrcode-0.14.0.min.js"></script>
         <script src="js/jquery.simple-color.js"></script>
         <script src="js/socket.io.js"></script>
         <script src="js/page-transition.js"></script>

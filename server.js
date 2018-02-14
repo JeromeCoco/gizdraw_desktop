@@ -138,5 +138,9 @@ io.sockets.on('connection', function (socket) {
 
     socket.on("sendLogStep", function(data){
         socket.broadcast.emit("receiveLogStep", data);
-    })
+    });
+
+    socket.on("sendSnap", function(data){
+        socket.broadcast.emit("receiveSnap", data);
+    });
 });
