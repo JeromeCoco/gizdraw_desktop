@@ -402,6 +402,7 @@ $(document).ready(function(){
 	        $("#status, #option-qr").css("display", "block");
 			$("#enterPin .modal-content").css("height", "410px");
 	        $('#randompin').html(convertSetFromIPToLetter[parseInt(part1)] + convertSetFromIPToLetter[parseInt(part2)] + convertSetFromIPToLetter[parseInt(part3)] + convertSetFromIPToLetter[parseInt(part4)]);
+	        /*$('#randompin').html(myIP);*/
 			var stringPin = convertSetFromIPToLetter[parseInt(part1)] + convertSetFromIPToLetter[parseInt(part2)] + convertSetFromIPToLetter[parseInt(part3)] + convertSetFromIPToLetter[parseInt(part4)] + ' ';
 	        $("#qrcode").qrcode({
 			    width: 128,
@@ -1097,6 +1098,7 @@ $(document).ready(function(){
 					if (isConnected) {
 						socket.emit("canvasResizeFromPC", {canvasSizeWidth:ui.size.width, canvasSizeHeight:ui.size.height});
 					}
+					console.log(canvasSize);
 				}
 			});
 		}
@@ -1159,6 +1161,9 @@ $(document).ready(function(){
 	    	logDetails = "Resize Canvas: " +canvasSize;
 			logId = "resized-log";
 	    	appendli(logDetails, logId, canvasSizeW, canvasSizeH, canvas.toDataURL());
+	    	if (isConnected) {
+				socket.emit("sendCSize", canvasSize);
+			}
 	    }
 
 	    // ctrl + n [create new modal]

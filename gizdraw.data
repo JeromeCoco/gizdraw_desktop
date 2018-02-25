@@ -38,5 +38,13 @@
   "file10": {
     "file_name": "MyCanvas.gdw",
     "file_location": "C:/Users/jerom/Pictures/GizDraw/MyCanvas.gdw"
+  },
+  "file11": {
+    "file_name": "lol.png",
+    "file_location": "C:/Users/jerom/Pictures/GizDraw/lol.png"
+  },
+  "file12": {
+    "file_name": "Untitled-1.jpg",
+    "file_location": "C:/Users/jerom/Pictures/GizDraw/Untitled-1.jpg"
   }
 }

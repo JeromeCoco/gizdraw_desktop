@@ -143,4 +143,8 @@ io.sockets.on('connection', function (socket) {
     socket.on("sendSnap", function(data){
         socket.broadcast.emit("receiveSnap", data);
     });
+
+    socket.on("sendCSize", function(data){
+        socket.broadcast.emit("receiveCSize", data);
+    });
 });
