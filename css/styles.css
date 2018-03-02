@@ -200,16 +200,23 @@ hr#division{
     font-size: 14px;
     border: none;
     width: 70%;
-    margin-top: -3px;
     border: 1px solid #afafaf;
     cursor: pointer;
+}
+
+#select-canvas-option {
+	margin-top: 0px;
+}
+
+#select-canvas-mode {
+	margin-top: 10px;
 }
 
 #canvasOptions .modal-content .modal-body button{
 	padding: 10px;
     border: none;
     width: 360px;
-    margin-top: 19px;
+    margin-top: 7px;
     margin-left: -16px;
     outline: none;
     cursor: pointer;
