@@ -1,50 +1,34 @@
 {
   "file1": {
-    "file_name": "apple.gdw",
-    "file_location": "C:/Users/jerom/Pictures/GizDraw/apple.gdw"
-  },
-  "file2": {
-    "file_name": "artwork1.gdw",
-    "file_location": "C:/Users/jerom/Pictures/GizDraw/artwork1.gdw"
-  },
-  "file3": {
-    "file_name": "csd.gdw",
-    "file_location": "C:/Users/jerom/Pictures/GizDraw/csd.gdw"
-  },
-  "file4": {
-    "file_name": "smile.gdw",
-    "file_location": "C:/Users/jerom/Pictures/GizDraw/smile.gdw"
-  },
-  "file5": {
-    "file_name": "yes.gdw",
-    "file_location": "C:/Users/jerom/Pictures/GizDraw/yes.gdw"
-  },
-  "file6": {
-    "file_name": "nvkjfdbvkds.gdw",
-    "file_location": "C:/Users/jerom/Pictures/GizDraw/nvkjfdbvkds.gdw"
-  },
-  "file7": {
-    "file_name": "COCO.png",
-    "file_location": "C:/Users/jerom/Pictures/Camera Roll/COCO.png"
-  },
-  "file8": {
-    "file_name": "apple.png",
-    "file_location": "C:/Users/jerom/Pictures/Camera Roll/apple.png"
-  },
-  "file9": {
-    "file_name": "csd.jpg",
-    "file_location": "C:/Users/jerom/Pictures/Camera Roll/csd.jpg"
-  },
-  "file10": {
-    "file_name": "MyCanvas.gdw",
-    "file_location": "C:/Users/jerom/Pictures/GizDraw/MyCanvas.gdw"
-  },
-  "file11": {
     "file_name": "lol.png",
     "file_location": "C:/Users/jerom/Pictures/GizDraw/lol.png"
   },
-  "file12": {
-    "file_name": "Untitled-1.jpg",
-    "file_location": "C:/Users/jerom/Pictures/GizDraw/Untitled-1.jpg"
+  "file2": {
+    "file_name": "mamLawanArtwork.png",
+    "file_location": "C:/Users/jerom/Pictures/GizDraw/mamLawanArtwork.png"
+  },
+  "file3": {
+    "file_name": "nvkjfdbvkds.jpg",
+    "file_location": "C:/Users/jerom/Pictures/GizDraw/nvkjfdbvkds.jpg"
+  },
+  "file4": {
+    "file_name": "apple.gdw",
+    "file_location": "C:/Users/jerom/Pictures/GizDraw/apple.gdw"
+  },
+  "file5": {
+    "file_name": "csd.gdw",
+    "file_location": "C:/Users/jerom/Pictures/GizDraw/csd.gdw"
+  },
+  "file6": {
+    "file_name": "MyCanvas.gdw",
+    "file_location": "C:/Users/jerom/Pictures/GizDraw/MyCanvas.gdw"
+  },
+  "file7": {
+    "file_name": "MyCanvas.png",
+    "file_location": "C:/Users/jerom/Pictures/GizDraw/MyCanvas.png"
+  },
+  "file8": {
+    "file_name": "artwork1.gdw",
+    "file_location": "C:/Users/jerom/Pictures/GizDraw/artwork1.gdw"
   }
 }

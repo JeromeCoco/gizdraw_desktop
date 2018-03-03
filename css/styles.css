@@ -938,3 +938,7 @@ table tr td span:hover{
 	margin-left: 75px;
     margin-top: 15px;
 }
+
+#template-image {
+  position: absolute;
+}

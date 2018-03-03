@@ -147,4 +147,8 @@ io.sockets.on('connection', function (socket) {
     socket.on("sendCSize", function(data){
         socket.broadcast.emit("receiveCSize", data);
     });
+
+    socket.on("sendImageToMobile", function(data){
+        socket.broadcast.emit("receiveImageToMobileFromPC", data);
+    });
 });

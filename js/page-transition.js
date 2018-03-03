@@ -236,7 +236,6 @@ $(document).ready(function(){
 
 		socket.on("onReceivecStep", function(data){
 			canvasPicSrc = data.canvasPiccStep;
-			// console.log(canvasPicSrc);
 		});
 
 		socket.on("onReceiveEventLog", function(data){
@@ -253,6 +252,8 @@ $(document).ready(function(){
 			tmp_canvas.height = data.height;
 			canvas.width = data.width;
 			canvas.height = data.height;
+			$("#canvas-name-active").html(data.filename);
+			createLevel = "open";
 			$("#main-sketch").css({height: data.height+'px',width: data.width+'px'});;
 			ctx.drawImage(image, 0, 0);
 		});
@@ -280,7 +281,21 @@ $(document).ready(function(){
 			for (var i = 1; i <= Object.keys(list).length; i++) {
 				var fileName = list["file"+i]["file_name"];
 				var fileLocation = list["file"+i]["file_location"];
-				$("#file").append('<div class="file-item" id="file'+i+'"> <img src="img/file-default-image.jpg"> <p>'+fileName+'</p> <p>'+fileLocation+'</p> </div> ');
+				var fileExtension = fileName.split(".");
+				var displayIcon;
+				switch (fileExtension[1]) {
+					case "gdw":
+						displayIcon = "file-default-image";
+						break;
+					case "png":
+						displayIcon = "file-default-image-png";
+						break;
+					case "jpg":
+						displayIcon = "file-default-image-jpg";
+						break;
+				}
+
+				$("#file").append('<div class="file-item" id="file'+i+'"> <img src="img/'+displayIcon+'.jpg"> <p>'+fileName+'</p> <p>'+fileLocation+'</p> </div> ');
 			}
 		});
 	} catch(e) {
@@ -298,7 +313,13 @@ $(document).ready(function(){
 			var fileName = list[selectedFile]["file_name"];
 			var fileLocation = list[selectedFile]["file_location"];
 			$("#canvas-name-active").html(fileName);
-			gdwReader(fileLocation);
+
+			var fileExtension = fileLocation.split(".");
+			if (fileExtension[1] == "gdw") {
+				gdwReader(fileLocation);
+			} else {
+				imageReader(fileLocation);
+			}
 		});
 	});
 
@@ -861,7 +882,6 @@ $(document).ready(function(){
 
 	var onDrawLine = function() {
 		var pptsl = ppts.length-1;
-		// console.log(ppts);
 		ppts.push({x: dataX, y: dataY});
 		ctx.lineWidth = markerWidth;
 		ctx.strokeStyle = markerColor;
@@ -1353,6 +1373,8 @@ $(document).ready(function(){
 	});
 
 	function openFileGdw() {
+		$('#tmp_canvas2').remove();
+		$('#tmp_canvas').remove();
 		const fs = require("fs");
 		const {dialog} = require("electron").remote;
 		dialog.showOpenDialog(function (fileNames) {
@@ -1410,13 +1432,65 @@ $(document).ready(function(){
 				}
 			});
 
-  			// for reading gdw file
-  			gdwReader(fileName);
+  			var fileExtension = fileName.split(".");
+  			if (fileExtension[1] == "gdw") {
+  				gdwReader(fileName);
+  			} else {
+  				imageReader(fileName);
+  			}
   		});
+	}
+
+	function imageReader(fileLocation){
+		$('#tmp_canvas2').remove();
+		$('#tmp_canvas').remove();
+		var publicImage;
+		fs.readFile(fileLocation, 'base64', function (err, data) {
+			var image = "data:image/png;base64,"+data;
+			$('#menu').css("display", "none");
+			$('#file').css("display", "none");
+			$('#setup-canvas-panel').addClass('hide');
+			$('#main-sketch').css('display', "block");
+			$('#sketchpad').css('display', "block");
+			$('body').css("background-color", "#d2d2d2");
+
+			tmp_canvas = document.createElement('canvas');
+			tmp_ctx = tmp_canvas.getContext('2d');
+			tmp_canvas.id = 'tmp_canvas2';
+			
+			$('#tmp_canvas2').css("position","absolute");
+			$('#tmp_canvas2').css("top","0");
+			canvasPic.src = image;
+			canvasPic.onload = function (){
+				canvas.width = canvasPic.width;
+				canvas.height = canvasPic.height;
+				tmp_canvas.width = canvasPic.width;
+				tmp_canvas.height = canvasPic.height;
+				$('#main-sketch').css('height', canvasPic.height);
+				$('#main-sketch').css('width', canvasPic.width);
+				mainsketch.appendChild(tmp_canvas);
+				$('#tmp_canvas2').css("position","absolute");
+				$('#tmp_canvas2').css("top","0");
+				$('#main-sketch').css('background-color', "white");
+	        	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	        	ctx.drawImage(canvasPic, 0, 0);
+	        }
+
+	       	var canvasDetails = {
+				width: canvasPic.width,
+				height: canvasPic.height,
+				imageSource: image
+			}
+
+			socket.emit("sendImageToMobile", canvasDetails);
+			createLevel = 'open';
+			clearLogs();
+		});
 	}
 
 	function gdwReader(fileLocation) {
 		fs.readFile(fileLocation, 'utf-8', function (err, data) {
+			console.log(data);
 			var convertedData = JSON.parse(data);
 			$('#menu').css("display", "none");
 			$('#file').css("display", "none");
