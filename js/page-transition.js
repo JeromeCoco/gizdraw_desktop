@@ -253,7 +253,7 @@ $(document).ready(function(){
 			tmp_canvas.height = data.height;
 			canvas.width = data.width;
 			canvas.height = data.height;
-			$("#canvas-name-active").html(data.filename);
+			$("#canvas-name-active").html("*Untitled");
 			createLevel = "open";
 			$("#main-sketch").css({height: data.height+'px',width: data.width+'px'});;
 			ctx.drawImage(image, 0, 0);
@@ -680,6 +680,9 @@ $(document).ready(function(){
 	$('#create-canvas2').click(function() {
 		if ($('#canvasName2').val() != "") {
 			// setup on desktop
+			$('#template-image').removeAttr('src');
+			onTemplate = false;
+			socket.emit("onClearTemplateFromPC", 'clear');
 			$('#canvas-name-active').html($('#canvasName2').val());
 			setupDesktopView();
 			if ($('#changeBackground2').val() == "Color") {
@@ -1429,7 +1432,8 @@ $(document).ready(function(){
 				}
 			}
 
-  			$('#canvas-name-active').html(splitPath[splitPath.length-1]);
+  			// $('#canvas-name-active').html(splitPath[splitPath.length-1]);
+  			$('#canvas-name-active').html("*Untitled");
 
   			// for reading / writing recent open file
   			fs.readFile('gizdraw.data', 'utf-8', function (err, data) {
