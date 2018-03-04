@@ -151,4 +151,17 @@ io.sockets.on('connection', function (socket) {
     socket.on("sendImageToMobile", function(data){
         socket.broadcast.emit("receiveImageToMobileFromPC", data);
     });
+
+    socket.on("sendTemplateFromMobileToPC", function(data){
+        socket.broadcast.emit("receiveTemplateFromMobileToPC", data);
+    });
+
+    socket.on("onClearTemplateFromMobile", function(data){
+        socket.broadcast.emit("onClearTemplateToPC", data);
+    });
+
+    socket.on("onClearTemplateFromPC", function(data){
+        socket.broadcast.emit("onClearTemplateToMobile", data);
+    });
+
 });

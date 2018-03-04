@@ -30,6 +30,7 @@ $(document).ready(function(){
 	var toolLog;
 	var logDetails, logCount = 0, logNum, logLength, logId;
 	var prvX, prvY, gridState = false, snap;
+	var onTemplate = false;
 
 	$('.simple_color_live_preview').simpleColor({ livePreview: true, cellWidth: 5, cellHeight: 5 });
 	$("#enterPin").css("display", "block");
@@ -270,6 +271,28 @@ $(document).ready(function(){
 		socket.on("receiveSnap", function(data){
 			snap = data;
 		});
+
+		socket.on("receiveTemplateFromMobileToPC", function(data){
+			onTemplate = true;
+			canvas.width = 600;
+			canvas.height = 350;
+			tmp_canvas.width = 600;
+			tmp_canvas.height = 350;
+			$("#main-sketch").css("width", "600px");
+			$("#main-sketch").css("height", "350px");
+			$("#template-image").attr('src', 'img/templates/'+data.image+'.PNG');
+			if (data.type == "drawing") {
+				$("#template-image").css("z-index", "-1");
+			} else {
+				$("#template-image").css("z-index", "0");
+			}
+		});
+
+		socket.on("onClearTemplateToPC", function(data){
+			$('#template-image').removeAttr('src');
+			onTemplate = false;
+		})
+
 	});
 
 	// list recent files
@@ -987,10 +1010,24 @@ $(document).ready(function(){
 	});
 
 	$("#clear-canvas").click(function() {
-		resetCanvas();
-		var cPushArray = new Array();
+		var confirmation1 = confirm("Are you sure you want to clear canvas?");
+		if (confirmation1) {
+			resetCanvas();
+			var cPushArray = new Array();
+		}
+
 		if (isConnected) {
 			socket.emit("onClearCanvasFromPC", "clear canvas");
+			if (onTemplate) {
+				if (confirmation1) {
+				var confirmation2 = confirm("Clear template?");
+				if (confirmation2) {
+					$('#template-image').removeAttr('src');
+					onTemplate = false;
+					socket.emit("onClearTemplateFromPC", 'clear');
+				}
+			}
+			}
 		}
 		$('.event-logs-li').remove();
 		$(".event-logs-container div").fadeIn('fast');
