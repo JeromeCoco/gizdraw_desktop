@@ -163,6 +163,28 @@ hr#division{
     cursor: pointer;
 }
 
+#saveFileNameModal .modal-content {
+	width: 360px;
+}
+
+#saveFileNameModal .modal-content{
+	background-color: white;
+	height: 139px;
+	border-radius: 3px;
+}
+
+#saveFileNameModal .modal-content .modal-body{
+	height: 139px;
+}
+
+#saveFileNameModal .modal-content .modal-body img{
+	width: 25px;
+    position: absolute;
+    left: 345px;
+    top: -8px;
+    cursor: pointer;
+}
+
 #canvasOptions .modal-content {
 	width: 360px;
 }

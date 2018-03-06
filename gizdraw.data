@@ -1,42 +1,18 @@
 {
   "file1": {
-    "file_name": "lol.png",
-    "file_location": "C:/Users/jerom/Pictures/GizDraw/lol.png"
+    "file_name": "art1.png",
+    "file_location": "C:/Users/jerom/Pictures/GizDraw/art1.png"
   },
   "file2": {
-    "file_name": "mamLawanArtwork.png",
-    "file_location": "C:/Users/jerom/Pictures/GizDraw/mamLawanArtwork.png"
+    "file_name": "art1.gdw",
+    "file_location": "C:/Users/jerom/Pictures/GizDraw/art1.gdw"
   },
   "file3": {
-    "file_name": "nvkjfdbvkds.jpg",
-    "file_location": "C:/Users/jerom/Pictures/GizDraw/nvkjfdbvkds.jpg"
+    "file_name": "apple.png",
+    "file_location": "C:/Users/jerom/Pictures/Camera Roll/apple.png"
   },
   "file4": {
-    "file_name": "apple.gdw",
-    "file_location": "C:/Users/jerom/Pictures/GizDraw/apple.gdw"
-  },
-  "file5": {
-    "file_name": "csd.gdw",
-    "file_location": "C:/Users/jerom/Pictures/GizDraw/csd.gdw"
-  },
-  "file6": {
-    "file_name": "MyCanvas.gdw",
-    "file_location": "C:/Users/jerom/Pictures/GizDraw/MyCanvas.gdw"
-  },
-  "file7": {
-    "file_name": "MyCanvas.png",
-    "file_location": "C:/Users/jerom/Pictures/GizDraw/MyCanvas.png"
-  },
-  "file8": {
-    "file_name": "artwork1.gdw",
-    "file_location": "C:/Users/jerom/Pictures/GizDraw/artwork1.gdw"
-  },
-  "file9": {
-    "file_name": "432018.gdw",
-    "file_location": "C:/Users/jerom/Pictures/GizDraw/432018.gdw"
-  },
-  "file10": {
-    "file_name": "432018.png",
-    "file_location": "C:/Users/jerom/Pictures/GizDraw/432018.png"
+    "file_name": "csd.jpg",
+    "file_location": "C:/Users/jerom/Pictures/Camera Roll/csd.jpg"
   }
 }

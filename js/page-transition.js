@@ -253,10 +253,12 @@ $(document).ready(function(){
 			tmp_canvas.height = data.height;
 			canvas.width = data.width;
 			canvas.height = data.height;
-			$("#canvas-name-active").html("*Untitled");
+			$("#canvas-name-active").html(data.filename);
 			createLevel = "open";
 			$("#main-sketch").css({height: data.height+'px',width: data.width+'px'});;
 			ctx.drawImage(image, 0, 0);
+			$('#template-image').removeAttr('src');
+			onTemplate = false;
 		});
 
 		socket.on("receiveLogFunctions", function(data){
@@ -286,6 +288,7 @@ $(document).ready(function(){
 			} else {
 				$("#template-image").css("z-index", "0");
 			}
+			$('#canvas-name-active').html("*Untitled");
 		});
 
 		socket.on("onClearTemplateToPC", function(data){
@@ -1107,6 +1110,10 @@ $(document).ready(function(){
 		$("#createNewCanvasModal").css("display", "none");
 	});
 
+	$("#close-saveFileName").click(function() {
+		$("#saveFileNameModal").css("display", "none");
+	});
+
 	$("#setBgColor").click(function() {
 		var setColor = $("#custom-bg-color").val();
 		$("#canvasOptions").css("display", "none");
@@ -1281,7 +1288,7 @@ $(document).ready(function(){
 
 	});
 
-	function savePNG() {
+	function savePNG() {		
 		var canvasBuffer = require('electron-canvas-to-buffer');
 		var buffer = canvasBuffer(canvas, 'image/png');
 		const {app} = require("electron").remote;
@@ -1432,8 +1439,8 @@ $(document).ready(function(){
 				}
 			}
 
-  			// $('#canvas-name-active').html(splitPath[splitPath.length-1]);
-  			$('#canvas-name-active').html("*Untitled");
+  			$('#canvas-name-active').html(splitPath[splitPath.length-1]);
+  			/*$('#canvas-name-active').html("*Untitled");*/
 
   			// for reading / writing recent open file
   			fs.readFile('gizdraw.data', 'utf-8', function (err, data) {
@@ -1526,6 +1533,8 @@ $(document).ready(function(){
 			socket.emit("sendImageToMobile", canvasDetails);
 			createLevel = 'open';
 			clearLogs();
+			$('#template-image').removeAttr('src');
+			onTemplate = false;
 		});
 	}
 
